@@ -10,6 +10,7 @@ import {
   pendingReviews,
   rateReview,
   reviewStageOf,
+  splitReviewInbox,
   startLearning,
   todayKey
 } from "./reviewEngine";
@@ -140,5 +141,18 @@ describe("reviewEngine (practice-cat contract)", () => {
     expect(dateAfter("2026-08-01", 1)).toBe("2026-08-02");
     expect(dueReview(state, "2026-08-10")?.offset).toBe(1);
     expect(dueReview(state, "2026-08-01")).toBeUndefined();
+  });
+
+  it("puts due cards in today's inbox and the rest in already-learned", () => {
+    const due = startLearning(emptyState("e1", "p1"), noon("2026-08-01"));
+    const waiting = startLearning(emptyState("e1", "p2"), noon("2026-08-10"));
+    const fresh = emptyState("e1", "p3");
+    const split = splitReviewInbox(
+      [{ id: "p1" }, { id: "p2" }, { id: "p3" }],
+      [due, waiting, fresh],
+      "2026-08-10"
+    );
+    expect(split.today.map((entry) => entry.item.id)).toEqual(["p1"]);
+    expect(split.learned.map((entry) => entry.item.id)).toEqual(["p2"]);
   });
 });
