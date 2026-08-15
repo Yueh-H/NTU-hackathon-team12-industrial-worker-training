@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { AdminEmployee } from "./pages/AdminEmployee";
+import { AdminCards } from "./pages/AdminCards";
 import { AdminHome } from "./pages/AdminHome";
 import { Gate } from "./pages/Gate";
 import { LearnCard } from "./pages/LearnCard";
@@ -23,6 +24,7 @@ export function App() {
         <Route path=":employeeId/quiz/:partId" element={<LearnQuiz />} />
       </Route>
       <Route path="/admin" element={<AdminHome />} />
+      <Route path="/admin/cards" element={<AdminCards />} />
       <Route path="/admin/:employeeId" element={<AdminEmployee />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
