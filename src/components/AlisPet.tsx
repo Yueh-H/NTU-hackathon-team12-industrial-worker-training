@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { parts, workerById } from "../data/catalog";
 import { queueFor, snapshotFor } from "../engine/dashboard";
+import { askAlisHeadless } from "../lib/alisHeadless";
 import { speakZh } from "../lib/speech";
 import { useShop } from "../store";
 
@@ -50,6 +51,8 @@ export function AlisPet() {
   const { employeeId } = useParams();
   const { states, attempts } = useShop();
   const [open, setOpen] = useState(false);
+  const [aiMessage, setAiMessage] = useState("");
+  const [aiBusy, setAiBusy] = useState(false);
   const worker = workerById(employeeId ?? "");
   const spokenRef = useRef("");
   const snapshot = worker ? snapshotFor(worker, states, attempts) : undefined;
@@ -68,6 +71,23 @@ export function AlisPet() {
   const workerId = worker?.id ?? "";
   const spokenKey = worker ? `${worker.id}:${mood}:${message}` : "";
   const voiceMessage = worker ? `${PET_NAME}提醒，${worker.name}。${message}` : "";
+  const aiPrompt = worker && snapshot
+    ? [
+        `學員：${worker.name}（${worker.station}）`,
+        `學習分數：${snapshot.learningScore}`,
+        `已開始：${snapshot.started}/${snapshot.assigned} 張`,
+        `掌握：${snapshot.mastered}/${snapshot.assigned} 張`,
+        `今日複習：${snapshot.dueToday} 張`,
+        `逾期複習：${snapshot.overdue} 張`,
+        `弱項：${snapshot.weakParts.map((part) => part.nameZh).join("、") || "目前沒有紀錄"}`,
+        `目前提醒：${message}`,
+        `下一張：${nextPart?.nameZh ?? "沒有指定"}`
+      ].join("\n")
+    : "";
+
+  useEffect(() => {
+    setAiMessage("");
+  }, [workerId]);
 
   useEffect(() => {
     if (!workerId || !spokenKey || !voiceMessage) return;
@@ -76,6 +96,25 @@ export function AlisPet() {
     rememberReminder(spokenKey);
     speakZh(voiceMessage);
   }, [spokenKey, voiceMessage, workerId]);
+
+  async function askHeadlessAssistant(): Promise<void> {
+    if (aiBusy || !aiPrompt) return;
+    setAiBusy(true);
+    setAiMessage("");
+    try {
+      const answer = await askAlisHeadless(aiPrompt);
+      setAiMessage(answer);
+      speakZh(answer);
+    } catch (error) {
+      setAiMessage(
+        error instanceof Error
+          ? `本機 Codex 尚未啟動：${error.message}`
+          : "本機 Codex 尚未啟動，請先執行 npm run ai:headless。"
+      );
+    } finally {
+      setAiBusy(false);
+    }
+  }
 
   if (!worker || !snapshot || !queue) return null;
 
@@ -108,9 +147,18 @@ export function AlisPet() {
             <span>{snapshot.started}/{snapshot.assigned} 張已開始</span>
             <span>{snapshot.learningScore} 分</span>
           </div>
+          {aiMessage ? <p className="alis-pet-ai-message"><strong>AI：</strong>{aiMessage}</p> : null}
           <div className="alis-pet-tools">
             <button className="alis-pet-voice" type="button" onClick={() => speakZh(voiceMessage)}>
               🔊 再說一次
+            </button>
+            <button
+              className="alis-pet-voice"
+              type="button"
+              disabled={aiBusy}
+              onClick={() => void askHeadlessAssistant()}
+            >
+              {aiBusy ? "⏳ Codex 思考中…" : "✨ 問學習小助手"}
             </button>
           </div>
           {nextPart ? (

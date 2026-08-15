@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { trainingSets } from "../data/catalog";
 import type { TrainingSet } from "../types";
 
@@ -23,6 +23,15 @@ export function WorkOrderRail({
           {collapsed ? "»" : "«"}
         </button>
       </div>
+      <NavLink
+        className={({ isActive }) => `wo-rail-ranking${isActive ? " is-on" : ""}${collapsed ? " is-collapsed" : ""}`}
+        to="/learn/ranking"
+        aria-label="全員學習排行榜"
+        title="全員學習排行榜"
+      >
+        <span aria-hidden="true">🏆</span>
+        {!collapsed ? <strong>全員學習排行榜</strong> : null}
+      </NavLink>
       <div className="wo-rail-list">
         {trainingSets.map((item) => (
           <WorkOrderButton
