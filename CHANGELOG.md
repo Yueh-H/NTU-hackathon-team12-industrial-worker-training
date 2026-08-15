@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.1] - 2026-08-15
+
+### Changed
+- Path and materials +/− each toggle on their own; opening one no longer closes the others
+
 ## [0.7.0] - 2026-08-15
 
 ### Added

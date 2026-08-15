@@ -34,12 +34,20 @@ export function MaterialsPanel({
 }) {
   const selected = parts.find((part) => part.id === selectedPartId);
   const selectedCategory = selected?.category;
-  const [open, setOpen] = useState<CardCategory | "">(selectedCategory ?? "struktur");
+  const [openCats, setOpenCats] = useState<Set<CardCategory>>(
+    () => new Set(selectedCategory ? [selectedCategory] : ["struktur"])
+  );
   const [todayOpen, setTodayOpen] = useState(true);
   const [learnedOpen, setLearnedOpen] = useState(false);
 
   useEffect(() => {
-    if (selectedCategory) setOpen(selectedCategory);
+    if (!selectedCategory) return;
+    setOpenCats((current) => {
+      if (current.has(selectedCategory)) return current;
+      const next = new Set(current);
+      next.add(selectedCategory);
+      return next;
+    });
   }, [selectedCategory]);
 
   if (!training.active) {
@@ -95,8 +103,15 @@ export function MaterialsPanel({
           states={states}
           attempts={attempts}
           selectedPartId={selectedPartId}
-          expanded={open === category}
-          onToggle={() => setOpen((current) => (current === category ? "" : category))}
+          expanded={openCats.has(category)}
+          onToggle={() =>
+            setOpenCats((current) => {
+              const next = new Set(current);
+              if (next.has(category)) next.delete(category);
+              else next.add(category);
+              return next;
+            })
+          }
         />
       ))}
     </aside>

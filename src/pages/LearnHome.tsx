@@ -20,20 +20,25 @@ import type { CardCategory } from "../types";
 import type { Attempt, Part, ReviewState } from "../types";
 import { useShop } from "../store";
 
-type OpenKey = CardCategory | "today" | "learned" | "";
+type OpenKey = CardCategory | "today" | "learned";
+
+function toggleKey(current: Set<OpenKey>, key: OpenKey): Set<OpenKey> {
+  const next = new Set(current);
+  if (next.has(key)) next.delete(key);
+  else next.add(key);
+  return next;
+}
 
 export function LearnHome() {
   const { employeeId = "" } = useParams();
   const worker = workerById(employeeId);
   const { states, attempts } = useShop();
-  const [openUnit, setOpenUnit] = useState<OpenKey>("today");
+  const [openKeys, setOpenKeys] = useState<Set<OpenKey>>(() => new Set(["today"]));
   if (!worker) return <Navigate to="/learn" replace />;
   const mine = states.filter((state) => state.employeeId === worker.id);
   const mineAttempts = attempts.filter((attempt) => attempt.employeeId === worker.id);
   const spoken = spokenSet(worker.id, hasCompletedZhSpeech);
   const inbox = splitReviewInbox(parts, mine);
-  const defaultOpen: OpenKey = inbox.today.length ? "today" : inbox.learned.length ? "learned" : units[0]?.id ?? "";
-  const expanded = openUnit || defaultOpen;
 
   return (
     <section className="path-stage">
@@ -48,8 +53,8 @@ export function LearnHome() {
         items={inbox.today}
         employeeId={worker.id}
         attempts={mineAttempts}
-        expanded={expanded === "today"}
-        onToggle={() => setOpenUnit((current) => (current === "today" ? "" : "today"))}
+        expanded={openKeys.has("today")}
+        onToggle={() => setOpenKeys((current) => toggleKey(current, "today"))}
       />
       <ReviewPathFolder
         id="learned"
@@ -59,8 +64,8 @@ export function LearnHome() {
         items={inbox.learned}
         employeeId={worker.id}
         attempts={mineAttempts}
-        expanded={expanded === "learned"}
-        onToggle={() => setOpenUnit((current) => (current === "learned" ? "" : "learned"))}
+        expanded={openKeys.has("learned")}
+        onToggle={() => setOpenKeys((current) => toggleKey(current, "learned"))}
       />
       <header className="path-head">
         <p className="eyebrow">{worker.name} · {worker.station}</p>
@@ -73,7 +78,7 @@ export function LearnHome() {
       {units.map((unit, unitIndex) => {
         const progress = unitProgress(unit, mineAttempts, worker.id);
         const stars = unitStars(unit, mineAttempts, worker.id, spoken);
-        const isOpen = expanded === unit.id;
+        const isOpen = openKeys.has(unit.id);
         const labels = categoryLabels[unit.id];
         return (
           <article key={unit.id} className={`path-unit${stars === 2 ? " is-clear" : ""}`} id={`unit-${unit.id}`}>
@@ -81,7 +86,7 @@ export function LearnHome() {
               className="path-unit-banner"
               type="button"
               aria-expanded={isOpen}
-              onClick={() => setOpenUnit((current) => (current === unit.id ? "" : unit.id))}
+              onClick={() => setOpenKeys((current) => toggleKey(current, unit.id))}
             >
               <span>
                 <small>

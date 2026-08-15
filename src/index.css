@@ -1341,6 +1341,18 @@ td small { color: var(--muted); }
 .path-unit-banner small { display: block; opacity: 0.72; font-size: 0.75rem; }
 .path-unit-banner strong { display: block; }
 .path-unit-banner b { font-size: 1.2rem; opacity: 0.8; }
+.path-unit-banner b,
+.mat-toggle b {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 1.15rem;
+  line-height: 1;
+}
+.mat-toggle b { background: rgba(15, 44, 56, 0.08); }
 .path-unit-banner .banner-end,
 .mat-toggle .banner-end {
   display: flex;
