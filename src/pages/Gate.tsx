@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { BackendBadge } from "../components/BackendBadge";
 import { trainingSet } from "../data/catalog";
 import { useShop } from "../store";
 
@@ -13,6 +14,7 @@ export function Gate() {
         <br />
         {trainingSet.docNo} · {trainingSet.machine}
       </p>
+      <BackendBadge />
       <div className="gate-actions">
         <Link className="btn primary" to="/learn">
           Karyawan · Belajar suku cadang
@@ -22,7 +24,7 @@ export function Gate() {
         </Link>
       </div>
       <p className="fine">
-        Data demo disimpan di browser ini. Buka /learn dan /admin di dua tab untuk melihat angka bergerak.
+        有設 Supabase 時，手機學、筆電看主管頁會打同一份資料。沒設就存在這個瀏覽器。
       </p>
       <button className="text-btn" type="button" onClick={resetDemo}>
         Reset data demo
