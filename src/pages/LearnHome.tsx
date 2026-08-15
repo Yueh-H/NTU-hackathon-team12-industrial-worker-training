@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { trainingSet, workerById, workers } from "../data/catalog";
 import { snapshotFor } from "../engine/dashboard";
 import { firstOpenPart, nodeState, unitProgress, units } from "../engine/path";
+import { buildAlisSnapshot, syncAlisSnapshot } from "../lib/alisSnapshot";
 import { relativeTime } from "../lib/format";
 import { useShop } from "../store";
 
@@ -9,6 +11,7 @@ export function LearnHome() {
   const { employeeId = "" } = useParams();
   const worker = workerById(employeeId);
   const { states, attempts } = useShop();
+  const [alisSyncMessage, setAlisSyncMessage] = useState("");
   if (!worker) return <Navigate to="/learn" replace />;
   const mine = states.filter((state) => state.employeeId === worker.id);
   const snap = snapshotFor(worker, mine, attempts);
@@ -36,6 +39,27 @@ export function LearnHome() {
         <p className="fine">
           已開始 {snap.viewedCount}/{snap.assigned} 張 · 最近{relativeTime(snap.lastAt, "zh")}
         </p>
+      </section>
+      <section className="info-card alis-card">
+        <h2>AI Alis 桌寵</h2>
+        <p>把目前學習狀況同步給桌寵，讓它提醒今天到期、逾期與下一張卡。</p>
+        <button
+          className="btn ghost"
+          type="button"
+          onClick={() => {
+            setAlisSyncMessage("同步中…");
+            void syncAlisSnapshot(buildAlisSnapshot(worker, states, attempts)).then((result) => {
+              setAlisSyncMessage(
+                result === "bridge"
+                  ? "已同步，AI Alis 會在下一次讀取時更新。"
+                  : "已下載狀態檔，放到 AI Alis 指定的位置即可。"
+              );
+            });
+          }}
+        >
+          同步目前學習情況
+        </button>
+        {alisSyncMessage ? <p className="fine">{alisSyncMessage}</p> : null}
       </section>
       {units.map((unit, unitIndex) => {
         const progress = unitProgress(unit, mine);
