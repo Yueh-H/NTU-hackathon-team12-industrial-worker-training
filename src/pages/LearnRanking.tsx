@@ -33,6 +33,33 @@ export function LearnRanking() {
         </Link>
       </header>
 
+      <section className="ranking-scheme">
+        <div className="section-title-row">
+          <h2>
+            {t.scoreScheme.zh}
+            <span className="bi-idn" lang="id">{t.scoreScheme.idn}</span>
+          </h2>
+          <span className="fine">100</span>
+        </div>
+        <ol className="score-parts">
+          {t.scoreParts.map((part) => (
+            <li key={part.zh}>
+              <strong>{part.pts}</strong>
+              <span>
+                {part.zh}
+                <span className="bi-idn" lang="id">{part.idn}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+        <BiText as="p" className="fine" {...t.scoreZero} />
+        <p className="score-future">
+          <strong>{t.scoreFuture.zh}<span className="bi-idn" lang="id">{t.scoreFuture.idn}</span></strong>
+          {t.scoreFutureFine.zh}
+          <span className="bi-idn" lang="id">{t.scoreFutureFine.idn}</span>
+        </p>
+      </section>
+
       {ranking.length >= 3 ? (
         <ol className="ranking-podium" aria-label={biLine({ zh: "前三名", idn: "Tiga besar" })}>
           {ranking.slice(0, 3).map((snap, index) => (

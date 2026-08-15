@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.2] - 2026-08-15
+
+### Added
+- Ranking page now shows the current 100-point scoring breakdown
+
 ## [0.10.1] - 2026-08-15
 
 ### Added

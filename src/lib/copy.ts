@@ -210,6 +210,23 @@ export const t = {
     zh: "掌握卡片、答對測驗與按時複習，會反映在學習積分上。",
     idn: "Kuasai kartu, jawab kuis, dan ulang tepat waktu. Itu jadi skor."
   },
+  scoreScheme: { zh: "目前計分方案", idn: "Cara hitung skor sekarang" },
+  scoreFuture: { zh: "未來方案", idn: "Rencana berikutnya" },
+  scoreFutureFine: {
+    zh: "之後可依工單或週次分開排；接登入後只看自己廠，不比速度。",
+    idn: "Nanti bisa per lembar atau per minggu. Setelah login, hanya pabrik sendiri. Tidak diukur kecepatan."
+  },
+  scoreZero: {
+    zh: "還沒開始學是 0 分。答錯不另扣名次。",
+    idn: "Belum mulai = 0. Salah jawab tidak potong peringkat."
+  },
+  scoreParts: [
+    { pts: 30, zh: "開始學的比例", idn: "Sudah mulai" },
+    { pts: 35, zh: "已掌握的比例", idn: "Sudah dikuasai" },
+    { pts: 20, zh: "測驗正確率", idn: "Akurasi kuis" },
+    { pts: 10, zh: "按時複習", idn: "Ulang tepat waktu" },
+    { pts: 5, zh: "最近有在學", idn: "Baru-baru ini belajar" }
+  ],
   backToPath: { zh: "回到學習路徑", idn: "Kembali ke jalur belajar" },
   thisCourse: { zh: "本課程", idn: "Kursus ini" },
   allLearners: { zh: "所有學習者", idn: "Semua pembelajar" },
