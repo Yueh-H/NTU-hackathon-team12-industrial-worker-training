@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { buildDemoProgress, parts } from "./data/catalog";
-import { ensureRemoteData, loadProgress, replaceProgress, upsertSession } from "./data/remote";
+import { ensureRemoteData, listenProgress, replaceProgress, upsertSession } from "./data/firebaseStore";
 import { applySession, emptyState, makeAttempt, STORAGE_KEY } from "./engine/reviewEngine";
-import { getSupabase, isCloudEnabled } from "./lib/supabase";
+import { getDb, isCloudEnabled } from "./lib/firebase";
 import type { Attempt, PersistShape, QuizKind, Rating, ReviewState } from "./types";
 
 export type DataBackend = "local" | "cloud";
@@ -75,38 +75,6 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     return initial;
   })()));
 
-  const refreshCloud = useCallback(async () => {
-    const client = getSupabase();
-    if (!client) return;
-    const next = await loadProgress(client);
-    setPersist(next);
-  }, []);
-
-  useEffect(() => {
-    if (!cloud) return;
-    const client = getSupabase();
-    if (!client) return;
-    let cancelled = false;
-    (async () => {
-      try {
-        const next = await ensureRemoteData(client);
-        if (!cancelled) {
-          setPersist(next);
-          setCloudError("");
-          setReady(true);
-        }
-      } catch (error) {
-        if (!cancelled) {
-          setCloudError(error instanceof Error ? error.message : "Supabase 連線失敗");
-          setReady(true);
-        }
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [cloud]);
-
   useEffect(() => {
     if (!cloud) {
       const onStorage = (event: StorageEvent) => {
@@ -116,24 +84,32 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       return () => window.removeEventListener("storage", onStorage);
     }
 
-    const client = getSupabase();
-    if (!client) return;
-    const poll = window.setInterval(() => {
-      void refreshCloud().catch((error) => {
-        setCloudError(error instanceof Error ? error.message : "同步失敗");
-      });
-    }, 2000);
-    const channel = client
-      .channel("progress")
-      .on("postgres_changes", { event: "*", schema: "public", table: "review_attempts" }, () => {
-        void refreshCloud();
-      })
-      .subscribe();
+    const db = getDb();
+    if (!db) return;
+    let cancelled = false;
+    let stop: (() => void) | undefined;
+    void (async () => {
+      try {
+        const next = await ensureRemoteData(db);
+        if (cancelled) return;
+        setPersist(next);
+        setCloudError("");
+        setReady(true);
+        stop = listenProgress(db, (live) => {
+          if (!cancelled) setPersist(live);
+        });
+      } catch (error) {
+        if (!cancelled) {
+          setCloudError(error instanceof Error ? error.message : "Firebase 連線失敗");
+          setReady(true);
+        }
+      }
+    })();
     return () => {
-      window.clearInterval(poll);
-      void client.removeChannel(channel);
+      cancelled = true;
+      stop?.();
     };
-  }, [cloud, refreshCloud]);
+  }, [cloud]);
 
   const stateFor = useCallback(
     (employeeId: string, partId: string) =>
@@ -185,10 +161,10 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       return next;
     });
     if (cloud && attempt) {
-      const client = getSupabase();
-      if (client) {
-        void upsertSession(client, saved, attempt).catch((error) => {
-          setCloudError(error instanceof Error ? error.message : "寫入失敗");
+      const db = getDb();
+      if (db) {
+        void upsertSession(db, saved, attempt).catch((error) => {
+          setCloudError(error instanceof Error ? error.message : "寫入 Firebase 失敗");
         });
       }
     }
@@ -202,11 +178,11 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       setPersist(next);
       return;
     }
-    const client = getSupabase();
-    if (!client) return;
+    const db = getDb();
+    if (!db) return;
     void (async () => {
       try {
-        await replaceProgress(client, next);
+        await replaceProgress(db, next);
         setPersist(next);
         setCloudError("");
       } catch (error) {
