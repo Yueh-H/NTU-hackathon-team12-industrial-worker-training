@@ -1,7 +1,7 @@
 import { Navigate, useParams } from "react-router-dom";
 import { categoryLabels, parts, partsByCategory, workerById } from "../data/catalog";
 import { nextDueLabel, partStatusLabel, snapshotFor } from "../engine/dashboard";
-import { RATING_ZH, STATUS_ZH } from "../lib/copy";
+import { RATING_ZH, STATUS_ID, STATUS_ZH } from "../lib/copy";
 import { formatDateTime, percent } from "../lib/format";
 import { usePageTitle } from "../lib/pageTitle";
 import type { CardCategory } from "../types";
@@ -77,9 +77,12 @@ export function AdminEmployee() {
                 return (
                   <article key={part.id} className={`part-chip is-${status}`}>
                     <span className="num">{part.callout}</span>
-                    <strong>{part.nameZh}</strong>
+                    <strong>
+                      {part.nameZh}
+                      <span className="bi-idn" lang="id">{part.nameId}</span>
+                    </strong>
                     <small>
-                      {STATUS_ZH[status]}
+                      {STATUS_ZH[status]} / {STATUS_ID[status]}
                       {nextDueLabel(state) ? ` · 下次 ${nextDueLabel(state)}` : ""}
                     </small>
                   </article>

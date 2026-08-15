@@ -1,9 +1,11 @@
+import { BiText } from "./BiText";
+import { t } from "../lib/copy";
 import type { Rating } from "../types";
 
-const OPTIONS: { id: Rating; label: string; hint: string }[] = [
-  { id: "forgot", label: "忘記", hint: "還沒記住" },
-  { id: "fuzzy", label: "模糊", hint: "有印象但不穩" },
-  { id: "remembered", label: "記得", hint: "現場叫得出來" }
+const OPTIONS: { id: Rating; label: { zh: string; idn: string }; hint: { zh: string; idn: string } }[] = [
+  { id: "forgot", label: t.forgot, hint: t.forgotHint },
+  { id: "fuzzy", label: t.fuzzy, hint: t.fuzzyHint },
+  { id: "remembered", label: t.remembered, hint: t.rememberedHint }
 ];
 
 export function RatingBar({
@@ -25,8 +27,8 @@ export function RatingBar({
           disabled={disabled}
           onClick={() => onChange(option.id)}
         >
-          <strong>{option.label}</strong>
-          <small>{option.hint}</small>
+          <BiText as="strong" {...option.label} />
+          <BiText as="small" {...option.hint} />
         </button>
       ))}
     </div>

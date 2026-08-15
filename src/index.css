@@ -50,6 +50,30 @@ img { max-width: 100%; display: block; }
 }
 .lede, .page-head p { margin: 0; color: var(--muted); }
 .fine { color: var(--muted); font-size: 0.86rem; }
+.bi { display: grid; gap: 1px; }
+.bi-idn {
+  display: block;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.86em;
+  line-height: 1.35;
+}
+.btn .bi, a.btn .bi { gap: 0; }
+.btn .bi-idn, a.btn .bi-idn, .text-btn .bi-idn {
+  color: inherit;
+  opacity: 0.82;
+  font-weight: 650;
+}
+.path-unit-banner .bi-idn,
+.review-banner .bi-idn,
+.wo-rail-item .bi-idn,
+.admin-overview-link .bi-idn,
+.mat-toggle .bi-idn {
+  color: inherit;
+  opacity: 0.72;
+}
+.rate .bi-idn { color: inherit; opacity: 0.8; }
+.gate .bi-idn { font-size: 0.92rem; }
 .backend-badge {
   margin: 12px 0 0;
   padding: 8px 12px;

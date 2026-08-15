@@ -26,7 +26,7 @@ export function FlipCard({
       role="button"
       tabIndex={0}
       aria-pressed={flipped}
-      aria-label={flipped ? "顯示正面" : "翻面看印尼文"}
+      aria-label={flipped ? "看正面 / Lihat sisi depan" : "翻面看印尼文 / Balik ke Indonesia"}
       onClick={onFlip}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
@@ -53,7 +53,7 @@ export function FlipCard({
               <p className="flip-zh">{part.nameZh}</p>
             </>
           )}
-          <span className="flip-hint">點一下翻面 · Ketuk untuk balik</span>
+          <span className="flip-hint">點一下翻面 / Ketuk untuk balik</span>
         </section>
 
         <section className="flip-face flip-back" aria-hidden={!flipped}>

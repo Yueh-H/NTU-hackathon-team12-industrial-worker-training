@@ -68,9 +68,9 @@ export function AdminCards() {
   return (
     <main className="page admin">
       <header className="page-head">
-        <p className="eyebrow">卡片模組管理</p>
-        <h1>單獨編輯每一張卡片</h1>
-        <p>每張卡片都有自己的屬性；修改只會套用到目前選取的卡片。</p>
+        <p className="eyebrow">卡片模組管理 / Kelola modul kartu</p>
+        <h1>單獨編輯每一張卡片<span className="bi-idn" lang="id">Edit setiap kartu sendiri</span></h1>
+        <p>每張卡片都有自己的屬性；修改只會套用到目前選取的卡片。<span className="bi-idn" lang="id">Setiap kartu punya atribut sendiri. Perubahan hanya untuk kartu yang dipilih.</span></p>
       </header>
 
       <section className="info-card">

@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { BiText, biLine } from "../components/BiText";
 import { DrawingBoard } from "../components/DrawingBoard";
 import { PartArt } from "../components/PartArt";
 import { RatingBar } from "../components/RatingBar";
@@ -14,7 +15,7 @@ import {
   unitPartIds
 } from "../engine/path";
 import { pickQuizKind } from "../engine/reviewEngine";
-import { QUIZ_KIND_ZH } from "../lib/copy";
+import { QUIZ_KIND_ID, QUIZ_KIND_ZH, t } from "../lib/copy";
 import { nameChoices, partChoices } from "../lib/quiz";
 import type { Rating } from "../types";
 import { useShop } from "../store";
@@ -75,65 +76,64 @@ export function LearnQuiz() {
     );
     const following = unitNowClear && unit ? nextUnit(unit) : undefined;
     const nextInLesson = lesson ? nextPartInLesson(lesson, part.id) : undefined;
+    const title = unitNowClear
+      ? t.unitAllStars(unit?.title ?? t.unitN(1).zh)
+      : correct
+        ? t.cardCorrect2
+        : t.tryAgain;
+    const body = unitNowClear ? t.unitAllCorrect : correct ? t.cardGot2 : t.wrongStay1;
     return (
       <main className="page">
         <header className="page-head">
-          <p className="eyebrow">{unitNowClear ? "關卡過關" : "完成"}</p>
-          <h1>
-            {unitNowClear
-              ? `${unit?.title ?? "這一關"} ★★ 全過`
-              : correct
-                ? "答對了，這張卡 2 顆星。"
-                : "還沒過關，請再試。"}
-          </h1>
-          <p>
-            {unitNowClear
-              ? "這一關每一張卡都答對了。"
-              : correct
-                ? "這張卡拿到 2 顆星。這一關全部答對，關卡才會變成 2 顆星。"
-                : "答錯這張卡還是 1 顆星。答對才會變成 2 顆星。"}
-          </p>
+          <p className="eyebrow">{biLine(unitNowClear ? t.unitClear : t.done)}</p>
+          <BiText as="h1" {...title} />
+          <BiText as="p" {...body} />
         </header>
         {following ? (
           <Link
             className="btn primary wide"
             to={`/learn/${worker.id}/part/${firstOpenPart(following.lessons[0], mine, worker.id)}?lesson=${following.lessons[0].id}`}
           >
-            下一關 · {following.title}
+            {biLine(t.nextUnit)} · {following.title}
           </Link>
         ) : nextInLesson && correct ? (
           <Link
             className="btn primary wide"
             to={`/learn/${worker.id}/part/${nextInLesson}?lesson=${lesson!.id}`}
           >
-            下一題 · {categoryLabels[lesson!.unit].zh}
+            {biLine(t.nextQuestion)} · {categoryLabels[lesson!.unit].zh}
           </Link>
         ) : (
           <Link className="btn primary wide" to={`/learn/${worker.id}`}>
-            回學習路徑
+            {biLine(t.backPath)}
           </Link>
         )}
         <button className="btn ghost wide" type="button" onClick={() => navigate(`/learn/${worker.id}`)}>
-          結束這一站
+          {biLine(t.endStation)}
         </button>
       </main>
     );
   }
 
+  const question =
+    kind === "image_to_name"
+      ? t.whatIsThis
+      : kind === "name_to_image"
+        ? t.whichImage(part.nameZh)
+        : t.tapOnSheet(part.nameZh);
+
   return (
     <main className="page">
       <header className="page-head compact">
-        <p className="eyebrow">測驗 · {QUIZ_KIND_ZH[kind]}</p>
-        <h1>
-          {kind === "image_to_name" && "這是什麼？"}
-          {kind === "name_to_image" && `哪一張是「${part.nameZh}」？`}
-          {kind === "hotspot" && `請在工單上點出：${part.nameZh}`}
-        </h1>
+        <p className="eyebrow">
+          {t.quiz.zh} / {t.quiz.idn} · {QUIZ_KIND_ZH[kind]} / {QUIZ_KIND_ID[kind]}
+        </p>
+        <BiText as="h1" {...question} />
       </header>
 
       {kind === "image_to_name" ? (
         <>
-          <PartArt part={part} label={part.nameZh} />
+          <PartArt part={part} label={`${part.nameZh} / ${part.nameId}`} />
           <div className="choice-list">
             {names.map((name) => (
               <button
@@ -145,6 +145,7 @@ export function LearnQuiz() {
                 onClick={() => lockAnswer(name)}
               >
                 {name}
+                {name === part.nameZh ? <span className="bi-idn" lang="id">{part.nameId}</span> : null}
               </button>
             ))}
           </div>
@@ -162,7 +163,7 @@ export function LearnQuiz() {
               }`}
               onClick={() => lockAnswer(item.id)}
             >
-              <PartArt part={item} label={item.nameZh} />
+              <PartArt part={item} label={`${item.nameZh} / ${item.nameId}`} />
             </button>
           ))}
         </div>
@@ -184,19 +185,21 @@ export function LearnQuiz() {
 
       {checked ? (
         <section className="rate-panel">
-          <p>{correct ? "答對。有多確定？" : "不對。請標成忘記或模糊。"}</p>
+          <BiText as="p" {...(correct ? t.correctHowSure : t.wrongMark)} />
           <RatingBar value={rating} onChange={setRating} />
           <button className="btn primary wide" type="button" disabled={!rating} onClick={finish}>
-            儲存結果
+            {biLine(t.saveResult)}
           </button>
         </section>
       ) : (
-        <p className="fine">先選答案，再自評忘記／模糊／記得。</p>
+        <BiText as="p" className="fine" {...t.pickThenRate} />
       )}
 
       <Link className="text-btn" to={`/learn/${worker.id}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`}>
-        回卡片
+        {biLine(t.backCard)}
       </Link>
     </main>
   );
 }
+
+

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.0] - 2026-08-15
+
+### Added
+- Chinese and Indonesian shown together on worker, quiz, ranking, and supervisor chrome
+
 ## [0.6.2] - 2026-08-15
 
 ### Changed

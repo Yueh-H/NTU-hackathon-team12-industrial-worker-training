@@ -11,8 +11,9 @@ import {
   unitStars,
   units
 } from "../engine/path";
-import { REVIEW_FOLDERS, reviewStageHint, reviewStageOf, splitReviewInbox } from "../engine/reviewEngine";
-import { REVIEW_STAGE_ZH } from "../lib/copy";
+import { REVIEW_FOLDERS, reviewStageOf, splitReviewInbox } from "../engine/reviewEngine";
+import { REVIEW_STAGE_ID, REVIEW_STAGE_ZH, reviewStageHintBi, t, type Bi } from "../lib/copy";
+import { BiText } from "./BiText";
 import { hasCompletedZhSpeech } from "../lib/speech";
 import type { Attempt, CardCategory, Part, ReviewState, TrainingSet } from "../types";
 
@@ -44,9 +45,12 @@ export function MaterialsPanel({
   if (!training.active) {
     return (
       <aside className="materials-panel">
-        <p className="eyebrow">材料</p>
-        <h2>{training.titleZh}</h2>
-        <p className="fine">{training.summaryZh}</p>
+        <p className="eyebrow">{t.materials.zh} / {t.materials.idn}</p>
+        <h2>
+          {training.titleZh}
+          <span className="bi-idn" lang="id">{training.titleId}</span>
+        </h2>
+        <BiText as="p" className="fine" zh={training.summaryZh} idn={training.summaryId} />
       </aside>
     );
   }
@@ -55,18 +59,17 @@ export function MaterialsPanel({
   const inbox = splitReviewInbox(visible, states);
   return (
     <aside className="materials-panel">
-      <p className="eyebrow">材料</p>
-      <h2>{training.titleZh}</h2>
-      <p className="fine">
-        {inbox.today.length
-          ? `今天有 ${inbox.today.length} 張要複習`
-          : "今天沒有到期複習"}
-      </p>
+      <p className="eyebrow">{t.materials.zh} / {t.materials.idn}</p>
+      <h2>
+        {training.titleZh}
+        <span className="bi-idn" lang="id">{training.titleId}</span>
+      </h2>
+      <BiText as="p" className="fine" {...(inbox.today.length ? t.todayDueN(inbox.today.length) : t.noDueToday)} />
       <ReviewFolder
         employeeId={employeeId}
-        title="今天要複習"
+        title={t.todayReview}
         tone="today"
-        empty="今天沒有到期或逾期的卡片。"
+        empty={t.noToday}
         items={inbox.today}
         attempts={attempts}
         selectedPartId={selectedPartId}
@@ -75,9 +78,9 @@ export function MaterialsPanel({
       />
       <ReviewFolder
         employeeId={employeeId}
-        title="已學習過"
+        title={t.learned}
         tone="learned"
-        empty="學過一次、還沒到下次複習日的卡片會在這裡。"
+        empty={t.noLearned}
         items={inbox.learned}
         attempts={attempts}
         selectedPartId={selectedPartId}
@@ -128,6 +131,7 @@ function CategoryBlock({
       <button className="mat-toggle" type="button" onClick={onToggle} aria-expanded={expanded}>
         <span>
           {categoryLabels[category].zh}
+          <span className="bi-idn" lang="id">{categoryLabels[category].idn}</span>
           <small>
             {progress.done}/{progress.total}
           </small>
@@ -153,9 +157,17 @@ function CategoryBlock({
                 >
                   <span className="num">{part.callout}</span>
                   <span>
-                    {part.nameZh} <StarPair count={partStars} />
+                    {part.nameZh}
+                    <span className="bi-idn" lang="id">{part.nameId}</span>
+                    {" "}
+                    <StarPair count={partStars} />
                   </span>
-                  <small>{state ? reviewStageHint(state) : "未學"}</small>
+                  <small>
+                    {state ? reviewStageHintBi(state).zh : t.speechIdleStatus.zh}
+                    <span className="bi-idn" lang="id">
+                      {state ? reviewStageHintBi(state).idn : t.speechIdleStatus.idn}
+                    </span>
+                  </small>
                 </Link>
               </li>
             );
@@ -178,9 +190,9 @@ function ReviewFolder({
   onToggle
 }: {
   employeeId: string;
-  title: string;
+  title: Bi;
   tone: "today" | "learned";
-  empty: string;
+  empty: Bi;
   items: Array<{ item: Part; state: ReviewState }>;
   attempts: Attempt[];
   selectedPartId?: string;
@@ -191,8 +203,9 @@ function ReviewFolder({
     <section className={`mat-cat review-folder is-${tone}${expanded ? " is-open" : ""}`}>
       <button className="mat-toggle" type="button" onClick={onToggle} aria-expanded={expanded}>
         <span>
-          {title}
-          <small>{items.length} 張</small>
+          {title.zh}
+          <span className="bi-idn" lang="id">{title.idn}</span>
+          <small>{t.cardsCount(items.length).zh} / {t.cardsCount(items.length).idn}</small>
         </span>
         <b aria-hidden="true">{expanded ? "−" : "+"}</b>
       </button>
@@ -204,7 +217,7 @@ function ReviewFolder({
                 {REVIEW_FOLDERS.filter((stage) => stage !== "mastered").map((stage) => (
                   <span key={stage}>
                     <i className={`heat-swatch is-${stage}`} />
-                    {REVIEW_STAGE_ZH[stage]}
+                    {REVIEW_STAGE_ZH[stage]} / {REVIEW_STAGE_ID[stage]}
                   </span>
                 ))}
               </p>
@@ -227,9 +240,15 @@ function ReviewFolder({
                     >
                       <span className="num">{item.callout}</span>
                       <span>
-                        {item.nameZh} <StarPair count={partStars} />
+                        {item.nameZh}
+                        <span className="bi-idn" lang="id">{item.nameId}</span>
+                        {" "}
+                        <StarPair count={partStars} />
                       </span>
-                      <small>{reviewStageHint(state)}</small>
+                      <small>
+                        {reviewStageHintBi(state).zh}
+                        <span className="bi-idn" lang="id">{reviewStageHintBi(state).idn}</span>
+                      </small>
                     </Link>
                   </li>
                 );
@@ -237,7 +256,7 @@ function ReviewFolder({
             </ul>
           </>
         ) : (
-          <p className="fine review-empty">{empty}</p>
+          <BiText as="p" className="fine review-empty" {...empty} />
         )
       ) : null}
     </section>

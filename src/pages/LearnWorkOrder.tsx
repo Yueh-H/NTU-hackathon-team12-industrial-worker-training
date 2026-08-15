@@ -42,12 +42,18 @@ export function LearnWorkOrder() {
     );
   }
 
-  if (loading) return <main className="page"><p className="info-card">正在準備這張工單的學習內容……</p></main>;
+  if (loading) {
+    return (
+      <main className="page">
+        <p className="info-card">正在準備這張工單的學習內容……<span className="bi-idn" lang="id">Menyiapkan isi belajar lembar ini…</span></p>
+      </main>
+    );
+  }
   if (!bundle) {
     return (
       <main className="page">
-        <p className="form-error">{error || "找不到學習內容。"}</p>
-        <Link className="btn ghost" to={`/learn/${employeeId}`}>回員工首頁</Link>
+        <p className="form-error">{error || "找不到學習內容。 / Isi belajar tidak ditemukan."}</p>
+        <Link className="btn ghost" to={`/learn/${employeeId}`}>回員工首頁 / Kembali ke beranda karyawan</Link>
       </main>
     );
   }

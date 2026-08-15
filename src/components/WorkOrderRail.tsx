@@ -1,5 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
+import { biLine } from "./BiText";
 import { trainingSets } from "../data/catalog";
+import { t } from "../lib/copy";
 import type { TrainingSet } from "../types";
 
 export function WorkOrderRail({
@@ -18,19 +20,19 @@ export function WorkOrderRail({
   return (
     <aside className={`wo-rail${collapsed ? " is-collapsed" : ""}`}>
       <div className="wo-rail-head">
-        {!collapsed ? <p className="eyebrow">工單</p> : null}
-        <button className="wo-rail-toggle" type="button" onClick={onToggle} aria-label={collapsed ? "展開工單" : "縮小工單"}>
+        {!collapsed ? <p className="eyebrow">{biLine(t.workOrder)}</p> : null}
+        <button className="wo-rail-toggle" type="button" onClick={onToggle} aria-label={collapsed ? t.expandRail.zh : t.collapseRail.zh} title={biLine(collapsed ? t.expandRail : t.collapseRail)}>
           {collapsed ? "»" : "«"}
         </button>
       </div>
       <NavLink
         className={({ isActive }) => `wo-rail-ranking${isActive ? " is-on" : ""}${collapsed ? " is-collapsed" : ""}`}
         to="/learn/ranking"
-        aria-label="全員學習排行榜"
-        title="全員學習排行榜"
+        aria-label={biLine(t.rankingLong)}
+        title={biLine(t.rankingLong)}
       >
         <span aria-hidden="true">🏆</span>
-        {!collapsed ? <strong>全員學習排行榜</strong> : null}
+        {!collapsed ? <strong>{t.rankingLong.zh}<span className="bi-idn" lang="id">{t.rankingLong.idn}</span></strong> : null}
       </NavLink>
       <div className="wo-rail-list">
         {trainingSets.map((item) => (
@@ -45,10 +47,10 @@ export function WorkOrderRail({
         <Link
           className="wo-rail-item wo-rank"
           to={`/learn/ranking?from=${employeeId}`}
-          title="全員排行榜"
+          title={biLine(t.ranking)}
         >
-          <strong>{collapsed ? "榜" : "排行榜"}</strong>
-          {collapsed ? null : <small>看全員學習積分</small>}
+          <strong>{collapsed ? "榜" : t.ranking.zh}</strong>
+          {collapsed ? null : <small>{t.rankingSee.zh}<span className="bi-idn" lang="id">{t.rankingSee.idn}</span></small>}
         </Link>
       </div>
     </aside>
@@ -78,7 +80,7 @@ function WorkOrderButton({
       {collapsed ? null : (
         <>
           <span>{item.titleZh.replace(/^[A-Z0-9]+\s/, "")}</span>
-          <small>{item.active ? item.machine : "尚未開放"}</small>
+          <small>{item.active ? item.machine : biLine(t.notOpen)}</small>
         </>
       )}
     </button>
