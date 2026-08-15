@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="punch a hole, slug falls out">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="70" y="10" width="20" height="30" fill="#e5e7eb"/>
+    <rect x="74" y="40" width="12" height="16" fill="#e5e7eb"/>
+    <line x1="60" y1="18" x2="60" y2="30" stroke-width="2"/>
+    <line x1="100" y1="18" x2="100" y2="30" stroke-width="2"/>
+    <rect x="16" y="58" width="128" height="16" fill="#e5e7eb"/>
+    <line x1="80" y1="80" x2="80" y2="84" stroke-width="2"/>
+    <line x1="80" y1="88" x2="80" y2="92" stroke-width="2"/>
+    <circle cx="80" cy="66" r="6" fill="#fbbf24"/>
+    <circle cx="80" cy="102" r="6" fill="#fbbf24"/>
+  </g>
+</svg>

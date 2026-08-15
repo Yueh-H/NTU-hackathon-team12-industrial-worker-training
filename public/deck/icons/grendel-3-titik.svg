@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="concealed three-point bolt">
+  <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="132" y="10" width="14" height="100" fill="#e5e7eb"/>
+    <rect x="55" y="15" width="50" height="90" rx="4" fill="#e5e7eb"/>
+    <path d="M55 32 L64 32 M55 60 L64 60 M55 88 L64 88" stroke-width="2"/>
+    <circle cx="96" cy="62" r="4.5"/>
+    <rect x="105" y="24" width="31" height="8" rx="3" fill="#fbbf24"/>
+    <rect x="105" y="58" width="31" height="8" rx="3" fill="#fbbf24"/>
+    <rect x="105" y="92" width="31" height="8" rx="3" fill="#fbbf24"/>
+  </g>
+</svg>

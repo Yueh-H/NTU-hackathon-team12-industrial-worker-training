@@ -21,7 +21,7 @@ export function LearnQuiz() {
   const [done, setDone] = useState(false);
 
   const prior = worker && part ? attemptsFor(worker.id, part.id).length : 0;
-  const kind = useMemo(() => pickQuizKind(prior), [prior]);
+  const kind = useMemo(() => pickQuizKind(prior, Boolean(part?.hotspot)), [prior, part]);
   const names = useMemo(() => (part ? nameChoices(part, parts) : []), [part]);
   const grid = useMemo(() => (part ? partChoices(part, parts) : []), [part]);
 
@@ -87,7 +87,7 @@ export function LearnQuiz() {
 
       {kind === "image_to_name" ? (
         <>
-          <PartArt partId={part.id} label={part.nameId} />
+          <PartArt part={part} label={part.nameId} />
           <div className="choice-list">
             {names.map((name) => (
               <button
@@ -116,7 +116,7 @@ export function LearnQuiz() {
               }`}
               onClick={() => lockAnswer(item.id)}
             >
-              <img src={`/parts/${item.id}.png`} alt={item.nameId} />
+              <PartArt part={item} label={item.nameId} />
             </button>
           ))}
         </div>

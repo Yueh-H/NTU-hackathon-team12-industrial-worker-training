@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="lock side of the door">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="55" y="15" width="50" height="90" rx="2" fill="#e5e7eb"/>
+    <g fill="#e5e7eb" stroke-width="2">
+      <rect x="48" y="27" width="8" height="14" rx="1"/>
+      <rect x="48" y="55" width="8" height="14" rx="1"/>
+      <rect x="48" y="83" width="8" height="14" rx="1"/>
+    </g>
+    <g fill="#fbbf24" stroke-width="2">
+      <rect x="94" y="15" width="11" height="90"/>
+      <circle cx="88" cy="62" r="6"/>
+    </g>
+    <line x1="88" y1="62" x2="76" y2="62"/>
+    <g stroke-width="2.5">
+      <line x1="144" y1="60" x2="122" y2="60"/>
+      <polyline points="128,54 122,60 128,66"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="drive a screw into a plate with a screwdriver">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="14" y="78" width="132" height="26" fill="#e5e7eb"/>
+    <path d="M66 50 L94 50 L94 58 L87 58 L87 72 L80 94 L73 72 L73 58 L66 58 Z" fill="#fbbf24"/>
+    <line x1="74" y1="63" x2="86" y2="66" stroke-width="2"/>
+    <line x1="74" y1="70" x2="86" y2="73" stroke-width="2"/>
+    <rect x="76" y="30" width="8" height="20" fill="#e5e7eb"/>
+    <rect x="64" y="8" width="32" height="24" rx="6" fill="#e5e7eb"/>
+    <path d="M102 12 A 16 16 0 0 1 108 26" stroke-width="2"/>
+    <path d="M112 10 A 22 22 0 0 1 120 28" stroke-width="2"/>
+    <path d="M30 32 L30 60"/>
+    <path d="M23 52 L30 60 L37 52"/>
+  </g>
+</svg>

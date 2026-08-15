@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="unequal double-leaf door">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="20" y="8" width="120" height="104" rx="3" fill="#e5e7eb"/>
+    <g fill="#fbbf24">
+      <rect x="30" y="16" width="60" height="88" rx="2"/>
+      <rect x="94" y="16" width="36" height="88" rx="2"/>
+    </g>
+    <g stroke-width="2">
+      <line x1="31" y1="34" x2="39" y2="34"/>
+      <line x1="31" y1="60" x2="39" y2="60"/>
+      <line x1="31" y1="86" x2="39" y2="86"/>
+      <line x1="121" y1="34" x2="129" y2="34"/>
+      <line x1="121" y1="60" x2="129" y2="60"/>
+      <line x1="121" y1="86" x2="129" y2="86"/>
+      <circle cx="83" cy="62" r="3.5"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="glass bead holding a glass pane in the frame">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M26 86 L50 86 L50 42 L64 42 L64 86 L140 86 L140 108 L26 108 Z" fill="#e5e7eb"/>
+    <rect x="64" y="14" width="12" height="72" fill="#e5e7eb"/>
+    <line x1="67" y1="66" x2="73" y2="40" stroke-width="2"/>
+    <path d="M76 26 L88 26 L88 74 L112 74 L112 86 L76 86 Z" fill="#fbbf24"/>
+    <circle cx="100" cy="80" r="2.5" stroke-width="2"/>
+  </g>
+</svg>

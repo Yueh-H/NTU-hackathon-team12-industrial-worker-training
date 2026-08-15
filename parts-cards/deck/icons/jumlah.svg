@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="quantity, three sheets with a times sixteen badge">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="20" y="30" width="64" height="22" fill="#e5e7eb"/>
+    <rect x="28" y="52" width="64" height="22" fill="#e5e7eb"/>
+    <rect x="36" y="74" width="64" height="22" fill="#e5e7eb"/>
+    <rect x="104" y="46" width="44" height="32" rx="8" fill="#fbbf24"/>
+    <text x="126" y="69" font-family="system-ui, sans-serif" font-size="20" fill="#1f2937" stroke="none" text-anchor="middle">&#215;16</text>
+  </g>
+</svg>

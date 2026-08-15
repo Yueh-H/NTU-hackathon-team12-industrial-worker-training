@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="edge cap channel on a door leaf">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="26" y="42" width="114" height="36" fill="#e5e7eb"/>
+    <path d="M46 34 L18 34 L18 86 L46 86 L46 78 L26 78 L26 42 L46 42 Z" fill="#fbbf24"/>
+    <g stroke-width="2">
+      <line x1="70" y1="52" x2="130" y2="52"/>
+      <line x1="70" y1="68" x2="130" y2="68"/>
+    </g>
+  </g>
+</svg>

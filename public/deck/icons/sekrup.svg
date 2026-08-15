@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="screw (stainless)">
+  <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="41,52 116,52 116,68 41,68" fill="#fbbf24" stroke="none"/>
+    <polygon points="116,52 138,60 116,68" fill="#fbbf24"/>
+    <path d="M41 52 L116 52 M41 68 L116 68"/>
+    <circle cx="28" cy="60" r="13" fill="#fbbf24"/>
+    <path d="M20 60 L36 60 M28 52 L28 68"/>
+    <path d="M50 52 L58 68 M62 52 L70 68 M74 52 L82 68 M86 52 L94 68 M98 52 L106 68" stroke-width="2"/>
+  </g>
+</svg>

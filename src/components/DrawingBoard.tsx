@@ -23,6 +23,7 @@ export function DrawingBoard({
     <div className="drawing-board">
       <img className="drawing-image" src="/drawing.png" alt="FM-DEMO lembar produksi DEMO-001" />
       {parts.map((part) => {
+        if (!part.hotspot) return null;
         const state = states.find((item) => item.partId === part.id);
         const status = state ? partStatusLabel(state) : "new";
         const classes = [

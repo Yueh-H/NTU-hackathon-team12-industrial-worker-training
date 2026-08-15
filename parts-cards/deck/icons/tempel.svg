@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="stick a strip onto a surface">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="14" y="76" width="132" height="28" fill="#e5e7eb"/>
+    <path d="M24 66 L96 66 C110 66 120 56 130 44 L138 52 C126 66 114 76 96 76 L24 76 Z" fill="#fbbf24"/>
+    <path d="M56 32 L56 58"/>
+    <path d="M48 50 L56 58 L64 50"/>
+  </g>
+</svg>

@@ -1,7 +1,7 @@
 import type { Attempt, QuizKind, Rating, Review, ReviewState } from "../types";
 
 export const OFFSETS = [1, 3, 7, 30] as const;
-export const STORAGE_KEY = "shop-trainer-v1";
+export const STORAGE_KEY = "shop-trainer-v2";
 
 export function todayKey(date = new Date()): string {
   const year = date.getFullYear();
@@ -170,7 +170,10 @@ export function makeAttempt(input: {
   };
 }
 
-export function pickQuizKind(attemptCount: number): QuizKind {
+export function pickQuizKind(attemptCount: number, hasHotspot = false): QuizKind {
+  if (!hasHotspot) {
+    return attemptCount % 2 === 0 ? "image_to_name" : "name_to_image";
+  }
   const kinds: QuizKind[] = ["image_to_name", "name_to_image", "hotspot"];
   return kinds[attemptCount % kinds.length];
 }

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="reinforcing gusset plate over a joint">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M30 14 L52 14 L52 82 L140 82 L140 104 L30 104 Z" fill="#e5e7eb"/>
+    <polygon points="52,80 104,80 52,28" fill="#fbbf24"/>
+    <circle cx="60" cy="72" r="2.5" stroke-width="2"/>
+    <circle cx="86" cy="74" r="2.5" stroke-width="2"/>
+    <circle cx="58" cy="48" r="2.5" stroke-width="2"/>
+  </g>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="1.0 mm steel sheet">
+  <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="24,66 104,66 104,71 24,71" fill="#e5e7eb"/>
+    <polygon points="104,66 136,40 136,45 104,71" fill="#e5e7eb"/>
+    <polygon points="24,66 104,66 136,40 56,40" fill="#fbbf24"/>
+    <path d="M60 69 L46 88" stroke-width="2"/>
+    <text x="44" y="104" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" fill="#1f2937" stroke="none">1.0</text>
+  </g>
+</svg>

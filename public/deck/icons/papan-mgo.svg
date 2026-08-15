@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="MgO board">
+  <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="26,64 106,64 106,70 26,70" fill="#e5e7eb"/>
+    <polygon points="106,64 136,40 136,46 106,70" fill="#e5e7eb"/>
+    <polygon points="26,64 106,64 136,40 56,40" fill="#fbbf24"/>
+    <text x="80" y="94" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" fill="#1f2937" stroke="none">MgO</text>
+  </g>
+</svg>

@@ -6,7 +6,7 @@ NTU Hackathon Team 12。把 Practice Cat 的間隔複習引擎，做成手機優
 
 ## 兩條介面
 
-- `/learn` 員工：點名進入 → 看工程圖 hotspot → 零件卡 → 測驗（看圖選名／看名選圖／在圖上點位置）→ `Lupa` / `Ragu-ragu` / `Ingat`
+- `/learn` 員工：點名進入 → 工單 64 張單字卡 → 測驗（看圖選名／看名選圖／圖上點位置）→ `Lupa` / `Ragu-ragu` / `Ingat`
 - `/admin` 主管：指派進度、今日／逾期、測驗正確率、弱項、需要協助的人
 
 複習契約沿用 Practice Cat：第一次學會才排程；D+1／3／7／30；忘記或答錯加隔日 rescue，**不搬動原里程碑**。
@@ -42,7 +42,8 @@ cp .env.example .env
 
 - `public/demo-sheet.pdf` 原製造表
 - `public/drawing.png` 工程圖
-- `src/data/seed.json` 12 個零件、3 名員工、1 名主管
+- `src/data/seed.json` 3 名員工、1 名主管
+- `src/data/workorder-cards.json` / `parts-cards/deck/` 工單 64 張卡（構造／材料／五金／動詞／欄位／讀行）
 
 ## 刻意不做（當天）
 

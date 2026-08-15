@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="door swing direction">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="48" y="14" width="52" height="92" rx="3" fill="#e5e7eb"/>
+    <line x1="43" y1="32" x2="53" y2="32" stroke-width="2"/>
+    <line x1="43" y1="60" x2="53" y2="60" stroke-width="2"/>
+    <line x1="43" y1="88" x2="53" y2="88" stroke-width="2"/>
+    <circle cx="93" cy="60" r="3.5" stroke-width="2"/>
+    <path d="M100 95 C118 95 128 84 128 58 L119 58 L132 34 L145 58 L137 58 C137 88 122 104 100 104 Z" fill="#fbbf24" stroke-width="2"/>
+  </g>
+</svg>

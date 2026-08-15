@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="size, width and height dimension arrows on a part">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="34" y="18" width="92" height="52" fill="#e5e7eb"/>
+    <line x1="34" y1="72" x2="34" y2="84" stroke-width="2"/>
+    <line x1="126" y1="72" x2="126" y2="84" stroke-width="2"/>
+    <line x1="32" y1="18" x2="26" y2="18" stroke-width="2"/>
+    <line x1="32" y1="70" x2="26" y2="70" stroke-width="2"/>
+    <path d="M34 88 L46 80 L46 85 L114 85 L114 80 L126 88 L114 96 L114 91 L46 91 L46 96 Z" fill="#fbbf24" stroke-width="2"/>
+    <path d="M16 18 L8 30 L13 30 L13 58 L8 58 L16 70 L24 58 L19 58 L19 30 L24 30 Z" fill="#fbbf24" stroke-width="2"/>
+  </g>
+</svg>
