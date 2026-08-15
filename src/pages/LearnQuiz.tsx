@@ -4,7 +4,15 @@ import { DrawingBoard } from "../components/DrawingBoard";
 import { PartArt } from "../components/PartArt";
 import { RatingBar } from "../components/RatingBar";
 import { categoryLabels, parts, partById, workerById } from "../data/catalog";
-import { lessonById, nextPartInLesson } from "../engine/path";
+import {
+  cardCleared,
+  firstOpenPart,
+  lessonById,
+  nextPartInLesson,
+  nextUnit,
+  unitForPart,
+  unitPartIds
+} from "../engine/path";
 import { pickQuizKind } from "../engine/reviewEngine";
 import { QUIZ_KIND_ZH } from "../lib/copy";
 import { nameChoices, partChoices } from "../lib/quiz";
@@ -31,6 +39,7 @@ export function LearnQuiz() {
   const grid = useMemo(() => (part ? partChoices(part, parts) : []), [part]);
 
   if (!worker || !part) return <Navigate to="/learn" replace />;
+  const unit = unitForPart(part.id);
   if (!hasCompletedZhSpeech(worker.id, part.id)) {
     return <Navigate to={`/learn/${worker.id}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`} replace />;
   }
@@ -61,23 +70,47 @@ export function LearnQuiz() {
   }
 
   if (done) {
+    const mine = attemptsFor(worker.id);
+    const unitNowClear = Boolean(
+      unit &&
+        unitPartIds(unit).every((id) =>
+          id === part.id ? correct : cardCleared(mine, worker.id, id)
+        )
+    );
+    const following = unitNowClear && unit ? nextUnit(unit) : undefined;
+    const nextInLesson = lesson ? nextPartInLesson(lesson, part.id) : undefined;
     return (
       <main className="page">
         <header className="page-head">
-          <p className="eyebrow">完成</p>
-          <h1>{correct ? "答對了。" : "明天會再出現。"}</h1>
+          <p className="eyebrow">{unitNowClear ? "關卡過關" : "完成"}</p>
+          <h1>
+            {unitNowClear
+              ? `${unit?.title ?? "這一關"} ★★ 全過`
+              : correct
+                ? "答對了，這張卡 2 顆星。"
+                : "還沒過關，請再試。"}
+          </h1>
           <p>
-            {rating === "remembered"
-              ? "D+1／3／7／30 排程維持不變。"
-              : "已加入隔日補強。原本的里程碑日期不搬動。"}
+            {unitNowClear
+              ? "這一關每一張卡都答對了。"
+              : correct
+                ? "這張卡拿到 2 顆星。這一關全部答對，關卡才會變成 2 顆星。"
+                : "答錯這張卡還是 1 顆星。答對才會變成 2 顆星。"}
           </p>
         </header>
-        {lesson && nextPartInLesson(lesson, part.id) ? (
+        {following ? (
           <Link
             className="btn primary wide"
-            to={`/learn/${worker.id}/part/${nextPartInLesson(lesson, part.id)}?lesson=${lesson.id}`}
+            to={`/learn/${worker.id}/part/${firstOpenPart(following.lessons[0], mine, worker.id)}?lesson=${following.lessons[0].id}`}
           >
-            下一題 · {categoryLabels[lesson.unit].zh}
+            下一關 · {following.title}
+          </Link>
+        ) : nextInLesson && correct ? (
+          <Link
+            className="btn primary wide"
+            to={`/learn/${worker.id}/part/${nextInLesson}?lesson=${lesson!.id}`}
+          >
+            下一題 · {categoryLabels[lesson!.unit].zh}
           </Link>
         ) : (
           <Link className="btn primary wide" to={`/learn/${worker.id}`}>

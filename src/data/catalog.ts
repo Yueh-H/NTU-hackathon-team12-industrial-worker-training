@@ -231,7 +231,7 @@ export function buildDemoProgress(today = new Date()): { states: ReviewState[]; 
   const attempts: Attempt[] = [];
 
   const budiDone = parts
-    .filter((part) => part.category === "struktur" && part.id !== "jendela")
+    .filter((part) => part.category === "struktur")
     .map((part) => part.id);
   for (const partId of budiDone) {
     const result = replay("budi", partId, today, 10, [

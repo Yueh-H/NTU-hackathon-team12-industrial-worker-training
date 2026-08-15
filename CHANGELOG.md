@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.5.0] - 2026-08-15
+
+### Added
+- Per-card stars: speech gives 1 star, a correct quiz gives 2 stars
+- Unit banners turn to 2 stars when every card in that unit is answered correctly
+
+### Changed
+- All six learning units stay open; later units are no longer locked
+
 ## [0.4.0] - 2026-08-15
 
 ### Added

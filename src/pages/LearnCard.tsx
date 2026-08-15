@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { FlipCard } from "../components/FlipCard";
 import { sheetSrc } from "../components/PartArt";
+import { StarPair } from "../components/StarPair";
 import { categoryLabels, partById, workerById } from "../data/catalog";
-import { lessonById } from "../engine/path";
+import { cardStars, lessonById } from "../engine/path";
 import { reviewStageHint, reviewStageOf } from "../engine/reviewEngine";
 import { REVIEW_STAGE_ZH } from "../lib/copy";
 import {
@@ -33,7 +34,7 @@ export function LearnCard() {
   const lesson = lessonById(params.get("lesson") ?? "");
   const worker = workerById(employeeId);
   const part = partById(partId);
-  const { stateFor } = useShop();
+  const { stateFor, attempts } = useShop();
   const navigate = useNavigate();
   const speechSupported = isZhRecognitionSupported();
   const [flipped, setFlipped] = useState(false);
@@ -65,6 +66,7 @@ export function LearnCard() {
   const category = categoryLabels[part.category];
   const step = lesson ? lesson.partIds.indexOf(part.id) + 1 : 0;
   const speechComplete = speechState === "complete";
+  const stars = cardStars(part.id, attempts, worker.id, speechComplete);
   const speechTarget = zhSpeechTarget(part.nameZh);
   const quizHref = `/learn/${worker.id}/quiz/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`;
   // For term cards the sheet crop is extra context ("this is how it looks on the sheet");
@@ -115,6 +117,14 @@ export function LearnCard() {
           {` · ${REVIEW_STAGE_ZH[stage]}`}
         </p>
         <h1>{part.nameZh}</h1>
+        <p className="card-star-line">
+          <StarPair count={stars} />
+          {stars === 2
+            ? "這張卡答對了，現在是 2 顆星。"
+            : speechComplete
+              ? "朗讀 1 星。答對這張卡才 2 星。"
+              : "朗讀對了得 1 顆星；答對這張卡得 2 顆星。"}
+        </p>
         {stage !== "inbox" ? <p>{reviewStageHint(state)}。再測一次可提前推進下一站，原定期日期不搬。</p> : null}
       </header>
       <FlipCard part={part} flipped={flipped} onFlip={() => setFlipped((value) => !value)} />
@@ -168,8 +178,8 @@ export function LearnCard() {
           <div className="speech-reward" role="status" aria-live="polite">
             <span className="speech-star" aria-hidden="true">★</span>
             <span>
-              <strong>{justEarnedStar ? "+1 顆星" : "已獲得 1 顆星"}</strong>
-              <small>中文朗讀完成</small>
+              <strong>{stars === 2 ? "這張卡 2 顆星" : justEarnedStar ? "+1 顆星" : "已獲得 1 顆星"}</strong>
+              <small>{stars === 2 ? "朗讀完成，而且答對了" : "中文朗讀完成"}</small>
             </span>
           </div>
         ) : null}

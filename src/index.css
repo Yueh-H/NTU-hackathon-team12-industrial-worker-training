@@ -1287,9 +1287,10 @@ td small { color: var(--muted); }
   gap: 10px;
 }
 .star-pair { letter-spacing: 1px; font-weight: 900; line-height: 1; }
-.star-pair .on { color: #f5c518; }
-.star-pair .off { color: rgba(255, 255, 255, 0.28); }
-.mat-toggle .star-pair .off { color: #d5ddd3; }
+.star-pair .on { color: #e0a800; }
+.star-pair .off { color: #d5ddd3; }
+.path-unit-banner .star-pair .off,
+.path-node .star-pair .off { color: rgba(255, 255, 255, 0.32); }
 .card-star-line {
   display: flex;
   align-items: center;
@@ -1297,7 +1298,8 @@ td small { color: var(--muted); }
   margin: 6px 0 0;
   font-size: 0.92rem;
 }
-.card-star-line .star-pair .off { color: #d5ddd3; }
+.path-node .star-pair { font-size: 0.78rem; }
+.mat-item .star-pair { margin-left: 6px; font-size: 0.85rem; }
 .path-unit-banner.is-locked { opacity: 0.58; }
 .path-lock-note {
   width: min(520px, 100%);

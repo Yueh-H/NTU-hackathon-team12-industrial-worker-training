@@ -3,8 +3,8 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { StarPair } from "../components/StarPair";
 import { parts, workerById } from "../data/catalog";
 import {
+  cardStars,
   firstOpenPart,
-  isUnitUnlocked,
   lessonForPart,
   nodeState,
   spokenSet,
@@ -16,7 +16,7 @@ import { reviewStageHint, reviewStageOf, splitReviewInbox } from "../engine/revi
 import { REVIEW_STAGE_ZH } from "../lib/copy";
 import { hasCompletedZhSpeech } from "../lib/speech";
 import type { CardCategory } from "../types";
-import type { Part, ReviewState } from "../types";
+import type { Attempt, Part, ReviewState } from "../types";
 import { useShop } from "../store";
 
 type OpenKey = CardCategory | "today" | "learned" | "";
@@ -46,6 +46,7 @@ export function LearnHome() {
         tone="today"
         items={inbox.today}
         employeeId={worker.id}
+        attempts={mineAttempts}
         expanded={expanded === "today"}
         onToggle={() => setOpenUnit((current) => (current === "today" ? "" : "today"))}
       />
@@ -56,13 +57,14 @@ export function LearnHome() {
         tone="learned"
         items={inbox.learned}
         employeeId={worker.id}
+        attempts={mineAttempts}
         expanded={expanded === "learned"}
         onToggle={() => setOpenUnit((current) => (current === "learned" ? "" : "learned"))}
       />
       <header className="path-head">
         <p className="eyebrow">{worker.name} · {worker.station}</p>
         <h1>選一站開始學</h1>
-        <p>每一關的題全部答對，這一關才會變成 2 顆星，並解鎖下一關。</p>
+        <p>每一張卡：朗讀 1 星，答對 2 星。這一關全部答對，關卡才會變成 2 顆星。</p>
         <Link className="btn dark path-rank-btn" to={`/learn/ranking?from=${worker.id}`}>
           全員排行榜
         </Link>
@@ -70,12 +72,11 @@ export function LearnHome() {
       {units.map((unit, unitIndex) => {
         const progress = unitProgress(unit, mineAttempts, worker.id);
         const stars = unitStars(unit, mineAttempts, worker.id, spoken);
-        const unlocked = isUnitUnlocked(unit, mineAttempts, worker.id);
         const isOpen = expanded === unit.id;
         return (
           <article key={unit.id} className={`path-unit${stars === 2 ? " is-clear" : ""}`} id={`unit-${unit.id}`}>
             <button
-              className={`path-unit-banner${unlocked ? "" : " is-locked"}`}
+              className="path-unit-banner"
               type="button"
               aria-expanded={isOpen}
               onClick={() => setOpenUnit((current) => (current === unit.id ? "" : unit.id))}
@@ -83,7 +84,6 @@ export function LearnHome() {
               <span>
                 <small>
                   第 {unitIndex + 1} 關 · {progress.done}/{progress.total}
-                  {unlocked ? "" : " · 未解鎖"}
                   {stars === 2 ? " · 已過關" : ""}
                 </small>
                 <strong>{unit.title}</strong>
@@ -94,27 +94,21 @@ export function LearnHome() {
               </span>
             </button>
             {isOpen ? (
-              unlocked ? (
-                <ol className="path-nodes">
-                  {unit.lessons.map((lesson, lessonIndex) => {
-                    const status = nodeState(lesson, mineAttempts, worker.id);
-                    const href = `/learn/${worker.id}/part/${firstOpenPart(lesson, mineAttempts, worker.id)}?lesson=${lesson.id}`;
-                    return (
-                      <li key={lesson.id} className={`path-row is-${status} shift-${lessonIndex % 3}`}>
-                        <Link className="path-node" to={href}>
-                          <span className="path-glyph">{status === "done" ? "✓" : lessonIndex + 1}</span>
-                          <span className="path-label">{lesson.title}</span>
-                          <small>{lesson.partIds.length} 題</small>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ol>
-              ) : (
-                <p className="fine path-lock-note">
-                  先答對第 {unitIndex} 關全部題目，這一關才會變成 2 顆星並解鎖。
-                </p>
-              )
+              <ol className="path-nodes">
+                {unit.lessons.map((lesson, lessonIndex) => {
+                  const status = nodeState(lesson, mineAttempts, worker.id);
+                  const href = `/learn/${worker.id}/part/${firstOpenPart(lesson, mineAttempts, worker.id)}?lesson=${lesson.id}`;
+                  return (
+                    <li key={lesson.id} className={`path-row is-${status} shift-${lessonIndex % 3}`}>
+                      <Link className="path-node" to={href}>
+                        <span className="path-glyph">{status === "done" ? "✓" : lessonIndex + 1}</span>
+                        <span className="path-label">{lesson.title}</span>
+                        <small>{lesson.partIds.length} 題</small>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ol>
             ) : null}
           </article>
         );
@@ -130,6 +124,7 @@ function ReviewPathFolder({
   tone,
   items,
   employeeId,
+  attempts,
   expanded,
   onToggle
 }: {
@@ -139,6 +134,7 @@ function ReviewPathFolder({
   tone: "today" | "learned";
   items: Array<{ item: Part; state: ReviewState }>;
   employeeId: string;
+  attempts: Attempt[];
   expanded: boolean;
   onToggle: () => void;
 }) {
@@ -164,6 +160,7 @@ function ReviewPathFolder({
             {items.map(({ item, state }, index) => {
               const stage = reviewStageOf(state);
               const lesson = lessonForPart(item.id);
+              const stars = cardStars(item.id, attempts, employeeId, hasCompletedZhSpeech(employeeId, item.id));
               return (
                 <li key={item.id} className={`path-row is-${stage} shift-${index % 3}`}>
                   <Link
@@ -172,6 +169,7 @@ function ReviewPathFolder({
                   >
                     <span className="path-glyph">{REVIEW_STAGE_ZH[stage]}</span>
                     <span className="path-label">{item.nameZh}</span>
+                    <StarPair count={stars} />
                     <small>{reviewStageHint(state)}</small>
                   </Link>
                 </li>

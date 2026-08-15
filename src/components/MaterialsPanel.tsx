@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { StarPair } from "./StarPair";
 import { categoryLabels, parts } from "../data/catalog";
 import {
-  isUnitUnlocked,
+  cardStars,
   lessonForPart,
   spokenSet,
   UNIT_ORDER,
@@ -68,6 +68,7 @@ export function MaterialsPanel({
         tone="today"
         empty="今天沒有到期或逾期的卡片。"
         items={inbox.today}
+        attempts={attempts}
         selectedPartId={selectedPartId}
         expanded={todayOpen}
         onToggle={() => setTodayOpen((value) => !value)}
@@ -78,6 +79,7 @@ export function MaterialsPanel({
         tone="learned"
         empty="學過一次、還沒到下次複習日的卡片會在這裡。"
         items={inbox.learned}
+        attempts={attempts}
         selectedPartId={selectedPartId}
         expanded={learnedOpen}
         onToggle={() => setLearnedOpen((value) => !value)}
@@ -119,16 +121,15 @@ function CategoryBlock({
   if (!items.length) return null;
   const unit = units.find((item) => item.id === category);
   const progress = unit ? unitProgress(unit, attempts, employeeId) : { done: 0, total: items.length };
-  const stars = unit ? unitStars(unit, attempts, employeeId, spokenSet(employeeId, hasCompletedZhSpeech)) : 0;
-  const unlocked = unit ? isUnitUnlocked(unit, attempts, employeeId) : true;
+  const spoken = spokenSet(employeeId, hasCompletedZhSpeech);
+  const stars = unit ? unitStars(unit, attempts, employeeId, spoken) : 0;
   return (
-    <section className={`mat-cat${expanded ? " is-open" : ""}${unlocked ? "" : " is-locked"}`}>
+    <section className={`mat-cat${expanded ? " is-open" : ""}`}>
       <button className="mat-toggle" type="button" onClick={onToggle} aria-expanded={expanded}>
         <span>
           {categoryLabels[category].zh}
           <small>
             {progress.done}/{progress.total}
-            {unlocked ? "" : " · 未解鎖"}
           </small>
         </span>
         <span className="banner-end">
@@ -137,30 +138,29 @@ function CategoryBlock({
         </span>
       </button>
       {expanded ? (
-        unlocked ? (
-          <ul>
-            {items.map((part) => {
-              const state = states.find((item) => item.partId === part.id);
-              const stage = state ? reviewStageOf(state) : "inbox";
-              const lesson = lessonForPart(part.id);
-              const href = `/learn/${employeeId}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`;
-              return (
-                <li key={part.id}>
-                  <Link
-                    className={`mat-item is-${stage}${selectedPartId === part.id ? " is-on" : ""}`}
-                    to={href}
-                  >
-                    <span className="num">{part.callout}</span>
-                    <span>{part.nameZh}</span>
-                    <small>{state ? reviewStageHint(state) : "未學"}</small>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        ) : (
-          <p className="fine review-empty">上一關全部答對後，這一區才會變成 2 顆星並解鎖。</p>
-        )
+        <ul>
+          {items.map((part) => {
+            const state = states.find((item) => item.partId === part.id);
+            const stage = state ? reviewStageOf(state) : "inbox";
+            const lesson = lessonForPart(part.id);
+            const href = `/learn/${employeeId}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`;
+            const partStars = cardStars(part.id, attempts, employeeId, spoken.has(part.id));
+            return (
+              <li key={part.id}>
+                <Link
+                  className={`mat-item is-${stage}${selectedPartId === part.id ? " is-on" : ""}`}
+                  to={href}
+                >
+                  <span className="num">{part.callout}</span>
+                  <span>
+                    {part.nameZh} <StarPair count={partStars} />
+                  </span>
+                  <small>{state ? reviewStageHint(state) : "未學"}</small>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       ) : null}
     </section>
   );
@@ -172,6 +172,7 @@ function ReviewFolder({
   tone,
   empty,
   items,
+  attempts,
   selectedPartId,
   expanded,
   onToggle
@@ -181,6 +182,7 @@ function ReviewFolder({
   tone: "today" | "learned";
   empty: string;
   items: Array<{ item: Part; state: ReviewState }>;
+  attempts: Attempt[];
   selectedPartId?: string;
   expanded: boolean;
   onToggle: () => void;
@@ -211,6 +213,12 @@ function ReviewFolder({
               {items.map(({ item, state }) => {
                 const stage = reviewStageOf(state);
                 const lesson = lessonForPart(item.id);
+                const partStars = cardStars(
+                  item.id,
+                  attempts,
+                  employeeId,
+                  hasCompletedZhSpeech(employeeId, item.id)
+                );
                 return (
                   <li key={item.id}>
                     <Link
@@ -218,7 +226,9 @@ function ReviewFolder({
                       to={`/learn/${employeeId}/part/${item.id}${lesson ? `?lesson=${lesson.id}` : ""}`}
                     >
                       <span className="num">{item.callout}</span>
-                      <span>{item.nameZh}</span>
+                      <span>
+                        {item.nameZh} <StarPair count={partStars} />
+                      </span>
                       <small>{reviewStageHint(state)}</small>
                     </Link>
                   </li>

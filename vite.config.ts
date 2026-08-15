@@ -19,6 +19,7 @@ export default defineConfig({
   base: process.env.GITHUB_ACTIONS ? pagesBase : "/",
   plugins: [react(), spaFallback()],
   test: {
-    environment: "node"
+    environment: "node",
+    exclude: ["**/node_modules/**", "**/dist/**", "model_sheet_training_v0_7_components/**"]
   }
 });
