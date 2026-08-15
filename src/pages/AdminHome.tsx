@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { BackendBadge } from "../components/BackendBadge";
+import { WorkOrderUpload } from "../components/WorkOrderUpload";
 import { categoryLabels, parts, partsByCategory, trainingSet, workers } from "../data/catalog";
 import { partStatusLabel, rankSnapshots, snapshotFor } from "../engine/dashboard";
 import { STATUS_ID, STATUS_ZH } from "../lib/copy";
@@ -40,6 +41,7 @@ export function AdminHome() {
         </p>
         <BackendBadge />
       </header>
+      <WorkOrderUpload />
       <div className="stat-row">
         <div>
           <small>今日應複習件數</small>

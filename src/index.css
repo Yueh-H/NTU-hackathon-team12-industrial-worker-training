@@ -430,6 +430,48 @@ td small { color: var(--muted); }
   gap: 16px;
 }
 .workorder-hero h2 { margin-bottom: 4px; }
+.sheet-upload { margin: 18px 0; display: grid; gap: 14px; }
+.sheet-upload.info-card h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--ink);
+}
+.sheet-drop {
+  display: grid;
+  place-items: center;
+  gap: 4px;
+  min-height: 132px;
+  padding: 18px;
+  border: 2px dashed rgba(217, 106, 50, 0.45);
+  border-radius: 18px;
+  background: #fff7ee;
+  color: inherit;
+  text-align: center;
+  cursor: pointer;
+}
+.sheet-drop strong { font-size: 1.05rem; }
+.sheet-drop small { color: var(--muted); }
+.sheet-drop.is-over,
+.sheet-drop.has-file { border-color: #d96a32; background: #fff1e2; }
+.sheet-preview {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.42fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+}
+.sheet-preview img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.sheet-parse { display: grid; gap: 4px; }
+.sheet-parse strong { font-size: 1.05rem; }
+.sheet-parse p { margin: 6px 0 0; color: var(--muted); }
 .workorder-list { margin-top: 24px; }
 .workorder-list-card {
   display: flex;
@@ -1453,6 +1495,7 @@ td small { color: var(--muted); }
   .sheet-card { flex-direction: column; }
   .workorder-hero,
   .workorder-list-card { align-items: stretch; flex-direction: column; }
+  .sheet-preview { grid-template-columns: 1fr; }
   .workorder-list-card .risk-badge { align-self: flex-start; }
   .module-columns { grid-template-columns: 1fr; gap: 10px; }
   .page.admin { width: min(520px, calc(100% - 28px)); }
