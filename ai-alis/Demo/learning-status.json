@@ -1,0 +1,21 @@
+{
+  "accuracy": 0.82,
+  "courseTitle": "防火門零件訓練",
+  "dueToday": 4,
+  "freshItems": 18,
+  "generatedAt": "2026-08-15T07:00:00Z",
+  "lastActivityAt": "2026-08-15T06:15:00Z",
+  "learnerID": "agus",
+  "learnerName": "Agus",
+  "mastered": 27,
+  "nextFocus": "先做：kaca tahan api",
+  "overdue": 1,
+  "schemaVersion": 1,
+  "source": "training-web",
+  "streakDays": 3,
+  "totalItems": 64,
+  "weakItems": [
+    "kaca tahan api",
+    "grendel 3 titik"
+  ]
+}
