@@ -1,0 +1,183 @@
+{
+  "orgName": "製一課",
+  "trainingSet": {
+    "id": "fm720102",
+    "version": 1,
+    "docNo": "FM720102 / 11507010-9",
+    "titleId": "Lembar Produksi Pintu Tahan Api FM720102",
+    "titleZh": "FM720102 防火遮煙視窗扇生產製造表",
+    "machine": "15-D9 子母扇",
+    "station": "製一課／組立",
+    "summaryId": "Kenali 12 suku cadang pada lembar produksi 11507010-9 sebelum merakit daun induk-anak 1724×2202. Salah sebut nama di lantai pabrik dianggap belum kompeten.",
+    "summaryZh": "上工前先認得訂單 11507010-9 上這 12 個零件。現場叫錯名稱視為尚未具備組立資格。"
+  },
+  "profiles": [
+    { "id": "budi", "name": "Budi Santoso", "station": "組立 A", "role": "worker", "language": "id" },
+    { "id": "sari", "name": "Sari Wulandari", "station": "組立 B", "role": "worker", "language": "id" },
+    { "id": "agus", "name": "Agus Pratama", "station": "組立 A", "role": "worker", "language": "id" },
+    { "id": "lin", "name": "林雅婷", "station": "現場主管", "role": "supervisor", "language": "zh" }
+  ],
+  "assignments": [
+    { "employeeId": "budi", "setId": "fm720102" },
+    { "employeeId": "sari", "setId": "fm720102" },
+    { "employeeId": "agus", "setId": "fm720102" }
+  ],
+  "parts": [
+    {
+      "id": "child-sash",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 1,
+      "nameId": "Daun anak 701×2202",
+      "nameZh": "子扇 701×2202",
+      "nameEn": "Child sash 701×2202",
+      "functionId": "Daun kecil pada pintu sepasang (子母扇). Ukuran jadi 701×2202, potong 753×2276 menurut 折法圖一.",
+      "safetyId": "Jangan tertukar dengan daun induk. Salah ukuran membuat engsel dan kaca tidak ketemu lubang.",
+      "hotspot": { "x": 16, "y": 33 },
+      "critical": true
+    },
+    {
+      "id": "mother-sash",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 2,
+      "nameId": "Daun induk 1022×2202",
+      "nameZh": "母扇 1022×2202",
+      "nameEn": "Mother sash 1022×2202",
+      "functionId": "Daun besar pasangan. Ukuran jadi 1022×2202, potong 1074×2276. Satu set 子母扇 = 1 induk + 1 anak, total 1724×2202.",
+      "safetyId": "Arah buka adalah 開外. Jangan menukar kiri/kanan saat memasang engsel bendera.",
+      "hotspot": { "x": 38, "y": 33 },
+      "critical": true
+    },
+    {
+      "id": "fire-glass",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 3,
+      "nameId": "Kaca tahan api 31 mm",
+      "nameZh": "柏肯防火玻璃 31mm",
+      "nameEn": "31 mm fire glass",
+      "functionId": "Kaca tahan api (柏肯) 31×226×1226, 16 lembar. Dipasang di bukaan hijau pada daun.",
+      "safetyId": "Kaca pecah atau beda ketebalan merusak sertifikasi tahan api. Angkat dengan sarung tangan, jangan meletakkan di tepi.",
+      "hotspot": { "x": 15, "y": 30 },
+      "critical": true
+    },
+    {
+      "id": "flag-hinge",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 4,
+      "nameId": "Engsel bendera OK-602-4\"",
+      "nameZh": "旗鉸 OK-602-4\"",
+      "nameEn": "Flag hinge OK-602-4\"",
+      "functionId": "Engsel tipe bendera, 3 buah per daun. Titik las ditandai 旗形鉸鍊焊點位置.",
+      "safetyId": "Hanya boleh tipe 旗 OK-602-4\". Engsel biasa tidak lulus uji api. Las hanya setelah wakil pabrik memberi aba-aba (點焊前通知副總).",
+      "hotspot": { "x": 47, "y": 46 },
+      "critical": true
+    },
+    {
+      "id": "anti-pry",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 5,
+      "nameId": "Baut anti-ongkel TH-720",
+      "nameZh": "防撬栓 TH-720",
+      "nameEn": "Anti-pry bolt TH-720",
+      "functionId": "Mencegah daun diungkit dari sisi engsel. Profil 1-1 W63×2201 dipotong lubang anti-ongkel, 8 kiri + 8 kanan.",
+      "safetyId": "Lupa memasang TH-720 membuat daun bisa diungkit saat kebakaran. Cek lubang sebelum cat.",
+      "hotspot": { "x": 16, "y": 69 },
+      "critical": true
+    },
+    {
+      "id": "drop-seal",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 6,
+      "nameId": "Strip turun DW-900",
+      "nameZh": "下降條 東鐵 DW-900",
+      "nameEn": "Drop seal DW-900",
+      "functionId": "Strip otomatis di bawah daun untuk menahan asap. Dipakai bersama list tekan GD-3033.",
+      "safetyId": "Strip macet = asap merembes. Jangan cat di karet, uji naik-turun sebelum packing.",
+      "hotspot": { "x": 72, "y": 13 },
+      "critical": true
+    },
+    {
+      "id": "recess-handle",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 7,
+      "nameId": "Handle cekung OK-702A",
+      "nameZh": "鉸側凹把 OK-702A",
+      "nameEn": "Recessed handle OK-702A",
+      "functionId": "Handle cekung di sisi engsel. Pelat magnesium 8-8 harus dipahat untuk 凹把 (anak) dan lubang kunci (induk).",
+      "safetyId": "Pahat di sisi yang salah merusak 32 lembar pelat. Cek 子/母 sebelum CNC.",
+      "hotspot": { "x": 80, "y": 42 },
+      "critical": false
+    },
+    {
+      "id": "three-lock",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 8,
+      "nameId": "Kunci 3 titik POWER-2612B",
+      "nameZh": "三押暗閂 POWER-2612B",
+      "nameEn": "3-point flush latch POWER-2612B",
+      "functionId": "Kunci 3 titik (三押暗閂) merekatkan daun anak. Dipakai dengan 陽極鎖 di daun induk.",
+      "safetyId": "Pintu tahan api tanpa 3 titik tidak menahan asap. Jangan mengganti merek lain tanpa perintah.",
+      "hotspot": { "x": 56, "y": 12 },
+      "critical": true
+    },
+    {
+      "id": "perlite",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 9,
+      "nameId": "Papan komposit perlit",
+      "nameZh": "珍珠岩複合板",
+      "nameEn": "Perlite composite board",
+      "functionId": "Isi tahan api. Sisi engsel 48 mm, sisi kunci 40 mm. Lihat potongan 圖2.",
+      "safetyId": "Papan basah atau retak wajib dibuang. Mengisi dengan styrofoam adalah pelanggaran keselamatan.",
+      "hotspot": { "x": 42, "y": 56 },
+      "critical": true
+    },
+    {
+      "id": "magnesium",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 10,
+      "nameId": "Papan magnesium 4.0t",
+      "nameZh": "4.0t 碳酸鎂板",
+      "nameEn": "4.0t magnesium board",
+      "functionId": "Lapisan 4.0t di dalam daun dan daftar A (8-1～8-10). Bagian bawah tidak perlu diisi.",
+      "safetyId": "Debu magnesium jangan dihirup. Pakai masker saat potong. Jangan tertukar dengan papan silikat 4.0t di zona las.",
+      "hotspot": { "x": 80, "y": 36 },
+      "critical": false
+    },
+    {
+      "id": "gd1043",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 11,
+      "nameId": "List GD-1043",
+      "nameZh": "嘉士豪 GD-1043",
+      "nameEn": "GD-1043 edge tape",
+      "functionId": "List 1.0t×43 mm di sisi atas dan dua sisi. Bawah pakai GD-1025 25 mm. Gudang harus pesan.",
+      "safetyId": "List terkelupas membuka celah api. Tekan rata, jangan ada gelembung di sudut las.",
+      "hotspot": { "x": 8, "y": 24 },
+      "critical": false
+    },
+    {
+      "id": "glass-bead",
+      "setId": "fm720102",
+      "version": 1,
+      "callout": 12,
+      "nameId": "List kaca galvanis 1.2t",
+      "nameZh": "1.2t 鍍鋅玻璃壓",
+      "nameEn": "1.2t galvanized glass bead",
+      "functionId": "Menekan kaca tahan api. W65.4×280 dan W65.4×1280, potong 45°, 64 batang tiap ukuran.",
+      "safetyId": "Sudut 45° yang miring membuat kaca longgar. Cek sekrup perluasan lubang sebelum kaca masuk.",
+      "hotspot": { "x": 78, "y": 84 },
+      "critical": true
+    }
+  ]
+}

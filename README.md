@@ -1,26 +1,34 @@
-# Hackathon — 2026-08-15
+# Lembar Kerja Mesin｜工業現場零件訓練
 
-黑客松專區。當天衝刺用，速度優先、demo 導向。
+NTU Hackathon Team 12。把 Practice Cat 的間隔複習引擎，做成手機優先的 Web App：工人用印尼文認防火門零件，主管看進度和弱項。
 
-## 題目 / 想法
+真實教材來自生產製造表 **FM720102 / 11507010-9**（60A 平面防火遮煙視窗扇・子母扇 1724×2202）。圖面已遮客戶／工地名稱；原 PDF 不進 git。
 
-**Practice Cat 延伸**——在既有的烏薩奇伴讀寵物 macOS app 上做延伸功能。
+## 兩條介面
 
-- 程式碼在主 repo：`~/Developer/practice-cat`，branch **`hackathon-20260815`**
-- 起點：`b045d9a` WIP snapshot（0.4.0 之後的未完成工作，含 HeptabaseCapture）；`main` 乾淨停在 0.4.0
-- 建置：`./scripts/test.sh` → `./scripts/build_app.sh` → `./scripts/install.sh`（SwiftPM，不需 Xcode project）
+- `/learn` 員工：點名進入 → 看工程圖 hotspot → 零件卡 → 測驗（看圖選名／看名選圖／在圖上點位置）→ `Lupa` / `Ragu-ragu` / `Ingat`
+- `/admin` 主管：指派進度、今日／逾期、測驗正確率、弱項、需要協助的人
 
-（延伸方向確定後填在這裡）
+複習契約沿用 Practice Cat：第一次學會才排程；D+1／3／7／30；忘記或答錯加隔日 rescue，**不搬動原里程碑**。
 
-## Demo 目標
+## 本機執行
 
-（評審會看到什麼？最小可展示路徑是什麼？）
+```bash
+npm install
+npm test
+npm run dev
+```
 
-## 快速紀錄
+瀏覽器開 http://localhost:5173 。Demo 建議兩個分頁：一邊 `/learn/agus` 答題，一邊 `/admin` 看數字動。
 
-- 2026-08-15：開區；practice-cat 開 `hackathon-20260815` branch 並 snapshot WIP。
+資料存在瀏覽器 `localStorage`（`shop-trainer-v1`）。首頁可重設 demo。下一步才接 Supabase。
 
-## 連結
+## 教材來源
 
-- 主辦方 / 題目頁：
-- Demo / deploy：
+- `public/11507010-9.pdf` 原製造表
+- `public/drawing.png` 工程圖
+- `src/data/seed.json` 12 個零件、3 名員工、1 名主管
+
+## 刻意不做（當天）
+
+登入 PIN／QR、AI 自動產教材、離線同步、多家工廠、HR 整合。

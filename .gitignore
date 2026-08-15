@@ -10,9 +10,13 @@ __pycache__/
 # Node
 node_modules/
 dist/
+*.tsbuildinfo
 
 # OS / editor
 .DS_Store
+
+# Real customer production sheets (never commit; deck uses masked crops only)
+*.pdf
 
 # Local session work log (auto-recorded by Claude Code hooks; never publish)
 work_log/
