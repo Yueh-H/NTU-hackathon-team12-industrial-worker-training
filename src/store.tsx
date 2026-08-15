@@ -1,9 +1,14 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { buildDemoProgress, parts } from "./data/catalog";
 import { ensureRemoteData, listenProgress, replaceProgress, upsertSession } from "./data/firebaseStore";
+import {
+  listenWorkOrders,
+  loadWorkOrderBundle as loadRemoteWorkOrder,
+  saveWorkOrder as saveRemoteWorkOrder
+} from "./data/workorderStore";
 import { applySession, emptyState, makeAttempt, STORAGE_KEY } from "./engine/reviewEngine";
 import { getDb, isCloudEnabled } from "./lib/firebase";
-import type { Attempt, PersistShape, QuizKind, Rating, ReviewState } from "./types";
+import type { Attempt, PersistShape, QuizKind, Rating, ReviewState, WorkOrderBundle } from "./types";
 
 export type DataBackend = "local" | "cloud";
 
@@ -20,15 +25,21 @@ interface ShopContextValue {
   backend: DataBackend;
   ready: boolean;
   cloudError: string;
+  workOrdersReady: boolean;
+  workOrderError: string;
+  workOrders: WorkOrderBundle["workOrder"][];
   states: ReviewState[];
   attempts: Attempt[];
   stateFor: (employeeId: string, partId: string) => ReviewState;
   attemptsFor: (employeeId: string, partId?: string) => Attempt[];
   submitSession: (input: SubmitInput) => ReviewState;
+  loadWorkOrder: (workOrderId: string) => Promise<WorkOrderBundle | null>;
+  saveWorkOrder: (bundle: WorkOrderBundle) => Promise<void>;
   resetDemo: () => void;
 }
 
 const ShopContext = createContext<ShopContextValue | null>(null);
+const WORKORDER_STORAGE_KEY = "lembar-kerja-work-orders-v1";
 
 function freshPersist(): PersistShape {
   const seeded = buildDemoProgress();
@@ -59,6 +70,21 @@ function writePersist(value: PersistShape): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
 }
 
+function readLocalWorkOrders(): WorkOrderBundle[] {
+  try {
+    const raw = localStorage.getItem(WORKORDER_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw) as WorkOrderBundle[];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeLocalWorkOrders(value: WorkOrderBundle[]): void {
+  localStorage.setItem(WORKORDER_STORAGE_KEY, JSON.stringify(value));
+}
+
 export function ShopProvider({ children }: { children: ReactNode }) {
   const cloud = isCloudEnabled();
   const [backend] = useState<DataBackend>(cloud ? "cloud" : "local");
@@ -74,6 +100,11 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     if (!localStorage.getItem(STORAGE_KEY)) writePersist(initial);
     return initial;
   })()));
+  const [workOrderRecords, setWorkOrderRecords] = useState<WorkOrderBundle[]>(() =>
+    cloud ? [] : readLocalWorkOrders()
+  );
+  const [workOrdersReady, setWorkOrdersReady] = useState(!cloud);
+  const [workOrderError, setWorkOrderError] = useState("");
 
   useEffect(() => {
     if (!cloud) {
@@ -108,6 +139,44 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelled = true;
       stop?.();
+    };
+  }, [cloud]);
+
+  useEffect(() => {
+    if (!cloud) {
+      const onStorage = (event: StorageEvent) => {
+        if (event.key === WORKORDER_STORAGE_KEY) setWorkOrderRecords(readLocalWorkOrders());
+      };
+      window.addEventListener("storage", onStorage);
+      return () => window.removeEventListener("storage", onStorage);
+    }
+
+    const db = getDb();
+    if (!db) return;
+    let cancelled = false;
+    const stop = listenWorkOrders(
+      db,
+      (orders) => {
+        if (cancelled) return;
+        setWorkOrderRecords((current) =>
+          orders.map((workOrder) => ({
+            workOrder,
+            modules: current.find((item) => item.workOrder.id === workOrder.id)?.modules ?? []
+          }))
+        );
+        setWorkOrderError("");
+        setWorkOrdersReady(true);
+      },
+      (error) => {
+        if (!cancelled) {
+          setWorkOrderError(error.message || "Firebase 工單資料讀取失敗");
+          setWorkOrdersReady(true);
+        }
+      }
+    );
+    return () => {
+      cancelled = true;
+      stop();
     };
   }, [cloud]);
 
@@ -171,6 +240,52 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     return saved;
   }, [cloud]);
 
+  const loadWorkOrder = useCallback(
+    async (workOrderId: string): Promise<WorkOrderBundle | null> => {
+      const cached = workOrderRecords.find((item) => item.workOrder.id === workOrderId);
+      if (!cloud) return cached ?? null;
+      const db = getDb();
+      if (!db) return null;
+      const remote = await loadRemoteWorkOrder(db, workOrderId);
+      if (remote) {
+        setWorkOrderRecords((current) => {
+          const existing = current.find((item) => item.workOrder.id === workOrderId);
+          if (
+            existing &&
+            existing.workOrder.updatedAt === remote.workOrder.updatedAt &&
+            existing.modules.length === remote.modules.length
+          ) {
+            return current;
+          }
+          return [...current.filter((item) => item.workOrder.id !== workOrderId), remote];
+        });
+      }
+      return remote;
+    },
+    [cloud, workOrderRecords]
+  );
+
+  const saveWorkOrder = useCallback(
+    async (bundle: WorkOrderBundle): Promise<void> => {
+      if (!cloud) {
+        setWorkOrderRecords((current) => {
+          const next = [...current.filter((item) => item.workOrder.id !== bundle.workOrder.id), bundle];
+          writeLocalWorkOrders(next);
+          return next;
+        });
+        return;
+      }
+      const db = getDb();
+      if (!db) throw new Error("Firebase 尚未設定，無法儲存大工單。");
+      await saveRemoteWorkOrder(db, bundle);
+      setWorkOrderRecords((current) => [
+        ...current.filter((item) => item.workOrder.id !== bundle.workOrder.id),
+        bundle
+      ]);
+    },
+    [cloud]
+  );
+
   const resetDemo = useCallback(() => {
     const next = freshPersist();
     if (!cloud) {
@@ -196,14 +311,33 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       backend,
       ready,
       cloudError,
+      workOrdersReady,
+      workOrderError,
+      workOrders: workOrderRecords.map((item) => item.workOrder),
       states: persist.states,
       attempts: persist.attempts,
       stateFor,
       attemptsFor,
       submitSession,
+      loadWorkOrder,
+      saveWorkOrder,
       resetDemo
     }),
-    [backend, ready, cloudError, persist, stateFor, attemptsFor, submitSession, resetDemo]
+    [
+      backend,
+      ready,
+      cloudError,
+      workOrdersReady,
+      workOrderError,
+      workOrderRecords,
+      persist,
+      stateFor,
+      attemptsFor,
+      submitSession,
+      loadWorkOrder,
+      saveWorkOrder,
+      resetDemo
+    ]
   );
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;

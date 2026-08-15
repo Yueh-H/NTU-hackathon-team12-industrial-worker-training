@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { AdminEmployee } from "./pages/AdminEmployee";
 import { AdminHome } from "./pages/AdminHome";
 import { AdminLayout } from "./pages/AdminLayout";
+import { AdminWorkOrderDetail, AdminWorkOrderNew, AdminWorkOrders } from "./pages/AdminWorkOrders";
 import { Gate } from "./pages/Gate";
 import { LearnCard } from "./pages/LearnCard";
 import { LearnHome } from "./pages/LearnHome";
@@ -9,6 +10,7 @@ import { DEFAULT_EMPLOYEE_ID, LearnLayout } from "./pages/LearnLayout";
 import { LearnRanking } from "./pages/LearnRanking";
 import { LearnQuiz } from "./pages/LearnQuiz";
 import { LearnSheet } from "./pages/LearnSheet";
+import { LearnWorkOrder } from "./pages/LearnWorkOrder";
 
 export function App() {
   return (
@@ -16,6 +18,7 @@ export function App() {
       <Route path="/" element={<Gate />} />
       <Route path="/learn" element={<Navigate to={`/learn/${DEFAULT_EMPLOYEE_ID}`} replace />} />
       <Route path="/learn/ranking" element={<LearnRanking />} />
+      <Route path="/learn/workorder/:workOrderId" element={<LearnWorkOrder />} />
       <Route path="/learn/:employeeId" element={<LearnLayout />}>
         <Route index element={<LearnHome />} />
         <Route path="sheet" element={<LearnSheet />} />
@@ -24,6 +27,9 @@ export function App() {
       </Route>
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<AdminHome />} />
+        <Route path="workorders" element={<AdminWorkOrders />} />
+        <Route path="workorders/new" element={<AdminWorkOrderNew />} />
+        <Route path="workorders/:workOrderId" element={<AdminWorkOrderDetail />} />
         <Route path=":employeeId" element={<AdminEmployee />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

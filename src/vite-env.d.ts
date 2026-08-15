@@ -8,6 +8,7 @@ interface ImportMetaEnv {
   readonly VITE_FIREBASE_STORAGE_BUCKET?: string;
   readonly VITE_FIREBASE_APP_ID?: string;
   readonly VITE_ALIS_CODEX_ENDPOINT?: string;
+  readonly VITE_AI_WORKORDER_ENDPOINT?: string;
 }
 
 interface ImportMeta {
