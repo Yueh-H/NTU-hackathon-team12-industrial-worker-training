@@ -1,14 +1,17 @@
 import { useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
 import { PartArt } from "../components/PartArt";
 import { categoryLabels, partById, workerById } from "../data/catalog";
 import { partStatusLabel } from "../engine/dashboard";
+import { lessonById } from "../engine/path";
 import { STATUS_ZH } from "../lib/copy";
 import { speakZh } from "../lib/speech";
 import { useShop } from "../store";
 
 export function LearnCard() {
   const { employeeId = "", partId = "" } = useParams();
+  const [params] = useSearchParams();
+  const lesson = lessonById(params.get("lesson") ?? "");
   const worker = workerById(employeeId);
   const part = partById(partId);
   const { stateFor } = useShop();
@@ -17,12 +20,16 @@ export function LearnCard() {
   const state = stateFor(worker.id, part.id);
   const status = partStatusLabel(state);
   const category = categoryLabels[part.category];
+  const step = lesson ? lesson.partIds.indexOf(part.id) + 1 : 0;
+  const quizHref = `/learn/${worker.id}/quiz/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`;
 
   return (
     <main className="page">
       <header className="page-head compact">
         <p className="eyebrow">
-          {category.zh} · #{part.callout} · {STATUS_ZH[status]}
+          {lesson
+            ? `${categoryLabels[lesson.unit].zh} · ${lesson.title} · ${step}/${lesson.partIds.length}`
+            : `${category.zh} · #${part.callout} · ${STATUS_ZH[status]}`}
         </p>
         <h1>{part.nameZh}</h1>
       </header>
@@ -45,11 +52,11 @@ export function LearnCard() {
         <h2>注意</h2>
         <p>{part.safetyId}</p>
       </section>
-      <Link className="btn primary wide" to={`/learn/${worker.id}/quiz/${part.id}`}>
+      <Link className="btn primary wide" to={quizHref}>
         開始測驗
       </Link>
-      <Link className="text-btn" to={`/learn/${worker.id}/sheet`}>
-        回工單圖
+      <Link className="text-btn" to={`/learn/${worker.id}`}>
+        回學習路徑
       </Link>
     </main>
   );

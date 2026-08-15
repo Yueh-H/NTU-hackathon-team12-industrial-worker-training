@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { categoryLabels } from "../data/catalog";
+import { lessonById, nextPartInLesson } from "../engine/path";
 import { DrawingBoard } from "../components/DrawingBoard";
 import { PartArt } from "../components/PartArt";
 import { RatingBar } from "../components/RatingBar";
@@ -12,6 +14,8 @@ import { useShop } from "../store";
 
 export function LearnQuiz() {
   const { employeeId = "", partId = "" } = useParams();
+  const [params] = useSearchParams();
+  const lesson = lessonById(params.get("lesson") ?? "");
   const worker = workerById(employeeId);
   const part = partById(partId);
   const { attemptsFor, states, submitSession } = useShop();
@@ -65,11 +69,20 @@ export function LearnQuiz() {
               : "已加入隔日補強。原本的里程碑日期不搬動。"}
           </p>
         </header>
-        <Link className="btn primary wide" to={`/learn/${worker.id}`}>
-          回今天的任務
-        </Link>
-        <button className="btn ghost wide" type="button" onClick={() => navigate(`/learn/${worker.id}/sheet`)}>
-          再看工單圖
+        {lesson && nextPartInLesson(lesson, part.id) ? (
+          <Link
+            className="btn primary wide"
+            to={`/learn/${worker.id}/part/${nextPartInLesson(lesson, part.id)}?lesson=${lesson.id}`}
+          >
+            下一題 · {categoryLabels[lesson.unit].zh}
+          </Link>
+        ) : (
+          <Link className="btn primary wide" to={`/learn/${worker.id}`}>
+            回學習路徑
+          </Link>
+        )}
+        <button className="btn ghost wide" type="button" onClick={() => navigate(`/learn/${worker.id}`)}>
+          結束這一站
         </button>
       </main>
     );
@@ -149,7 +162,7 @@ export function LearnQuiz() {
         <p className="fine">先選答案，再自評忘記／模糊／記得。</p>
       )}
 
-      <Link className="text-btn" to={`/learn/${worker.id}/part/${part.id}`}>
+      <Link className="text-btn" to={`/learn/${worker.id}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`}>
         回卡片
       </Link>
     </main>
