@@ -22,6 +22,10 @@ export function AdminSidebar() {
         <strong>全員總覽</strong>
         <small>一眼看完進度、弱項與掌握圖</small>
       </NavLink>
+      <NavLink className={({ isActive }) => `admin-overview-link workorder-nav${isActive ? " is-on" : ""}`} to="/admin/workorders">
+        <strong>大工單 → 學習</strong>
+        <small>貼上工單，AI 拆成員工情境</small>
+      </NavLink>
       <div className="admin-people">
         {workers.map((worker) => {
           const snap = snapshotFor(worker, states, attempts);

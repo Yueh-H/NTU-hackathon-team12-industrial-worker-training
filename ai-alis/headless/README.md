@@ -1,6 +1,6 @@
 # 學習小助手：Codex 無頭模式
 
-這個小服務讓網頁右下角的「學習小助手」在使用者按下「問學習小助手」時，透過本機 Codex CLI 呼叫 `gpt-5.6-luna`。網頁與服務之間使用 `text/plain`，不使用 JSON，也不把 API key 放進前端。
+這個小服務讓網頁右下角的「學習小助手」與主管的「大工單 → 學習」介面，透過本機 Codex CLI 呼叫 `gpt-5.6-luna`。學習小助手使用純文字；大工單分析使用 JSON，且不把 API key 放進前端。
 
 ## 啟動
 
@@ -25,6 +25,16 @@ AI_ALIS_CODEX_MODEL=gpt-5.6-luna \
 AI_ALIS_CODEX_REASONING=low \
 npm run ai:headless
 ```
+
+主管大工單預設使用 `gpt-5.6-luna` + `reasoning.effort=max`：
+
+```bash
+AI_WORKORDER_CODEX_MODEL=gpt-5.6-luna \
+AI_WORKORDER_CODEX_REASONING=max \
+npm run ai:headless
+```
+
+端點：`POST http://127.0.0.1:8787/analyze-workorder`。若服務未啟動，主管頁會顯示「示範拆解」並仍可完成當天 demo；正式使用前請確認結果已標示為 Codex AI。
 
 健康檢查：
 

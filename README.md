@@ -23,7 +23,7 @@ npm run dev
 
 瀏覽器開 http://localhost:5173 。沒接雲端時：同一瀏覽器兩個分頁即可。接上 Supabase 後：手機開 `/learn/agus`，筆電開 `/admin`。
 
-要讓「學習小助手」用 `gpt-5.6-luna` 回答學習狀態，另外開一個終端機執行 `npm run ai:headless`；詳細設定見 [`ai-alis/headless/README.md`](ai-alis/headless/README.md)。服務只在本機 `127.0.0.1` 運作，網頁按下按鈕時才會呼叫，傳輸格式是純文字。
+要讓「學習小助手」與主管的「大工單 → 學習」介面使用 Codex，另外開一個終端機執行 `npm run ai:headless`；詳細設定見 [`ai-alis/headless/README.md`](ai-alis/headless/README.md)。學習小助手預設使用 `gpt-5.6-luna`／`low`，大工單拆解預設使用 `gpt-5.6-luna`／`reasoning max`。服務只在本機 `127.0.0.1` 運作，不把 API key 放入前端。
 
 ## Demo 網址
 
@@ -34,6 +34,8 @@ https://yueh-h.github.io/NTU-hackathon-team12-industrial-worker-training/
 ## 資料持久化（Firebase Firestore）
 
 沒有 `.env` 時用瀏覽器 `localStorage`。有 Firebase 設定時，學習進度寫進 Firestore，主管頁即時更新。
+
+主管可從 `/admin/workorders` 貼入一張大工單。每張工單會獨立寫入 `work_orders/{workOrderId}`，AI 拆出的員工學習單元寫入 `work_orders/{workOrderId}/learning_modules/{moduleId}`；結果頁可直接切到 `/learn/workorder/{workOrderId}` 預覽員工學習流程。
 
 專案：`ntu-team12-trainer`。本機：
 
@@ -54,4 +56,4 @@ cp .env.example .env
 
 ## 刻意不做（當天）
 
-登入 PIN／QR、AI 自動產教材、離線同步、多家工廠、HR 整合。
+登入 PIN／QR、正式權限控管、多家工廠、HR 整合。Firebase rules 目前仍是 hackathon demo 的公開讀寫，正式上線前必須接 Firebase Auth 並限制 org／工單範圍。

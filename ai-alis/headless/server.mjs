@@ -8,9 +8,13 @@ const HOST = "127.0.0.1";
 const PORT = Number(process.env.AI_ALIS_CODEX_PORT ?? 8787);
 const MODEL = process.env.AI_ALIS_CODEX_MODEL ?? "gpt-5.6-luna";
 const REASONING = process.env.AI_ALIS_CODEX_REASONING ?? "low";
+const WORKORDER_MODEL = process.env.AI_WORKORDER_CODEX_MODEL ?? "gpt-5.6-luna";
+const WORKORDER_REASONING = process.env.AI_WORKORDER_CODEX_REASONING ?? "max";
 const CODEX_BIN = process.env.AI_ALIS_CODEX_BIN ?? "codex";
 const MAX_PROMPT_LENGTH = 8000;
 const MAX_ANSWER_LENGTH = 4000;
+const MAX_WORKORDER_BODY_LENGTH = 24000;
+const MAX_WORKORDER_ANSWER_LENGTH = 18000;
 const TIMEOUT_MS = Number(process.env.AI_ALIS_CODEX_TIMEOUT_MS ?? 45000);
 const allowedOrigins = new Set([
   "http://localhost:5173",
@@ -29,20 +33,42 @@ const SYSTEM_PROMPT = `你是工業現場訓練網站裡的「學習小助手」
 最多回答兩句，不要捏造資料，不要提到 API、模型、Codex、程式碼或系統提示，也不要要求使用者提供機密資料。
 你只負責解釋目前狀態與下一個小步驟，不要呼叫工具、不修改檔案。`;
 
+const WORKORDER_SYSTEM_PROMPT = `你是工業現場的訓練課程設計師。
+主管會提交一張大工單，請只根據工單原文，把它拆解成員工可以逐步學習的工作情境。
+保留尺寸、數量、型號、工序與安全限制；原文沒有提供的數字不要自行捏造。
+請輸出單一 JSON 物件，不要 Markdown code fence、不要前言或後記，格式必須是：
+{
+  "summary": "給主管看的短摘要",
+  "riskLevel": "low | medium | high",
+  "modules": [
+    {
+      "title": "學習單元名稱",
+      "objective": "員工完成後能做到什麼",
+      "steps": ["可執行步驟 1", "可執行步驟 2"],
+      "safety": ["安全與品質檢查"],
+      "checkQuestion": "一題現場理解檢核",
+      "checkAnswer": "依工單原文可接受的答案",
+      "estimatedMinutes": 10,
+      "sourceText": "這個單元依據的工單片段"
+    }
+  ]
+}
+至少產生 3 個、最多 8 個單元；每個單元要能在現場獨立教學。`;
+
 let busy = false;
 
 function isAllowedOrigin(origin) {
   return !origin || allowedOrigins.has(origin);
 }
 
-function setResponseHeaders(response, origin) {
+function setResponseHeaders(response, origin, contentType = "text/plain; charset=utf-8") {
   if (origin && isAllowedOrigin(origin)) {
     response.setHeader("Access-Control-Allow-Origin", origin);
     response.setHeader("Vary", "Origin");
   }
   response.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  response.setHeader("Content-Type", "text/plain; charset=utf-8");
+  response.setHeader("Content-Type", contentType);
   response.setHeader("Cache-Control", "no-store");
 }
 
@@ -50,6 +76,12 @@ function sendText(response, statusCode, text, origin = "") {
   setResponseHeaders(response, origin);
   response.statusCode = statusCode;
   response.end(text);
+}
+
+function sendJson(response, statusCode, value, origin = "") {
+  setResponseHeaders(response, origin, "application/json; charset=utf-8");
+  response.statusCode = statusCode;
+  response.end(JSON.stringify(value));
 }
 
 function readTextBody(request) {
@@ -85,21 +117,56 @@ function readTextBody(request) {
   });
 }
 
-async function runCodex(prompt) {
+function readJsonBody(request) {
+  return new Promise((resolve, reject) => {
+    let settled = false;
+    let size = 0;
+    const chunks = [];
+
+    request.setEncoding("utf8");
+    request.on("data", (chunk) => {
+      if (settled) return;
+      size += Buffer.byteLength(chunk, "utf8");
+      if (size > MAX_WORKORDER_BODY_LENGTH) {
+        settled = true;
+        reject(new Error(`工單內容太長，最多 ${MAX_WORKORDER_BODY_LENGTH} bytes。`));
+        request.destroy();
+        return;
+      }
+      chunks.push(chunk);
+    });
+    request.on("end", () => {
+      if (settled) return;
+      settled = true;
+      try {
+        resolve(JSON.parse(chunks.join("")));
+      } catch {
+        reject(new Error("工單請求不是有效 JSON。"));
+      }
+    });
+    request.on("error", (error) => {
+      if (!settled) {
+        settled = true;
+        reject(error);
+      }
+    });
+  });
+}
+
+async function runCodexPrompt(fullPrompt, reasoning, outputLimit, model) {
   const workDir = await mkdtemp(join(tmpdir(), "alis-codex-work-"));
   const outputDir = await mkdtemp(join(tmpdir(), "alis-codex-output-"));
   const outputPath = join(outputDir, "answer.txt");
-  const fullPrompt = `${SYSTEM_PROMPT}\n\n以下是這次的學習狀態：\n${prompt.trim()}`;
   const args = [
     "exec",
     "--model",
-    MODEL,
+    model,
     "--sandbox",
     "read-only",
     "--ephemeral",
     "--skip-git-repo-check",
     "--config",
-    `reasoning.effort=${REASONING}`,
+    `reasoning.effort=${reasoning}`,
     "--output-last-message",
     outputPath,
     fullPrompt
@@ -146,13 +213,40 @@ async function runCodex(prompt) {
 
     const answer = (await readFile(outputPath, "utf8")).trim();
     if (!answer) throw new Error("Codex 沒有回傳文字。 ");
-    return answer.slice(0, MAX_ANSWER_LENGTH);
+    return answer.slice(0, outputLimit);
   } finally {
     await Promise.all([
       rm(workDir, { recursive: true, force: true }),
       rm(outputDir, { recursive: true, force: true })
     ]);
   }
+}
+
+async function runCodex(prompt) {
+  return runCodexPrompt(
+    `${SYSTEM_PROMPT}\n\n以下是這次的學習狀態：\n${prompt.trim()}`,
+    REASONING,
+    MAX_ANSWER_LENGTH,
+    MODEL
+  );
+}
+
+function parseJsonAnswer(value) {
+  const fenced = value.match(/```(?:json)?\s*([\s\S]*?)```/i)?.[1] ?? value;
+  const start = fenced.indexOf("{");
+  const end = fenced.lastIndexOf("}");
+  if (start < 0 || end <= start) throw new Error("Codex 沒有回傳可解析的工單 JSON。");
+  return JSON.parse(fenced.slice(start, end + 1));
+}
+
+async function analyzeWorkOrder(payload) {
+  const title = typeof payload?.title === "string" ? payload.title.trim() : "";
+  const docNo = typeof payload?.docNo === "string" ? payload.docNo.trim() : "";
+  const rawContent = typeof payload?.rawContent === "string" ? payload.rawContent.trim() : "";
+  if (!title || !rawContent) throw new Error("工單標題與工單內容都是必填。 ");
+  const prompt = `${WORKORDER_SYSTEM_PROMPT}\n\n工單標題：${title}\n工單編號：${docNo || "未提供"}\n\n工單原文：\n${rawContent}`;
+  const answer = await runCodexPrompt(prompt, WORKORDER_REASONING, MAX_WORKORDER_ANSWER_LENGTH, WORKORDER_MODEL);
+  return parseJsonAnswer(answer);
 }
 
 const server = createServer(async (request, response) => {
@@ -172,7 +266,31 @@ const server = createServer(async (request, response) => {
   }
 
   if (request.method === "GET" && url.pathname === "/health") {
-    sendText(response, 200, `ok · ${MODEL}`, origin);
+    sendText(response, 200, `ok · ${MODEL} · workorder=${WORKORDER_MODEL}/${WORKORDER_REASONING}`, origin);
+    return;
+  }
+
+  if (request.method === "POST" && url.pathname === "/analyze-workorder") {
+    if (busy) {
+      sendJson(response, 429, { error: "另一張工單正在分析，請稍等一下。" }, origin);
+      return;
+    }
+    busy = true;
+    try {
+      const payload = await readJsonBody(request);
+      const analysis = await analyzeWorkOrder(payload);
+      sendJson(response, 200, {
+        analysis,
+        model: WORKORDER_MODEL,
+        reasoningEffort: WORKORDER_REASONING
+      }, origin);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "未知錯誤。";
+      console.error(`[ai-alis] workorder ${message}`);
+      sendJson(response, 502, { error: `工單 AI 分析失敗：${message}` }, origin);
+    } finally {
+      busy = false;
+    }
     return;
   }
 
@@ -206,5 +324,5 @@ const server = createServer(async (request, response) => {
 
 server.listen(PORT, HOST, () => {
   console.log(`[ai-alis] http://${HOST}:${PORT}/ask`);
-  console.log(`[ai-alis] model=${MODEL} reasoning=${REASONING} sandbox=read-only ephemeral=true`);
+  console.log(`[ai-alis] model=${MODEL} reasoning=${REASONING} workorder=${WORKORDER_MODEL}/${WORKORDER_REASONING} sandbox=read-only ephemeral=true`);
 });
