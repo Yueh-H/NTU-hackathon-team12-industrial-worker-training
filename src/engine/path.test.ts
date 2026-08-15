@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { emptyState } from "./reviewEngine";
 import { firstOpenPart, isLessonDone, lessons, nodeState, units } from "./path";
 
-describe("duolingo path", () => {
+describe("learn path", () => {
   it("builds six work-order units with checkpoints", () => {
     expect(units).toHaveLength(6);
     expect(lessons.length).toBeGreaterThan(6);
@@ -10,15 +10,14 @@ describe("duolingo path", () => {
     expect(units[0].lessons[0].partIds.length).toBeGreaterThan(0);
   });
 
-  it("keeps the first checkpoint current when nothing is learned", () => {
-    const first = units[0].lessons[0];
-    const empty = first.partIds.map((partId) => emptyState("agus", partId));
-    expect(nodeState(first, empty)).toBe("current");
-    expect(nodeState(units[0].lessons[1], empty)).toBe("locked");
-    expect(nodeState(units[1].lessons[0], empty)).toBe("locked");
+  it("lets every unfinished checkpoint be opened", () => {
+    const empty = units.flatMap((unit) => unit.lessons.flatMap((lesson) => lesson.partIds.map((partId) => emptyState("agus", partId))));
+    expect(nodeState(units[0].lessons[0], empty)).toBe("open");
+    expect(nodeState(units[0].lessons[1], empty)).toBe("open");
+    expect(nodeState(units[1].lessons[0], empty)).toBe("open");
   });
 
-  it("opens the next checkpoint after a lesson is finished", () => {
+  it("marks a finished checkpoint as done without locking the rest", () => {
     const first = units[0].lessons[0];
     const done = first.partIds.map((partId) => ({
       ...emptyState("agus", partId),
@@ -26,7 +25,8 @@ describe("duolingo path", () => {
       learnedAt: "2026-08-15T00:00:00.000Z"
     }));
     expect(isLessonDone(first, done)).toBe(true);
-    expect(nodeState(units[0].lessons[1], done)).toBe("current");
+    expect(nodeState(first, done)).toBe("done");
+    expect(nodeState(units[0].lessons[1], done)).toBe("open");
     expect(firstOpenPart(first, done)).toBe(first.partIds[0]);
   });
 });
