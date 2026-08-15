@@ -1,16 +1,62 @@
-export function speakZh(text: string): void {
+export type AssistantSpeechLanguage = "zh-TW" | "en-US" | "id-ID";
+
+const INDONESIAN_MARKERS = new Set([
+  "apa",
+  "bagaimana",
+  "belum",
+  "bisa",
+  "dan",
+  "dari",
+  "hari",
+  "harus",
+  "ini",
+  "kapan",
+  "kartu",
+  "kenapa",
+  "mana",
+  "mengapa",
+  "saya",
+  "tidak",
+  "tolong",
+  "ulang",
+  "untuk",
+  "yang",
+  "ya"
+]);
+
+export function detectSpeechLanguage(text: string): AssistantSpeechLanguage {
+  if (/[\u3400-\u9fff]/.test(text)) return "zh-TW";
+  const words = text.toLowerCase().match(/[a-zÀ-ÿ]+/g) ?? [];
+  const indonesianHits = words.filter((word) => INDONESIAN_MARKERS.has(word)).length;
+  if (indonesianHits >= 2 || words.some((word) => ["apa", "bagaimana", "kenapa", "mengapa", "tolong"].includes(word))) {
+    return "id-ID";
+  }
+  return "en-US";
+}
+
+function speakWithLanguage(text: string, language: AssistantSpeechLanguage): void {
   if (typeof window === "undefined" || !window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") return;
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = "zh-TW";
-  utterance.rate = 0.92;
+  utterance.lang = language;
+  utterance.rate = language === "zh-TW" ? 0.92 : 0.96;
   const voices = window.speechSynthesis.getVoices();
-  const chinese = voices.find((voice) => {
+  const normalizedLanguage = language.toLowerCase();
+  const baseLanguage = normalizedLanguage.split("-")[0];
+  const matchingVoice = voices.find((voice) => voice.lang.toLowerCase() === normalizedLanguage) ?? voices.find((voice) => {
     const lang = voice.lang.toLowerCase();
-    return lang.startsWith("zh-tw") || lang.startsWith("zh-hant") || lang.includes("taiwan");
-  }) ?? voices.find((voice) => voice.lang.toLowerCase().startsWith("zh"));
-  if (chinese) utterance.voice = chinese;
+    return lang.startsWith(baseLanguage);
+  });
+  if (matchingVoice) utterance.voice = matchingVoice;
   window.speechSynthesis.speak(utterance);
+}
+
+export function speakZh(text: string): void {
+  speakWithLanguage(text, "zh-TW");
+}
+
+export function speakAuto(text: string): void {
+  speakWithLanguage(text, detectSpeechLanguage(text));
 }
 
 const SPEECH_JUDGE_ENDPOINT =
