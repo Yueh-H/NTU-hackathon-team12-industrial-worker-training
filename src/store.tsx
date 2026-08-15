@@ -6,6 +6,7 @@ import {
   loadWorkOrderBundle as loadRemoteWorkOrder,
   saveWorkOrder as saveRemoteWorkOrder
 } from "./data/workorderStore";
+import { DEMO_WORK_ORDER_ID, demoWorkOrderBundle, withDemoWorkOrder } from "./data/demoSheet";
 import { uploadWorkOrderPdf as uploadRemoteWorkOrderPdf } from "./data/workorderStorage";
 import { applySession, emptyState, makeAttempt, STORAGE_KEY } from "./engine/reviewEngine";
 import { getDb, getFirebaseStorage, isCloudEnabled } from "./lib/firebase";
@@ -273,7 +274,8 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
   const loadWorkOrder = useCallback(
     async (workOrderId: string): Promise<WorkOrderBundle | null> => {
-      const cached = workOrderRecords.find((item) => item.workOrder.id === workOrderId);
+      const cached = withDemoWorkOrder(workOrderRecords).find((item) => item.workOrder.id === workOrderId);
+      if (workOrderId === DEMO_WORK_ORDER_ID) return cached ?? demoWorkOrderBundle();
       if (!cloud) return cached ?? null;
       const db = getDb();
       if (!db) return null;
@@ -363,7 +365,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       cloudError,
       workOrdersReady,
       workOrderError,
-      workOrders: workOrderRecords.map((item) => item.workOrder),
+      workOrders: withDemoWorkOrder(workOrderRecords).map((item) => item.workOrder),
       states: persist.states,
       attempts: persist.attempts,
       stateFor,

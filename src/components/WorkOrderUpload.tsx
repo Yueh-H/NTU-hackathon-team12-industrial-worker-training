@@ -1,6 +1,6 @@
 import { useEffect, useState, type ChangeEvent, type DragEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { DEMO_SHEET } from "../data/demoSheet";
+import { DEMO_SHEET, DEMO_WORK_ORDER_ID } from "../data/demoSheet";
 import { analyzeWorkOrder } from "../lib/aiWorkOrder";
 import { assetUrl } from "../lib/asset";
 import { biLine, BiText } from "./BiText";
@@ -173,6 +173,9 @@ export function WorkOrderUpload() {
       {error ? <p className="form-error">{error}</p> : null}
       {warning ? <p className="form-warning">{warning}</p> : null}
       <div className="form-actions">
+        <Link className="btn ghost" to={`/admin/workorders/${DEMO_WORK_ORDER_ID}`}>
+          開啟已上架 PDF
+        </Link>
         <Link className="btn ghost" to="/admin/workorders/new">
           {biLine(t.pasteInstead)}
         </Link>

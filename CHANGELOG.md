@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.10.0] - 2026-08-15
+
+### Added
+- Redacted FM-DEMO / DEMO-001 PDF is shipped on GitHub Pages
+- Built-in demo work order so the sheet can be shown remotely without uploading again
+
 ## [0.9.0] - 2026-08-15
 
 ### Added

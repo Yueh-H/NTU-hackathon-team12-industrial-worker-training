@@ -1,6 +1,8 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { WorkOrderPdf } from "../components/WorkOrderPdf";
 import { WorkOrderUpload } from "../components/WorkOrderUpload";
+import { DEMO_WORK_ORDER_ID } from "../data/demoSheet";
 import { analyzeWorkOrder } from "../lib/aiWorkOrder";
 import { formatDateTime } from "../lib/format";
 import { usePageTitle } from "../lib/pageTitle";
@@ -33,7 +35,7 @@ export function AdminWorkOrders() {
       <header className="page-head">
         <p className="eyebrow">老闆工具 · 上傳工單</p>
         <h1>發一張生產製造表</h1>
-        <p>老闆把 PDF／PNG 丟進來，再拆成員工可以逐步學習的工作情境。</p>
+        <p>遠端展示用的 demo-sheet.pdf 已上架；也可以再丟一份新的 PDF／PNG。</p>
       </header>
       <WorkOrderUpload />
       {workOrderError ? <p className="form-error">{workOrderError}</p> : null}
@@ -56,7 +58,10 @@ export function AdminWorkOrders() {
           </Link>
         ))}
         {workOrdersReady && !workOrders.length ? (
-          <p className="info-card empty-state">還沒有大工單。先建立第一張，讓它變成員工學習內容。</p>
+          <p className="info-card empty-state">
+            還沒有新上傳的工單。示範 PDF 在{" "}
+            <Link to={`/admin/workorders/${DEMO_WORK_ORDER_ID}`}>DEMO-001</Link>。
+          </p>
         ) : null}
       </section>
       <Link className="text-btn" to="/admin">
@@ -292,26 +297,7 @@ export function AdminWorkOrderDetail() {
         </div>
         <p>{workOrder.summary}</p>
       </section>
-      {workOrder.sourceFile ? (
-        <section className="info-card source-file-card">
-          <div className="section-title-row">
-            <h2>來源 PDF</h2>
-            <span className="fine">{workOrder.sourceFile.pageCount} 頁 · {fileSizeLabel(workOrder.sourceFile.size)}</span>
-          </div>
-          <p>
-            {workOrder.sourceFile.downloadUrl ? (
-              <a href={workOrder.sourceFile.downloadUrl} target="_blank" rel="noreferrer">
-                {workOrder.sourceFile.name} ↗
-              </a>
-            ) : (
-              <strong>{workOrder.sourceFile.name}</strong>
-            )}
-          </p>
-          <small className="fine">
-            {workOrder.sourceFile.downloadUrl ? "已存入 Firebase Storage。" : "本機 fallback 僅保存檔案 metadata，未上傳雲端。"}
-          </small>
-        </section>
-      ) : null}
+      <WorkOrderPdf workOrder={workOrder} />
       <section className="module-list">
         <div className="section-title-row">
           <h2>員工學習單元</h2>

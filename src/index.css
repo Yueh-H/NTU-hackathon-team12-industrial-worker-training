@@ -632,6 +632,15 @@ td small { color: var(--muted); }
 .case-done { margin-left: auto; color: var(--mint); font-size: 0.78rem; font-weight: 800; }
 .learning-case .module-columns ul { color: var(--rose); }
 .source-file-card a { color: var(--navy); font-weight: 700; }
+.workorder-pdf-frame {
+  display: block;
+  width: 100%;
+  height: min(78vh, 1040px);
+  margin: 12px 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
 
 .admin-shell {
   display: grid;
