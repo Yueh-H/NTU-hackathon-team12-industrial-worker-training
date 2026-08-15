@@ -13,6 +13,30 @@ export function speakZh(text: string): void {
   window.speechSynthesis.speak(utterance);
 }
 
+const SPEECH_JUDGE_ENDPOINT =
+  import.meta.env.VITE_AI_SPEECH_ENDPOINT?.trim() || "http://127.0.0.1:8787/judge-speech";
+const SPEECH_JUDGE_TIMEOUT_MS = 8000;
+
+async function judgeSpeechWithCodex(target: string, transcript: string): Promise<boolean> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), SPEECH_JUDGE_TIMEOUT_MS);
+  try {
+    const response = await fetch(SPEECH_JUDGE_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ target, transcript }),
+      signal: controller.signal
+    });
+    if (!response.ok) return false;
+    const payload = (await response.json()) as { accepted?: unknown };
+    return payload.accepted === true;
+  } catch (_) {
+    return false;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 interface RecognitionAlternative {
   transcript: string;
 }
@@ -202,6 +226,9 @@ export function recognizeZh(target: string, handlers: ChineseSpeechHandlers): ()
   let cancelled = false;
   let completed = false;
   let reportedError = false;
+  let judgePending = false;
+  let ended = false;
+  let judgeRequest = 0;
   let finalTranscript = "";
   const finalAlternatives: string[] = [];
   recognition.lang = "zh-TW";
@@ -233,6 +260,24 @@ export function recognizeZh(target: string, handlers: ChineseSpeechHandlers): ()
       completed = true;
       handlers.onSuccess(finalTranscript.trim());
       try { recognition.stop(); } catch (_) {}
+      return;
+    }
+    if (finalTranscript && !judgePending) {
+      judgePending = true;
+      const request = ++judgeRequest;
+      handlers.onInterim?.(`${shownTranscript || finalTranscript.trim()}（AI 複核中…）`);
+      void judgeSpeechWithCodex(target, finalTranscript).then((accepted) => {
+        if (cancelled || completed || request !== judgeRequest) return;
+        judgePending = false;
+        if (accepted) {
+          completed = true;
+          handlers.onSuccess(finalTranscript.trim());
+          try { recognition.stop(); } catch (_) {}
+          if (ended) handlers.onEnd?.();
+          return;
+        }
+        if (ended && !reportedError) reportNoMatch();
+      });
     }
   };
   recognition.onerror = (event) => {
@@ -241,19 +286,29 @@ export function recognizeZh(target: string, handlers: ChineseSpeechHandlers): ()
     handlers.onError(recognitionErrorMessage(event.error));
   };
   recognition.onend = () => {
+    ended = true;
     if (cancelled || completed) {
       if (!cancelled) handlers.onEnd?.();
       return;
     }
+    if (judgePending) return;
     if (!reportedError) {
-      handlers.onError(
-        finalTranscript
-          ? "沒有辨識到卡片上的中文詞語，請看著上方文字再朗讀一次。"
-          : "沒有完成中文朗讀，請看著卡片再試一次。"
-      );
+      reportNoMatch();
+      return;
     }
     handlers.onEnd?.();
   };
+
+  function reportNoMatch() {
+    if (cancelled || completed || reportedError) return;
+    reportedError = true;
+    handlers.onError(
+      finalTranscript
+        ? "沒有辨識到卡片上的中文詞語，請看著上方文字再朗讀一次。"
+        : "沒有完成中文朗讀，請看著卡片再試一次。"
+    );
+    handlers.onEnd?.();
+  }
   try {
     recognition.start();
   } catch (_) {

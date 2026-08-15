@@ -15,12 +15,26 @@
     { "id": "budi", "name": "Budi Santoso", "station": "組立 A", "role": "worker", "language": "id" },
     { "id": "sari", "name": "Sari Wulandari", "station": "組立 B", "role": "worker", "language": "id" },
     { "id": "agus", "name": "Agus Pratama", "station": "組立 A", "role": "worker", "language": "id" },
+    { "id": "dwi", "name": "Dwi Kurniawan", "station": "組立 B", "role": "worker", "language": "id" },
+    { "id": "rina", "name": "Rina Lestari", "station": "組立 C", "role": "worker", "language": "id" },
+    { "id": "joko", "name": "Joko Saputra", "station": "組立 C", "role": "worker", "language": "id" },
+    { "id": "maya", "name": "Maya Sari", "station": "品檢", "role": "worker", "language": "id" },
+    { "id": "arif", "name": "Arif Hidayat", "station": "備料", "role": "worker", "language": "id" },
+    { "id": "dewi", "name": "Dewi Anggraini", "station": "組立 B", "role": "worker", "language": "id" },
+    { "id": "yusuf", "name": "Yusuf Maulana", "station": "組立 A", "role": "worker", "language": "id" },
     { "id": "lin", "name": "Lin", "station": "現場主管", "role": "supervisor", "language": "zh" }
   ],
   "assignments": [
     { "employeeId": "budi", "setId": "fm720102" },
     { "employeeId": "sari", "setId": "fm720102" },
-    { "employeeId": "agus", "setId": "fm720102" }
+    { "employeeId": "agus", "setId": "fm720102" },
+    { "employeeId": "dwi", "setId": "fm720102" },
+    { "employeeId": "rina", "setId": "fm720102" },
+    { "employeeId": "joko", "setId": "fm720102" },
+    { "employeeId": "maya", "setId": "fm720102" },
+    { "employeeId": "arif", "setId": "fm720102" },
+    { "employeeId": "dewi", "setId": "fm720102" },
+    { "employeeId": "yusuf", "setId": "fm720102" }
   ],
   "parts": [
     {

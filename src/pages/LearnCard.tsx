@@ -145,7 +145,10 @@ export function LearnCard() {
         <p className="speech-target" lang="zh-Hant">
           {speechTarget}
         </p>
-        <p className="fine">按下麥克風，唸出上方中文。辨識成功會得到 1 顆星，並解鎖測驗。</p>
+        <p className="fine">
+          按下麥克風，唸出上方中文。辨識成功會得到 1 顆星，並解鎖測驗；本機 Codex 服務在線時會用
+          gpt-5.6-luna／reasoning max 複核結果。
+        </p>
         <div className="speech-actions">
           <button
             className="btn primary"
