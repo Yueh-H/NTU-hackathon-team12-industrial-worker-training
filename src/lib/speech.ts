@@ -1,5 +1,5 @@
 export function speakZh(text: string): void {
-  if (typeof window === "undefined" || !window.speechSynthesis) return;
+  if (typeof window === "undefined" || !window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") return;
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "zh-TW";
@@ -11,6 +11,11 @@ export function speakZh(text: string): void {
   }) ?? voices.find((voice) => voice.lang.toLowerCase().startsWith("zh"));
   if (chinese) utterance.voice = chinese;
   window.speechSynthesis.speak(utterance);
+}
+
+export function stopZhSpeech(): void {
+  if (typeof window === "undefined" || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
 }
 
 interface RecognitionAlternative {

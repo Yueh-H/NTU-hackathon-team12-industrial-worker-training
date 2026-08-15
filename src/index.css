@@ -480,6 +480,18 @@ td small { color: var(--muted); }
   color: var(--muted);
   font-size: 0.72rem;
 }
+.alis-pet-tools { display: flex; gap: 8px; margin-top: 10px; }
+.alis-pet-voice {
+  padding: 6px 9px;
+  border: 1px solid rgba(15, 44, 56, 0.16);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--navy);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.74rem;
+}
+.alis-pet-voice:hover { background: rgba(15, 44, 56, 0.06); }
 .alis-pet-action {
   display: inline-flex;
   margin-top: 12px;
@@ -515,6 +527,7 @@ td small { color: var(--muted); }
 }
 .alis-pet-button:focus-visible,
 .alis-pet-close:focus-visible,
+.alis-pet-voice:focus-visible,
 .alis-pet-action:focus-visible {
   outline: 3px solid rgba(217, 106, 50, 0.4);
   outline-offset: 3px;
