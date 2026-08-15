@@ -52,6 +52,10 @@ export function lessonById(id: string): Lesson | undefined {
   return lessons.find((lesson) => lesson.id === id);
 }
 
+export function lessonForPart(partId: string): Lesson | undefined {
+  return lessons.find((lesson) => lesson.partIds.includes(partId));
+}
+
 export function partsInLesson(lesson: Lesson): Part[] {
   return lesson.partIds.map((id) => parts.find((part) => part.id === id)).filter((part): part is Part => Boolean(part));
 }
