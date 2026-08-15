@@ -1,8 +1,11 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { WorkOrderUpload } from "../components/WorkOrderUpload";
 import { analyzeWorkOrder } from "../lib/aiWorkOrder";
 import { formatDateTime } from "../lib/format";
+import { usePageTitle } from "../lib/pageTitle";
 import { extractPdfText } from "../lib/pdfText";
+import { moduleForWorkOrder, newWorkOrderId } from "../lib/workOrderPublish";
 import { useShop } from "../store";
 import type { LearningModule, WorkOrder, WorkOrderBundle } from "../types";
 
@@ -11,10 +14,6 @@ const RISK_LABELS = {
   medium: "中風險",
   high: "高風險"
 } as const;
-
-function newWorkOrderId(): string {
-  return `wo-${Date.now().toString(36)}`;
-}
 
 function analysisSourceLabel(source: WorkOrder["analysisSource"]): string {
   return source === "codex" ? "Codex AI 已分析" : "示範拆解（AI service 未連線）";
@@ -25,38 +24,18 @@ function fileSizeLabel(size: number): string {
   return `${(size / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-function moduleForWorkOrder(
-  workOrderId: string,
-  module: Omit<LearningModule, "id" | "workOrderId">,
-  index: number
-): LearningModule {
-  return {
-    ...module,
-    id: `${workOrderId}-module-${index + 1}`,
-    workOrderId,
-    order: index + 1
-  };
-}
-
 export function AdminWorkOrders() {
+  usePageTitle("上傳工單 · 老闆");
   const { workOrders, workOrdersReady, workOrderError } = useShop();
 
   return (
     <main className="page admin">
       <header className="page-head">
-        <p className="eyebrow">主管工具 · AI 拆解</p>
-        <h1>大工單</h1>
-        <p>把主管手上的工單拆成員工可以逐步學習的工作情境。</p>
+        <p className="eyebrow">老闆工具 · 上傳工單</p>
+        <h1>發一張生產製造表</h1>
+        <p>老闆把 PDF／PNG 丟進來，再拆成員工可以逐步學習的工作情境。</p>
       </header>
-      <section className="workorder-hero info-card">
-        <div>
-          <h2>新增一張大工單</h2>
-          <p>輸入工單原文後，使用 gpt-5.6-luna／reasoning max 產生學習單元。</p>
-        </div>
-        <Link className="btn primary" to="/admin/workorders/new">
-          建立大工單
-        </Link>
-      </section>
+      <WorkOrderUpload />
       {workOrderError ? <p className="form-error">{workOrderError}</p> : null}
       <section className="workorder-list">
         <div className="section-title-row">

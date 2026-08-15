@@ -29,6 +29,9 @@ export function Gate() {
         <Link className="btn dark" to="/admin">
           {biLine(t.supervisor)}
         </Link>
+        <Link className="btn ghost" to="/admin/workorders">
+          {biLine(t.bossUpload)}
+        </Link>
       </div>
       <BiText as="p" className="fine" zh={t.gateFine.zh} idn={t.gateFine.idn} />
       <button className="text-btn" type="button" onClick={resetDemo}>

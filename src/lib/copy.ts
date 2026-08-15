@@ -85,6 +85,7 @@ export const t = {
   gateTitle: { zh: "工程訓練單", idn: "Lembar latihan kerja" },
   workerLearn: { zh: "員工學習", idn: "Belajar karyawan" },
   supervisor: { zh: "主管監控", idn: "Pantauan supervisor" },
+  bossUpload: { zh: "老闆發工單", idn: "Bos unggah lembar" },
   gateFine: {
     zh: "已接 Firebase 時，手機學習、筆電看主管頁會打同一份資料。沒接就存在這個瀏覽器。",
     idn: "Kalau Firebase tersambung, HP dan laptop memakai data yang sama. Kalau tidak, data hanya di browser ini."
@@ -217,8 +218,19 @@ export const t = {
   adminPeople: { zh: "人員", idn: "Orang" },
   adminOverview: { zh: "全員總覽", idn: "Ringkasan semua orang" },
   adminOverviewFine: { zh: "一眼看完進度、弱項與掌握圖", idn: "Lihat progres, kelemahan, dan peta penguasaan" },
-  adminWorkorders: { zh: "大工單 → 學習", idn: "Lembar besar → belajar" },
-  adminWorkordersFine: { zh: "貼上工單，AI 拆成員工情境", idn: "Tempel lembar, AI jadi unit belajar" },
+  adminWorkorders: { zh: "上傳工單", idn: "Unggah lembar" },
+  adminWorkordersFine: { zh: "丟 PDF／PNG，拆成員工學習", idn: "Unggah PDF/PNG, jadi unit belajar" },
+  uploadSheet: { zh: "上傳生產製造表", idn: "Unggah lembar produksi" },
+  uploadHint: {
+    zh: "拖入 PDF 或 PNG。今天示範會套用 DEMO-001 的解析，不會當場讀任意新圖。",
+    idn: "Seret PDF atau PNG. Demo hari ini memakai hasil DEMO-001, bukan baca gambar baru."
+  },
+  pickFile: { zh: "選檔或拖進來", idn: "Pilih file atau seret ke sini" },
+  pickFileFine: { zh: "接受 PDF、PNG、JPG", idn: "PDF, PNG, atau JPG" },
+  parsedAs: { zh: "示範解析結果", idn: "Hasil analisis demo" },
+  pasteInstead: { zh: "改用文字貼上", idn: "Tempel teks saja" },
+  analyzing: { zh: "AI 分析中……", idn: "AI sedang menganalisis…" },
+  publishSheet: { zh: "分析並建立學習內容", idn: "Analisis dan buat materi belajar" },
   adminCards: { zh: "編輯卡片", idn: "Edit kartu" },
   adminCardsFine: { zh: "單獨改每一張卡的名稱與提示", idn: "Ubah nama dan petunjuk tiap kartu" },
   adminMonitor: { zh: "主管監控", idn: "Pantauan supervisor" },

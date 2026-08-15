@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.0] - 2026-08-15
+
+### Added
+- Boss work-order upload on the home gate, supervisor overview, and `/admin/workorders`
+- PDF/PNG dropzone that creates employee learning units from the uploaded sheet
+
 ## [0.7.1] - 2026-08-15
 
 ### Changed

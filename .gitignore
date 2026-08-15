@@ -23,3 +23,6 @@ dist/
 # Local session work log (auto-recorded by Claude Code hooks; never publish)
 work_log/
 .worklog_enabled
+
+# Local editor / harness config
+.claude/
