@@ -207,6 +207,26 @@ export function shortDue(day: string): string {
   return `${Number(month)}/${Number(date)}`;
 }
 
+export function isDueNow(state: ReviewState, day = todayKey()): boolean {
+  return Boolean(dueReview(state, day));
+}
+
+export function splitReviewInbox<T extends { id: string }>(
+  items: T[],
+  states: ReviewState[],
+  day = todayKey()
+): { today: Array<{ item: T; state: ReviewState }>; learned: Array<{ item: T; state: ReviewState }> } {
+  const today: Array<{ item: T; state: ReviewState }> = [];
+  const learned: Array<{ item: T; state: ReviewState }> = [];
+  for (const item of items) {
+    const state = states.find((entry) => entry.partId === item.id);
+    if (!state || state.status === "inbox") continue;
+    if (isDueNow(state, day)) today.push({ item, state });
+    else learned.push({ item, state });
+  }
+  return { today, learned };
+}
+
 export function reviewStageHint(state: ReviewState, day = todayKey()): string {
   const stage = reviewStageOf(state);
   if (stage === "inbox") return "未學";

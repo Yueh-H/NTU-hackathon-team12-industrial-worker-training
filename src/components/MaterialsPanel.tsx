@@ -1,28 +1,41 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { StarPair } from "./StarPair";
 import { categoryLabels, parts } from "../data/catalog";
-import { lessonForPart, UNIT_ORDER } from "../engine/path";
-import { REVIEW_FOLDERS, reviewStageHint, reviewStageOf } from "../engine/reviewEngine";
+import {
+  isUnitUnlocked,
+  lessonForPart,
+  spokenSet,
+  UNIT_ORDER,
+  unitProgress,
+  unitStars,
+  units
+} from "../engine/path";
+import { REVIEW_FOLDERS, reviewStageHint, reviewStageOf, splitReviewInbox } from "../engine/reviewEngine";
 import { REVIEW_STAGE_ZH } from "../lib/copy";
-import type { CardCategory, Part, ReviewState, TrainingSet } from "../types";
+import { hasCompletedZhSpeech } from "../lib/speech";
+import type { Attempt, CardCategory, Part, ReviewState, TrainingSet } from "../types";
 
 export function MaterialsPanel({
   employeeId,
   setId,
   training,
   states,
+  attempts,
   selectedPartId
 }: {
   employeeId: string;
   setId: string;
   training: TrainingSet;
   states: ReviewState[];
+  attempts: Attempt[];
   selectedPartId?: string;
 }) {
   const selected = parts.find((part) => part.id === selectedPartId);
   const selectedCategory = selected?.category;
   const [open, setOpen] = useState<CardCategory | "">(selectedCategory ?? "struktur");
-  const [reviewOpen, setReviewOpen] = useState(true);
+  const [todayOpen, setTodayOpen] = useState(true);
+  const [learnedOpen, setLearnedOpen] = useState(false);
 
   useEffect(() => {
     if (selectedCategory) setOpen(selectedCategory);
@@ -39,20 +52,35 @@ export function MaterialsPanel({
   }
 
   const visible = parts.filter((part) => part.setId === setId);
-  const reviewing = visible
-    .map((part) => ({ part, state: states.find((item) => item.partId === part.id) }))
-    .filter((item): item is { part: Part; state: ReviewState } => Boolean(item.state && item.state.status !== "inbox"));
+  const inbox = splitReviewInbox(visible, states);
   return (
     <aside className="materials-panel">
       <p className="eyebrow">材料</p>
       <h2>{training.titleZh}</h2>
-      <p className="fine">{visible.length} 項 · 學過的進上方複習夾，顏色＝下一站</p>
+      <p className="fine">
+        {inbox.today.length
+          ? `今天有 ${inbox.today.length} 張要複習`
+          : "今天沒有到期複習"}
+      </p>
       <ReviewFolder
         employeeId={employeeId}
-        items={reviewing}
+        title="今天要複習"
+        tone="today"
+        empty="今天沒有到期或逾期的卡片。"
+        items={inbox.today}
         selectedPartId={selectedPartId}
-        expanded={reviewOpen}
-        onToggle={() => setReviewOpen((value) => !value)}
+        expanded={todayOpen}
+        onToggle={() => setTodayOpen((value) => !value)}
+      />
+      <ReviewFolder
+        employeeId={employeeId}
+        title="已學習過"
+        tone="learned"
+        empty="學過一次、還沒到下次複習日的卡片會在這裡。"
+        items={inbox.learned}
+        selectedPartId={selectedPartId}
+        expanded={learnedOpen}
+        onToggle={() => setLearnedOpen((value) => !value)}
       />
       {UNIT_ORDER.map((category) => (
         <CategoryBlock
@@ -60,6 +88,7 @@ export function MaterialsPanel({
           category={category}
           employeeId={employeeId}
           states={states}
+          attempts={attempts}
           selectedPartId={selectedPartId}
           expanded={open === category}
           onToggle={() => setOpen((current) => (current === category ? "" : category))}
@@ -73,6 +102,7 @@ function CategoryBlock({
   category,
   employeeId,
   states,
+  attempts,
   selectedPartId,
   expanded,
   onToggle
@@ -80,48 +110,57 @@ function CategoryBlock({
   category: CardCategory;
   employeeId: string;
   states: ReviewState[];
+  attempts: Attempt[];
   selectedPartId?: string;
   expanded: boolean;
   onToggle: () => void;
 }) {
   const items = parts.filter((part) => part.category === category);
   if (!items.length) return null;
-  const done = items.filter((part) => {
-    const state = states.find((item) => item.partId === part.id);
-    return state && state.status !== "inbox";
-  }).length;
+  const unit = units.find((item) => item.id === category);
+  const progress = unit ? unitProgress(unit, attempts, employeeId) : { done: 0, total: items.length };
+  const stars = unit ? unitStars(unit, attempts, employeeId, spokenSet(employeeId, hasCompletedZhSpeech)) : 0;
+  const unlocked = unit ? isUnitUnlocked(unit, attempts, employeeId) : true;
   return (
-    <section className={`mat-cat${expanded ? " is-open" : ""}`}>
+    <section className={`mat-cat${expanded ? " is-open" : ""}${unlocked ? "" : " is-locked"}`}>
       <button className="mat-toggle" type="button" onClick={onToggle} aria-expanded={expanded}>
         <span>
           {categoryLabels[category].zh}
           <small>
-            {done}/{items.length}
+            {progress.done}/{progress.total}
+            {unlocked ? "" : " · 未解鎖"}
           </small>
         </span>
-        <b aria-hidden="true">{expanded ? "−" : "+"}</b>
+        <span className="banner-end">
+          <StarPair count={stars} />
+          <b aria-hidden="true">{expanded ? "−" : "+"}</b>
+        </span>
       </button>
       {expanded ? (
-        <ul>
-          {items.map((part) => {
-            const state = states.find((item) => item.partId === part.id);
-            const stage = state ? reviewStageOf(state) : "inbox";
-            const lesson = lessonForPart(part.id);
-            const href = `/learn/${employeeId}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`;
-            return (
-              <li key={part.id}>
-                <Link
-                  className={`mat-item is-${stage}${selectedPartId === part.id ? " is-on" : ""}`}
-                  to={href}
-                >
-                  <span className="num">{part.callout}</span>
-                  <span>{part.nameZh}</span>
-                  <small>{state ? reviewStageHint(state) : "未學"}</small>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        unlocked ? (
+          <ul>
+            {items.map((part) => {
+              const state = states.find((item) => item.partId === part.id);
+              const stage = state ? reviewStageOf(state) : "inbox";
+              const lesson = lessonForPart(part.id);
+              const href = `/learn/${employeeId}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`;
+              return (
+                <li key={part.id}>
+                  <Link
+                    className={`mat-item is-${stage}${selectedPartId === part.id ? " is-on" : ""}`}
+                    to={href}
+                  >
+                    <span className="num">{part.callout}</span>
+                    <span>{part.nameZh}</span>
+                    <small>{state ? reviewStageHint(state) : "未學"}</small>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p className="fine review-empty">上一關全部答對後，這一區才會變成 2 顆星並解鎖。</p>
+        )
       ) : null}
     </section>
   );
@@ -129,22 +168,28 @@ function CategoryBlock({
 
 function ReviewFolder({
   employeeId,
+  title,
+  tone,
+  empty,
   items,
   selectedPartId,
   expanded,
   onToggle
 }: {
   employeeId: string;
-  items: { part: Part; state: ReviewState }[];
+  title: string;
+  tone: "today" | "learned";
+  empty: string;
+  items: Array<{ item: Part; state: ReviewState }>;
   selectedPartId?: string;
   expanded: boolean;
   onToggle: () => void;
 }) {
   return (
-    <section className={`mat-cat review-folder${expanded ? " is-open" : ""}`}>
+    <section className={`mat-cat review-folder is-${tone}${expanded ? " is-open" : ""}`}>
       <button className="mat-toggle" type="button" onClick={onToggle} aria-expanded={expanded}>
         <span>
-          複習夾
+          {title}
           <small>{items.length} 張</small>
         </span>
         <b aria-hidden="true">{expanded ? "−" : "+"}</b>
@@ -152,50 +197,37 @@ function ReviewFolder({
       {expanded ? (
         items.length ? (
           <>
-            <p className="review-legend" aria-hidden="true">
-              {REVIEW_FOLDERS.filter((stage) => stage !== "mastered" && stage !== "rescue").map((stage) => (
-                <span key={stage}>
-                  <i className={`heat-swatch is-${stage}`} />
-                  {REVIEW_STAGE_ZH[stage]}
-                </span>
-              ))}
-              <span>
-                <i className="heat-swatch is-rescue" />
-                救援
-              </span>
-            </p>
-            {REVIEW_FOLDERS.map((stage) => {
-              const group = items.filter((item) => reviewStageOf(item.state) === stage);
-              if (!group.length) return null;
-              return (
-                <div key={stage} className="review-group">
-                  <h3>
+            {tone === "today" ? (
+              <p className="review-legend" aria-hidden="true">
+                {REVIEW_FOLDERS.filter((stage) => stage !== "mastered").map((stage) => (
+                  <span key={stage}>
+                    <i className={`heat-swatch is-${stage}`} />
                     {REVIEW_STAGE_ZH[stage]}
-                    <small>{group.length}</small>
-                  </h3>
-                  <ul>
-                    {group.map(({ part, state }) => {
-                      const lesson = lessonForPart(part.id);
-                      return (
-                        <li key={part.id}>
-                          <Link
-                            className={`mat-item is-${stage}${selectedPartId === part.id ? " is-on" : ""}`}
-                            to={`/learn/${employeeId}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`}
-                          >
-                            <span className="num">{part.callout}</span>
-                            <span>{part.nameZh}</span>
-                            <small>{reviewStageHint(state)}</small>
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              );
-            })}
+                  </span>
+                ))}
+              </p>
+            ) : null}
+            <ul>
+              {items.map(({ item, state }) => {
+                const stage = reviewStageOf(state);
+                const lesson = lessonForPart(item.id);
+                return (
+                  <li key={item.id}>
+                    <Link
+                      className={`mat-item is-${stage}${selectedPartId === item.id ? " is-on" : ""}`}
+                      to={`/learn/${employeeId}/part/${item.id}${lesson ? `?lesson=${lesson.id}` : ""}`}
+                    >
+                      <span className="num">{item.callout}</span>
+                      <span>{item.nameZh}</span>
+                      <small>{reviewStageHint(state)}</small>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </>
         ) : (
-          <p className="fine review-empty">學過一次的卡片會進這裡，依 D+1／3／7／30 分夾複習。</p>
+          <p className="fine review-empty">{empty}</p>
         )
       ) : null}
     </section>
