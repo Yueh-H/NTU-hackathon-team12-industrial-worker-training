@@ -20,6 +20,7 @@ dist/
 # Real customer production sheets stay local. Only the redacted demo sheet is published.
 *.pdf
 !public/demo-sheet.pdf
+!public/demo-sheet.pdf
 
 # Local session work log (auto-recorded by Claude Code hooks; never publish)
 work_log/

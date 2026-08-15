@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.1] - 2026-08-15
+
+### Added
+- Supervisor home embeds the DEMO-001 model PDF at the top of the page
+
 ## [0.10.0] - 2026-08-15
 
 ### Added
