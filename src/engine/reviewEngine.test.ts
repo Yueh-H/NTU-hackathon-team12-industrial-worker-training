@@ -9,6 +9,7 @@ import {
   milestoneDates,
   pendingReviews,
   rateReview,
+  reviewStageOf,
   startLearning,
   todayKey
 } from "./reviewEngine";
@@ -104,6 +105,33 @@ describe("reviewEngine (practice-cat contract)", () => {
     }
     expect(pendingReviews(state)).toHaveLength(0);
     expect(state.status).toBe("mastered");
+  });
+
+  it("lets a later session complete the next milestone early without moving later dates", () => {
+    const learned = noon("2026-08-15");
+    const started = applySession(emptyState("e1", "p1"), {
+      rating: "remembered",
+      quizCorrect: true,
+      now: learned
+    });
+    const before = milestoneDates(started);
+    const next = applySession(started, {
+      rating: "remembered",
+      quizCorrect: true,
+      now: learned
+    });
+    expect(next.reviews.find((review) => review.offset === 1)?.status).toBe("completed");
+    expect(next.reviews.find((review) => review.offset === 3)?.status).toBe("pending");
+    expect(milestoneDates(next)).toEqual(before);
+  });
+
+  it("classifies cards into D+1 / D+3 / D+7 / D+30 folders", () => {
+    const learned = noon("2026-08-01");
+    let state = startLearning(emptyState("e1", "p1"), learned);
+    expect(reviewStageOf(state)).toBe("d1");
+    const d1 = state.reviews.find((review) => review.offset === 1)!;
+    state = rateReview(state, d1.id, "remembered", noon("2026-08-02"));
+    expect(reviewStageOf(state)).toBe("d3");
   });
 
   it("treats a pending review with dueDate before today as overdue", () => {

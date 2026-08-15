@@ -135,9 +135,17 @@ export function applySession(
   const day = todayKey(now);
   const firstLearn = state.status === "inbox";
   let next = firstLearn ? startLearning(state, now) : state;
-  const due = dueReview(next, day);
-  if (due && !firstLearn) {
-    next = rateReview(next, due.id, input.rating, now);
+  if (firstLearn) {
+    if (input.rating !== "remembered" || input.quizCorrect === false) {
+      next = addRescue(next, now);
+    } else {
+      next = { ...next, lastReviewedAt: now.toISOString(), updatedAt: now.toISOString() };
+    }
+    return next;
+  }
+  const target = dueReview(next, day) ?? pendingReviews(next)[0];
+  if (target) {
+    next = rateReview(next, target.id, input.rating, now);
   } else if (input.rating !== "remembered" || input.quizCorrect === false) {
     next = addRescue(next, now);
   } else {
@@ -176,6 +184,39 @@ export function pickQuizKind(attemptCount: number, hasHotspot = false): QuizKind
   }
   const kinds: QuizKind[] = ["image_to_name", "name_to_image", "hotspot"];
   return kinds[attemptCount % kinds.length];
+}
+
+export type ReviewStage = "inbox" | "d1" | "d3" | "d7" | "d30" | "rescue" | "mastered";
+
+export const REVIEW_FOLDERS: ReviewStage[] = ["rescue", "d1", "d3", "d7", "d30", "mastered"];
+
+export function reviewStageOf(state: ReviewState): ReviewStage {
+  if (state.status === "inbox") return "inbox";
+  const next = pendingReviews(state)[0];
+  if (!next) return "mastered";
+  if (next.kind === "rescue") return "rescue";
+  if (next.offset === 3) return "d3";
+  if (next.offset === 7) return "d7";
+  if (next.offset === 30) return "d30";
+  return "d1";
+}
+
+export function shortDue(day: string): string {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return day;
+  const [, month, date] = day.split("-");
+  return `${Number(month)}/${Number(date)}`;
+}
+
+export function reviewStageHint(state: ReviewState, day = todayKey()): string {
+  const stage = reviewStageOf(state);
+  if (stage === "inbox") return "未學";
+  if (stage === "mastered") return "已掌握";
+  const next = pendingReviews(state)[0];
+  const tag =
+    stage === "rescue" ? "隔日救援" : stage === "d3" ? "D+3" : stage === "d7" ? "D+7" : stage === "d30" ? "D+30" : "D+1";
+  if (next && next.dueDate < day) return `逾期 · ${tag}`;
+  if (next && next.dueDate === day) return `今日 · ${tag}`;
+  return next ? `${tag} · ${shortDue(next.dueDate)}` : tag;
 }
 
 export function milestoneDates(state: ReviewState): string[] {
