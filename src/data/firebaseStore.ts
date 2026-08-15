@@ -108,6 +108,22 @@ async function writeAll(db: Firestore, persist: PersistShape): Promise<void> {
   for (const run of chunks) await run();
 }
 
+export function missingEmployeeProgress(
+  current: Pick<PersistShape, "states" | "attempts">,
+  seeded: Pick<PersistShape, "states" | "attempts">
+): Pick<PersistShape, "states" | "attempts"> {
+  const existingEmployeeIds = new Set(current.states.map((state) => state.employeeId));
+  const missingEmployeeIds = new Set(
+    seeded.states
+      .map((state) => state.employeeId)
+      .filter((employeeId) => !existingEmployeeIds.has(employeeId))
+  );
+  return {
+    states: seeded.states.filter((state) => missingEmployeeIds.has(state.employeeId)),
+    attempts: seeded.attempts.filter((attempt) => missingEmployeeIds.has(attempt.employeeId))
+  };
+}
+
 export async function replaceProgress(db: Firestore, persist: PersistShape): Promise<void> {
   const [stateSnap, attemptSnap] = await Promise.all([
     getDocs(collection(db, STATES)),
@@ -124,8 +140,23 @@ export async function replaceProgress(db: Firestore, persist: PersistShape): Pro
 
 export async function ensureRemoteData(db: Firestore): Promise<PersistShape> {
   const current = await loadProgress(db);
-  if (current.states.length) return current;
   const seeded = buildDemoProgress();
+  if (current.states.length) {
+    const additions = missingEmployeeProgress(current, seeded);
+    if (!additions.states.length && !additions.attempts.length) return current;
+    await writeAll(db, {
+      version: 1,
+      savedAt: new Date().toISOString(),
+      states: additions.states,
+      attempts: additions.attempts
+    });
+    return {
+      version: 1,
+      savedAt: new Date().toISOString(),
+      states: [...current.states, ...additions.states],
+      attempts: [...current.attempts, ...additions.attempts]
+    };
+  }
   const persist: PersistShape = {
     version: 1,
     savedAt: new Date().toISOString(),

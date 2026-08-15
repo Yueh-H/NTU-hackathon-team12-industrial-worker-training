@@ -1,5 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { attemptToDoc, docToAttempt, docToState, stateDocId, stateToDoc } from "./firebaseStore";
+import {
+  attemptToDoc,
+  docToAttempt,
+  docToState,
+  missingEmployeeProgress,
+  stateDocId,
+  stateToDoc
+} from "./firebaseStore";
+import { buildDemoProgress } from "./catalog";
 import type { Attempt, ReviewState } from "../types";
 
 describe("firebase mappers", () => {
@@ -41,5 +49,20 @@ describe("firebase mappers", () => {
       completedAt: "2026-08-15T12:01:00.000Z"
     };
     expect(docToAttempt(attemptToDoc(attempt))).toEqual(attempt);
+  });
+
+  it("adds only employees missing from an existing cloud seed", () => {
+    const seeded = buildDemoProgress(new Date("2026-08-15T12:00:00"));
+    const current = {
+      states: seeded.states.filter((state) => ["budi", "sari", "agus"].includes(state.employeeId)),
+      attempts: seeded.attempts.filter((attempt) => ["budi", "sari", "agus"].includes(attempt.employeeId))
+    };
+
+    const additions = missingEmployeeProgress(current, seeded);
+
+    expect(new Set(additions.states.map((state) => state.employeeId))).toEqual(
+      new Set(["dwi", "rina", "joko", "maya", "arif", "dewi", "yusuf"])
+    );
+    expect(additions.attempts.every((attempt) => !["budi", "sari", "agus"].includes(attempt.employeeId))).toBe(true);
   });
 });
