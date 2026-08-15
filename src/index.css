@@ -604,6 +604,18 @@ td small { color: var(--muted); }
   font-size: 0.86rem;
   line-height: 1.5;
 }
+.alis-pet-bubble .alis-pet-ai-message {
+  margin: 10px 0 0;
+  padding: 8px 10px;
+  border: 1px solid rgba(35, 114, 82, 0.18);
+  border-radius: 12px;
+  background: rgba(217, 238, 222, 0.45);
+}
+.alis-pet-bubble .alis-pet-ai-message strong {
+  display: inline;
+  padding-right: 0;
+  font-size: inherit;
+}
 .alis-pet-close {
   position: absolute;
   top: 9px;
@@ -652,6 +664,7 @@ td small { color: var(--muted); }
   font-size: 0.74rem;
 }
 .alis-pet-voice:hover { background: rgba(15, 44, 56, 0.06); }
+.alis-pet-voice:disabled { cursor: wait; opacity: 0.58; }
 .alis-pet-action {
   display: inline-flex;
   margin-top: 12px;

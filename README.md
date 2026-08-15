@@ -23,6 +23,8 @@ npm run dev
 
 瀏覽器開 http://localhost:5173 。沒接雲端時：同一瀏覽器兩個分頁即可。接上 Supabase 後：手機開 `/learn/agus`，筆電開 `/admin`。
 
+要讓「學習小助手」用 `gpt-5.6-luna` 回答學習狀態，另外開一個終端機執行 `npm run ai:headless`；詳細設定見 [`ai-alis/headless/README.md`](ai-alis/headless/README.md)。服務只在本機 `127.0.0.1` 運作，網頁按下按鈕時才會呼叫，傳輸格式是純文字。
+
 ## Demo 網址
 
 https://yueh-h.github.io/NTU-hackathon-team12-industrial-worker-training/
