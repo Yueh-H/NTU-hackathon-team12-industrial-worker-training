@@ -18,6 +18,8 @@ npm run dev
 - sandbox：`read-only`
 - `--ephemeral`：每次請求使用暫存工作目錄，完成後清理
 
+桌寵的 `POST /ask` 會收到學習狀態摘要與使用者問題，問題可以使用中文、English 或 Bahasa Indonesia；Codex 會依使用者問題的主要語言回答，前端也會用相近語言朗讀回答。
+
 可用環境變數覆寫：
 
 ```bash
