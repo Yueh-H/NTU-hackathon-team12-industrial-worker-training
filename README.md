@@ -21,6 +21,12 @@ npm run dev
 
 瀏覽器開 http://localhost:5173 。沒接雲端時：同一瀏覽器兩個分頁即可。接上 Supabase 後：手機開 `/learn/agus`，筆電開 `/admin`。
 
+## Demo 網址
+
+https://yueh-h.github.io/NTU-hackathon-team12-industrial-worker-training/
+
+`main` 一推就會由 GitHub Actions 部署到 GitHub Pages。員工頁 `/learn`，主管頁 `/admin`。
+
 ## 接中央資料庫（Supabase）
 
 沒有 `.env` 時自動用 `localStorage`。要跨裝置同步：
