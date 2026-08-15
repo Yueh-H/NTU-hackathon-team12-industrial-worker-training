@@ -1,7 +1,6 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { WorkOrderSidebar } from "../components/WorkOrderSidebar";
-import { workerById } from "../data/catalog";
-import { firstOpenPart, nodeState, units } from "../engine/path";
+import { trainingSet, workerById } from "../data/catalog";
+import { firstOpenPart, nodeState, unitProgress, units } from "../engine/path";
 import { useShop } from "../store";
 
 export function LearnHome() {
@@ -12,18 +11,23 @@ export function LearnHome() {
   const mine = states.filter((state) => state.employeeId === worker.id);
 
   return (
-    <div className="learn-shell">
-      <WorkOrderSidebar employeeId={worker.id} units={units} states={mine} workerName={worker.name} />
-      <section className="path-stage">
-        <header className="path-head">
-          <p className="eyebrow">學習路徑</p>
-          <h1>像過關一樣把工單學完</h1>
-          <p>右邊每一顆是一個檢核站。過關後才會打開下一站。</p>
-        </header>
-        {units.map((unit, unitIndex) => (
+    <section className="path-stage">
+      <header className="path-head">
+        <p className="eyebrow">{worker.name} · {worker.station}</p>
+        <h1>{trainingSet.titleZh}</h1>
+        <p>每一顆是一個檢核站。過關後才會打開下一站。</p>
+        <Link className="btn ghost" to={`/learn/${worker.id}/sheet`}>
+          打開完整工單圖
+        </Link>
+      </header>
+      {units.map((unit, unitIndex) => {
+        const progress = unitProgress(unit, mine);
+        return (
           <article key={unit.id} className="path-unit" id={`unit-${unit.id}`}>
             <div className="path-unit-banner">
-              <small>第 {unitIndex + 1} 關</small>
+              <small>
+                第 {unitIndex + 1} 關 · {progress.done}/{progress.total}
+              </small>
               <strong>{unit.title}</strong>
             </div>
             <ol className="path-nodes">
@@ -53,8 +57,8 @@ export function LearnHome() {
               })}
             </ol>
           </article>
-        ))}
-      </section>
-    </div>
+        );
+      })}
+    </section>
   );
 }
