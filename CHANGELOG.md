@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.1] - 2026-08-15
+
+### Fixed
+- Browser tab titles now match the page: 主管檢核, 員工學習, 全員排行榜
+
 ## [0.3.0] - 2026-08-15
 
 ### Added

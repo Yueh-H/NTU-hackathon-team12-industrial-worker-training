@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { BackendBadge } from "../components/BackendBadge";
 import { trainingSet } from "../data/catalog";
+import { usePageTitle } from "../lib/pageTitle";
 import { useShop } from "../store";
 
 export function Gate() {
+  usePageTitle("工程訓練單");
   const { resetDemo } = useShop();
   return (
     <main className="page gate">
