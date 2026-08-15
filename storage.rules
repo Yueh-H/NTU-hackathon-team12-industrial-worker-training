@@ -1,0 +1,10 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Hackathon demo：每張工單只放自己的 source.pdf。
+    // 正式上線要改成 Auth，並限制主管／員工對應的 orgId 與 workOrderId。
+    match /work_orders/{workOrderId}/{fileName} {
+      allow read, write: if true;
+    }
+  }
+}

@@ -35,7 +35,7 @@ https://yueh-h.github.io/NTU-hackathon-team12-industrial-worker-training/
 
 沒有 `.env` 時用瀏覽器 `localStorage`。有 Firebase 設定時，學習進度寫進 Firestore，主管頁即時更新。
 
-主管可從 `/admin/workorders` 貼入一張大工單。每張工單會獨立寫入 `work_orders/{workOrderId}`，AI 拆出的員工學習單元寫入 `work_orders/{workOrderId}/learning_modules/{moduleId}`；結果頁可直接切到 `/learn/workorder/{workOrderId}` 預覽員工學習流程。
+主管可從 `/admin/workorders` 上傳一張 PDF 大工單，也可以補充文字。PDF 會先在瀏覽器抽取文字，再上傳到 Firebase Storage 的 `work_orders/{workOrderId}/source.pdf`；工單 metadata／抽取文字寫入 `work_orders/{workOrderId}`，AI 拆出的員工學習單元寫入 `work_orders/{workOrderId}/learning_modules/{moduleId}`。結果頁可直接切到 `/learn/workorder/{workOrderId}` 預覽員工學習流程。
 
 專案：`ntu-team12-trainer`。本機：
 
@@ -45,7 +45,13 @@ cp .env.example .env
 
 填入 Project settings 裡的 web app 金鑰，重開 `npm run dev`。GitHub Pages 由 Actions secrets 注入同一組 `VITE_FIREBASE_*`。
 
-規則在 `firestore.rules`：hackathon demo 允許讀寫進度。正式上線要改 Auth。
+規則在 `firestore.rules` 與 `storage.rules`：hackathon demo 允許讀寫進度與工單 PDF。若要把規則同步到 Firebase：
+
+```bash
+firebase deploy --only firestore:rules,storage
+```
+
+正式上線要改 Auth。
 
 ## 教材來源
 
@@ -56,4 +62,4 @@ cp .env.example .env
 
 ## 刻意不做（當天）
 
-登入 PIN／QR、正式權限控管、多家工廠、HR 整合。Firebase rules 目前仍是 hackathon demo 的公開讀寫，正式上線前必須接 Firebase Auth 並限制 org／工單範圍。
+登入 PIN／QR、正式權限控管、多家工廠、HR 整合。Firebase Firestore／Storage rules 目前仍是 hackathon demo 的公開讀寫，正式上線前必須接 Firebase Auth 並限制 org／工單範圍。

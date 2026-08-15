@@ -9,7 +9,7 @@ import {
   type Firestore,
   type Unsubscribe
 } from "firebase/firestore";
-import type { LearningModule, WorkOrder, WorkOrderBundle, WorkOrderRisk } from "../types";
+import type { LearningModule, WorkOrder, WorkOrderBundle, WorkOrderRisk, WorkOrderSourceFile } from "../types";
 
 const WORK_ORDERS = "work_orders";
 const LEARNING_MODULES = "learning_modules";
@@ -20,6 +20,21 @@ function riskLevel(value: unknown): WorkOrderRisk {
 
 function stringList(value: unknown): string[] {
   return Array.isArray(value) ? value.map(String).filter(Boolean) : [];
+}
+
+function sourceFile(value: unknown): WorkOrderSourceFile | null {
+  if (!value || typeof value !== "object") return null;
+  const raw = value as Record<string, unknown>;
+  const size = Number(raw.size);
+  const pageCount = Number(raw.pageCount);
+  return {
+    name: String(raw.name ?? "source.pdf"),
+    storagePath: String(raw.storagePath ?? ""),
+    downloadUrl: String(raw.downloadUrl ?? ""),
+    size: Number.isFinite(size) ? size : 0,
+    pageCount: Number.isFinite(pageCount) ? pageCount : 0,
+    uploadedAt: String(raw.uploadedAt ?? "")
+  };
 }
 
 export function workOrderToDoc(order: WorkOrder): Record<string, unknown> {
@@ -35,6 +50,7 @@ export function workOrderToDoc(order: WorkOrder): Record<string, unknown> {
     model: order.model,
     reasoningEffort: order.reasoningEffort,
     analysisSource: order.analysisSource,
+    sourceFile: order.sourceFile,
     createdBy: order.createdBy,
     createdAt: order.createdAt,
     updatedAt: order.updatedAt
@@ -54,6 +70,7 @@ export function docToWorkOrder(raw: Record<string, unknown>): WorkOrder {
     model: String(raw.model ?? "gpt-5.6-luna"),
     reasoningEffort: "max",
     analysisSource: raw.analysisSource === "codex" ? "codex" : "demo-fallback",
+    sourceFile: sourceFile(raw.sourceFile),
     createdBy: String(raw.createdBy ?? "supervisor"),
     createdAt: String(raw.createdAt ?? ""),
     updatedAt: String(raw.updatedAt ?? "")

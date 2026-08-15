@@ -6,9 +6,18 @@ import {
   loadWorkOrderBundle as loadRemoteWorkOrder,
   saveWorkOrder as saveRemoteWorkOrder
 } from "./data/workorderStore";
+import { uploadWorkOrderPdf as uploadRemoteWorkOrderPdf } from "./data/workorderStorage";
 import { applySession, emptyState, makeAttempt, STORAGE_KEY } from "./engine/reviewEngine";
-import { getDb, isCloudEnabled } from "./lib/firebase";
-import type { Attempt, PersistShape, QuizKind, Rating, ReviewState, WorkOrderBundle } from "./types";
+import { getDb, getFirebaseStorage, isCloudEnabled } from "./lib/firebase";
+import type {
+  Attempt,
+  PersistShape,
+  QuizKind,
+  Rating,
+  ReviewState,
+  WorkOrderBundle,
+  WorkOrderSourceFile
+} from "./types";
 
 export type DataBackend = "local" | "cloud";
 
@@ -35,6 +44,7 @@ interface ShopContextValue {
   submitSession: (input: SubmitInput) => ReviewState;
   loadWorkOrder: (workOrderId: string) => Promise<WorkOrderBundle | null>;
   saveWorkOrder: (bundle: WorkOrderBundle) => Promise<void>;
+  uploadWorkOrderPdf: (workOrderId: string, file: File, pageCount: number) => Promise<WorkOrderSourceFile>;
   resetDemo: () => void;
 }
 
@@ -307,6 +317,25 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     [cloud]
   );
 
+  const uploadWorkOrderPdf = useCallback(
+    async (workOrderId: string, file: File, pageCount: number): Promise<WorkOrderSourceFile> => {
+      if (!cloud) {
+        return {
+          name: file.name,
+          storagePath: `local-only/work_orders/${workOrderId}/source.pdf`,
+          downloadUrl: "",
+          size: file.size,
+          pageCount,
+          uploadedAt: new Date().toISOString()
+        };
+      }
+      const storage = getFirebaseStorage();
+      if (!storage) throw new Error("Firebase Storage 尚未設定，無法上傳 PDF。");
+      return uploadRemoteWorkOrderPdf(storage, workOrderId, file, pageCount);
+    },
+    [cloud]
+  );
+
   const resetDemo = useCallback(() => {
     const next = freshPersist();
     if (!cloud) {
@@ -342,6 +371,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       submitSession,
       loadWorkOrder,
       saveWorkOrder,
+      uploadWorkOrderPdf,
       resetDemo
     }),
     [
@@ -357,6 +387,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
       submitSession,
       loadWorkOrder,
       saveWorkOrder,
+      uploadWorkOrderPdf,
       resetDemo
     ]
   );

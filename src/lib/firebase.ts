@@ -1,5 +1,6 @@
 import { initializeApp, type FirebaseApp } from "firebase/app";
 import { getFirestore, type Firestore } from "firebase/firestore";
+import { getStorage, type FirebaseStorage } from "firebase/storage";
 
 export interface FirebaseWebConfig {
   apiKey: string;
@@ -26,6 +27,7 @@ export function firebaseConfig(): FirebaseWebConfig | null {
 
 let app: FirebaseApp | null | undefined;
 let db: Firestore | null | undefined;
+let storage: FirebaseStorage | null | undefined;
 
 export function getFirebaseApp(): FirebaseApp | null {
   if (app !== undefined) return app;
@@ -39,6 +41,13 @@ export function getDb(): Firestore | null {
   const firebaseApp = getFirebaseApp();
   db = firebaseApp ? getFirestore(firebaseApp) : null;
   return db;
+}
+
+export function getFirebaseStorage(): FirebaseStorage | null {
+  if (storage !== undefined) return storage;
+  const firebaseApp = getFirebaseApp();
+  storage = firebaseApp ? getStorage(firebaseApp) : null;
+  return storage;
 }
 
 export function isCloudEnabled(): boolean {

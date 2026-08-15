@@ -457,6 +457,9 @@ td small { color: var(--muted); }
 .workorder-form textarea { min-height: 240px; resize: vertical; line-height: 1.55; }
 .workorder-form input:focus,
 .workorder-form textarea:focus { outline: 3px solid rgba(35, 114, 82, 0.18); border-color: var(--mint); }
+.field-hint,
+.field-status { color: var(--muted); font-size: 0.82rem; font-weight: 400; }
+.field-status { color: var(--mint); }
 .ai-config-card {
   display: grid;
   gap: 2px;
@@ -525,6 +528,7 @@ td small { color: var(--muted); }
 .learning-case.is-done { border-color: rgba(35, 114, 82, 0.42); background: #f7fff9; }
 .case-done { margin-left: auto; color: var(--mint); font-size: 0.78rem; font-weight: 800; }
 .learning-case .module-columns ul { color: var(--rose); }
+.source-file-card a { color: var(--navy); font-weight: 700; }
 
 .admin-shell {
   display: grid;

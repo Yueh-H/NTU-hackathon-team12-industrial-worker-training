@@ -46,7 +46,7 @@ AI_SPEECH_CODEX_REASONING=max \
 npm run ai:headless
 ```
 
-端點：`POST http://127.0.0.1:8787/analyze-workorder`。若服務未啟動，主管頁會顯示「示範拆解」並仍可完成當天 demo；正式使用前請確認結果已標示為 Codex AI。
+端點：`POST http://127.0.0.1:8787/analyze-workorder`。主管頁會先把 PDF 文字抽取後送到這個端點。若服務未啟動，主管頁會顯示「示範拆解」並仍可完成當天 demo；正式使用前請確認結果已標示為 Codex AI。
 
 健康檢查：
 

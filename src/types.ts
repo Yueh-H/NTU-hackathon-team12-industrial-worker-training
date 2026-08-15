@@ -30,6 +30,15 @@ export type WorkOrderStatus = "ready";
 export type WorkOrderRisk = "low" | "medium" | "high";
 export type WorkOrderAnalysisSource = "codex" | "demo-fallback";
 
+export interface WorkOrderSourceFile {
+  name: string;
+  storagePath: string;
+  downloadUrl: string;
+  size: number;
+  pageCount: number;
+  uploadedAt: string;
+}
+
 /** A boss-submitted order. Kept separate from the fixed vocabulary training set. */
 export interface WorkOrder {
   id: string;
@@ -43,6 +52,7 @@ export interface WorkOrder {
   model: string;
   reasoningEffort: "max";
   analysisSource: WorkOrderAnalysisSource;
+  sourceFile: WorkOrderSourceFile | null;
   createdBy: string;
   createdAt: string;
   updatedAt: string;

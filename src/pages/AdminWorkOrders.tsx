@@ -1,7 +1,8 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { analyzeWorkOrder } from "../lib/aiWorkOrder";
 import { formatDateTime } from "../lib/format";
+import { extractPdfText } from "../lib/pdfText";
 import { useShop } from "../store";
 import type { LearningModule, WorkOrder, WorkOrderBundle } from "../types";
 
@@ -17,6 +18,11 @@ function newWorkOrderId(): string {
 
 function analysisSourceLabel(source: WorkOrder["analysisSource"]): string {
   return source === "codex" ? "Codex AI 已分析" : "示範拆解（AI service 未連線）";
+}
+
+function fileSizeLabel(size: number): string {
+  if (size < 1024 * 1024) return `${Math.max(1, Math.round(size / 1024))} KB`;
+  return `${(size / (1024 * 1024)).toFixed(1)} MB`;
 }
 
 function moduleForWorkOrder(
@@ -83,51 +89,99 @@ export function AdminWorkOrders() {
 
 export function AdminWorkOrderNew() {
   const navigate = useNavigate();
-  const { saveWorkOrder, backend } = useShop();
+  const { saveWorkOrder, uploadWorkOrderPdf, backend } = useShop();
   const [title, setTitle] = useState("");
   const [docNo, setDocNo] = useState("");
   const [rawContent, setRawContent] = useState("");
+  const [pdfDraft, setPdfDraft] = useState<{ file: File; text: string; pageCount: number } | null>(null);
+  const [pdfLoading, setPdfLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [warning, setWarning] = useState("");
+
+  async function handlePdfChange(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0] ?? null;
+    setPdfDraft(null);
+    setError("");
+    setWarning("");
+    if (!file) return;
+    if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
+      setError("只能上傳 PDF 檔案。");
+      return;
+    }
+    if (file.size > 25 * 1024 * 1024) {
+      setError("PDF 上限為 25 MB，請先壓縮檔案。");
+      return;
+    }
+    setPdfLoading(true);
+    try {
+      const extracted = await extractPdfText(file);
+      setPdfDraft({ file, text: extracted.text, pageCount: extracted.pageCount });
+      setWarning(
+        extracted.text
+          ? `已讀取 ${extracted.pageCount} 頁 PDF 文字，送出時會先上傳再進行 break down。`
+          : "這份 PDF 沒有可抽取的文字，請在下方補充工單內容，否則 AI 無法拆解。"
+      );
+    } catch (extractError) {
+      setError(extractError instanceof Error ? `PDF 讀取失敗：${extractError.message}` : "PDF 讀取失敗。");
+    } finally {
+      setPdfLoading(false);
+    }
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const cleanTitle = title.trim();
     const cleanContent = rawContent.trim();
-    if (!cleanTitle || !cleanContent) {
-      setError("請填寫工單名稱與工單原文。");
+    if (!cleanTitle || (!cleanContent && !pdfDraft?.text)) {
+      setError("請填寫工單名稱，並上傳有文字的 PDF 或貼入工單原文。");
+      return;
+    }
+    if (pdfLoading) {
+      setError("PDF 還在讀取中，請稍候。");
       return;
     }
 
     setSubmitting(true);
     setError("");
     setWarning("");
-    const result = await analyzeWorkOrder({ title: cleanTitle, docNo: docNo.trim(), rawContent: cleanContent });
     const id = newWorkOrderId();
     const now = new Date().toISOString();
+    const sourceContent = [
+      pdfDraft ? `【PDF 原文：${pdfDraft.file.name}】\n${pdfDraft.text}` : "",
+      cleanContent ? `【主管補充】\n${cleanContent}` : ""
+    ]
+      .filter(Boolean)
+      .join("\n\n");
+
     const workOrder: WorkOrder = {
       id,
       orgId: "team12-demo",
       title: cleanTitle,
       docNo: docNo.trim(),
-      rawContent: cleanContent,
-      summary: result.analysis.summary,
-      riskLevel: result.analysis.riskLevel,
+      rawContent: sourceContent,
+      summary: "",
+      riskLevel: "medium",
       status: "ready",
       model: "gpt-5.6-luna",
       reasoningEffort: "max",
-      analysisSource: result.source,
+      analysisSource: "demo-fallback",
+      sourceFile: null,
       createdBy: "supervisor",
       createdAt: now,
       updatedAt: now
     };
-    const bundle: WorkOrderBundle = {
-      workOrder,
-      modules: result.analysis.modules.map((module, index) => moduleForWorkOrder(id, module, index))
-    };
 
     try {
+      if (pdfDraft) workOrder.sourceFile = await uploadWorkOrderPdf(id, pdfDraft.file, pdfDraft.pageCount);
+      const result = await analyzeWorkOrder({ title: cleanTitle, docNo: docNo.trim(), rawContent: sourceContent });
+      workOrder.summary = result.analysis.summary;
+      workOrder.riskLevel = result.analysis.riskLevel;
+      workOrder.analysisSource = result.source;
+      const bundle: WorkOrderBundle = {
+        workOrder,
+        modules: result.analysis.modules.map((module, index) => moduleForWorkOrder(id, module, index))
+      };
       await saveWorkOrder(bundle);
       if (result.warning) setWarning(result.warning);
       navigate(`/admin/workorders/${id}`);
@@ -164,19 +218,31 @@ export function AdminWorkOrderNew() {
           />
         </label>
         <label>
-          工單原文／主管備註
+          上傳工單 PDF
+          <input type="file" accept="application/pdf,.pdf" onChange={handlePdfChange} />
+          <small className="field-hint">PDF 會先上傳到 Firebase Storage，再抽取文字交給 break down。單檔上限 25 MB。</small>
+          {pdfLoading ? <small className="field-status">正在讀取 PDF 文字……</small> : null}
+          {pdfDraft ? (
+            <small className="field-status">
+              {pdfDraft.file.name} · {pdfDraft.pageCount} 頁 · {fileSizeLabel(pdfDraft.file.size)}
+            </small>
+          ) : null}
+        </label>
+        <label>
+          工單原文／主管補充（PDF 可抽取文字時選填）
           <textarea
             value={rawContent}
             onChange={(event) => setRawContent(event.target.value)}
-            placeholder={'貼上尺寸、材料、工序、數量與安全注意事項……'}
+            placeholder={'如果 PDF 是掃描影像，請在這裡補上尺寸、材料、工序、數量與安全注意事項……'}
             rows={14}
-            required
           />
         </label>
         <div className="ai-config-card">
           <strong>AI 拆解設定</strong>
           <span>Codex · gpt-5.6-luna · reasoning effort max</span>
-          <small>不把 API key 放在前端；由本機 headless service 代為呼叫。{backend === "cloud" ? "結果會寫進 Firebase。" : "目前會先存於這個瀏覽器。"}</small>
+          <small>
+            不把 API key 放在前端；由 headless service 代為呼叫。{backend === "cloud" ? "PDF 存 Firebase Storage，工單與 break down 存 Firestore。" : "目前只會在這個瀏覽器保存文字與檔案 metadata。"}
+          </small>
         </div>
         {error ? <p className="form-error">{error}</p> : null}
         {warning ? <p className="form-warning">{warning}</p> : null}
@@ -247,6 +313,26 @@ export function AdminWorkOrderDetail() {
         </div>
         <p>{workOrder.summary}</p>
       </section>
+      {workOrder.sourceFile ? (
+        <section className="info-card source-file-card">
+          <div className="section-title-row">
+            <h2>來源 PDF</h2>
+            <span className="fine">{workOrder.sourceFile.pageCount} 頁 · {fileSizeLabel(workOrder.sourceFile.size)}</span>
+          </div>
+          <p>
+            {workOrder.sourceFile.downloadUrl ? (
+              <a href={workOrder.sourceFile.downloadUrl} target="_blank" rel="noreferrer">
+                {workOrder.sourceFile.name} ↗
+              </a>
+            ) : (
+              <strong>{workOrder.sourceFile.name}</strong>
+            )}
+          </p>
+          <small className="fine">
+            {workOrder.sourceFile.downloadUrl ? "已存入 Firebase Storage。" : "本機 fallback 僅保存檔案 metadata，未上傳雲端。"}
+          </small>
+        </section>
+      ) : null}
       <section className="module-list">
         <div className="section-title-row">
           <h2>員工學習單元</h2>
