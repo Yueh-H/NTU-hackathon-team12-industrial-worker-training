@@ -50,6 +50,17 @@ img { max-width: 100%; display: block; }
 }
 .lede, .page-head p { margin: 0; color: var(--muted); }
 .fine { color: var(--muted); font-size: 0.86rem; }
+.backend-badge {
+  margin: 12px 0 0;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #ece4d2;
+  color: var(--muted);
+  font-size: 0.82rem;
+  display: inline-block;
+}
+.backend-badge.ok { background: #e0f3e9; color: var(--mint); }
+.backend-badge.warn { background: #ffe7e2; color: var(--rose); }
 
 .btn {
   display: inline-flex;

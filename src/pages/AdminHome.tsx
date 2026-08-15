@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { BackendBadge } from "../components/BackendBadge";
 import { trainingSet, workers } from "../data/catalog";
 import { snapshotFor } from "../engine/dashboard";
 import { formatDateTime, percent, relativeTime } from "../lib/format";
@@ -21,6 +22,7 @@ export function AdminHome() {
         <p>
           {trainingSet.docNo} · 已指派 {assigned} 人，已開始 {started} 人
         </p>
+        <BackendBadge />
       </header>
       <div className="stat-row">
         <div>

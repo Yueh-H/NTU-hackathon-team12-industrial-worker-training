@@ -19,9 +19,24 @@ npm test
 npm run dev
 ```
 
-瀏覽器開 http://localhost:5173 。Demo 建議兩個分頁：一邊 `/learn/agus` 答題，一邊 `/admin` 看數字動。
+瀏覽器開 http://localhost:5173 。沒接雲端時：同一瀏覽器兩個分頁即可。接上 Supabase 後：手機開 `/learn/agus`，筆電開 `/admin`。
 
-資料存在瀏覽器 `localStorage`（`shop-trainer-v1`）。首頁可重設 demo。下一步才接 Supabase。
+## 接中央資料庫（Supabase）
+
+沒有 `.env` 時自動用 `localStorage`。要跨裝置同步：
+
+1. 開一個免費 [Supabase](https://supabase.com) 專案
+2. SQL Editor 貼上並執行 `supabase/schema.sql`
+3. Settings → API 複製 Project URL 與 anon key
+4. 在專案根目錄建立 `.env`（不要提交）：
+
+```bash
+cp .env.example .env
+```
+
+填入 `VITE_SUPABASE_URL`、`VITE_SUPABASE_ANON_KEY`，然後重開 `npm run dev`。
+
+首頁徽章會顯示「中央資料庫已連線」。第一次連線會自動寫入 12 個零件與三份 demo 進度。這份 schema 的 RLS 是 hackathon demo 用（anon 可寫進度），正式上線要改 Auth。
 
 ## 教材來源
 
