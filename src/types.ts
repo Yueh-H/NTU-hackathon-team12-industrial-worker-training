@@ -23,6 +23,7 @@ export interface TrainingSet {
   station: string;
   summaryId: string;
   summaryZh: string;
+  active: boolean;
 }
 
 export type CardCategory = "struktur" | "bahan" | "hardware" | "proses" | "lembar" | "baris";
