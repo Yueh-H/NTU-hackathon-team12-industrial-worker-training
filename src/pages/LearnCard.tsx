@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { PartArt } from "../components/PartArt";
+import { FlipCard } from "../components/FlipCard";
+import { sheetSrc } from "../components/PartArt";
 import { categoryLabels, partById, workerById } from "../data/catalog";
 import { partStatusLabel } from "../engine/dashboard";
 import { lessonById } from "../engine/path";
@@ -10,6 +11,7 @@ import {
   isZhRecognitionSupported,
   recognizeZh,
   saveCompletedZhSpeech,
+  speakId,
   speakZh,
   zhSpeechTarget
 } from "../lib/speech";
@@ -34,7 +36,7 @@ export function LearnCard() {
   const { stateFor } = useShop();
   const navigate = useNavigate();
   const speechSupported = isZhRecognitionSupported();
-  const [showId, setShowId] = useState(false);
+  const [flipped, setFlipped] = useState(false);
   const [speechState, setSpeechState] = useState<SpeechState>(() => {
     if (!speechSupported) return "unsupported";
     return hasCompletedZhSpeech(employeeId, partId) ? "complete" : "idle";
@@ -65,6 +67,9 @@ export function LearnCard() {
   const speechComplete = speechState === "complete";
   const speechTarget = zhSpeechTarget(part.nameZh);
   const quizHref = `/learn/${worker.id}/quiz/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`;
+  // For term cards the sheet crop is extra context ("this is how it looks on the sheet");
+  // for baris cards the crop already IS the front of the flip card.
+  const crop = part.category === "baris" ? null : sheetSrc(part);
 
   function startSpeech() {
     if (!worker || !part) return;
@@ -110,16 +115,24 @@ export function LearnCard() {
         </p>
         <h1>{part.nameZh}</h1>
       </header>
-      <PartArt part={part} label={part.nameZh} />
+      <FlipCard part={part} flipped={flipped} onFlip={() => setFlipped((value) => !value)} />
       <div className="name-block">
         <button className="btn ghost" type="button" onClick={() => speakZh(speechTarget)}>
           聽中文示範
         </button>
-        <button className="btn ghost" type="button" onClick={() => setShowId((value) => !value)}>
-          {showId ? "隱藏印尼文" : "顯示印尼文"}
+        <button className="btn ghost" type="button" onClick={() => speakId(part.nameId)}>
+          Dengar (ID)
+        </button>
+        <button className="btn ghost" type="button" onClick={() => setFlipped((value) => !value)}>
+          {flipped ? "看正面" : "翻面看印尼文"}
         </button>
       </div>
-      {showId ? <p className="zh-name">{part.nameId}</p> : null}
+      {crop ? (
+        <section className="info-card">
+          <h2>在單子上長這樣</h2>
+          <img className="sheet-crop" src={crop} alt={`${part.nameZh} 在生產製造表上的樣子`} />
+        </section>
+      ) : null}
 
       <section className={`speech-gate speech-gate-${speechState}`} aria-labelledby="speechGateTitle">
         <div className="speech-gate-head">

@@ -27,6 +27,13 @@ export interface TrainingSet {
 
 export type CardCategory = "struktur" | "bahan" | "hardware" | "proses" | "lembar" | "baris";
 
+/** One segment of a line-reading (baris) card: raw text on the sheet, Indonesian gloss, role label (zh). */
+export interface LineSegment {
+  seg: string;
+  idn: string;
+  role: string;
+}
+
 export interface Part {
   id: string;
   setId: string;
@@ -40,6 +47,8 @@ export interface Part {
   safetyId: string;
   icon: string | null;
   sheet: string | null;
+  /** Non-empty only for baris (line-reading) cards. */
+  segments: LineSegment[];
   hotspot: { x: number; y: number } | null;
   critical: boolean;
   uncertain: boolean;
