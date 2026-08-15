@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="for this location: part at the bottom edge of a door leaf">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="62" y="14" width="52" height="92" rx="3" fill="#e5e7eb"/>
+    <line x1="57" y1="30" x2="67" y2="30" stroke-width="2"/>
+    <line x1="57" y1="58" x2="67" y2="58" stroke-width="2"/>
+    <line x1="57" y1="80" x2="67" y2="80" stroke-width="2"/>
+    <circle cx="107" cy="58" r="3.5" stroke-width="2"/>
+    <rect x="66" y="93" width="44" height="10" fill="#fbbf24"/>
+    <path d="M16 94 L44 94 L44 88 L58 98 L44 108 L44 102 L16 102 Z" fill="#fbbf24" stroke-width="2"/>
+  </g>
+</svg>
