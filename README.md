@@ -27,22 +27,19 @@ https://yueh-h.github.io/NTU-hackathon-team12-industrial-worker-training/
 
 `main` 一推就會由 GitHub Actions 部署到 GitHub Pages。員工頁 `/learn`，主管頁 `/admin`。
 
-## 接中央資料庫（Supabase）
+## 資料持久化（Firebase Firestore）
 
-沒有 `.env` 時自動用 `localStorage`。要跨裝置同步：
+沒有 `.env` 時用瀏覽器 `localStorage`。有 Firebase 設定時，學習進度寫進 Firestore，主管頁即時更新。
 
-1. 開一個免費 [Supabase](https://supabase.com) 專案
-2. SQL Editor 貼上並執行 `supabase/schema.sql`
-3. Settings → API 複製 Project URL 與 anon key
-4. 在專案根目錄建立 `.env`（不要提交）：
+專案：`ntu-team12-trainer`。本機：
 
 ```bash
 cp .env.example .env
 ```
 
-填入 `VITE_SUPABASE_URL`、`VITE_SUPABASE_ANON_KEY`，然後重開 `npm run dev`。
+填入 Project settings 裡的 web app 金鑰，重開 `npm run dev`。GitHub Pages 由 Actions secrets 注入同一組 `VITE_FIREBASE_*`。
 
-首頁徽章會顯示「中央資料庫已連線」。第一次連線會自動寫入 12 個零件與三份 demo 進度。這份 schema 的 RLS 是 hackathon demo 用（anon 可寫進度），正式上線要改 Auth。
+規則在 `firestore.rules`：hackathon demo 允許讀寫進度。正式上線要改 Auth。
 
 ## 教材來源
 
