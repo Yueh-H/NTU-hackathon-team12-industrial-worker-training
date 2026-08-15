@@ -3,6 +3,7 @@ import { categoryLabels, parts, partsByCategory, workerById } from "../data/cata
 import { nextDueLabel, partStatusLabel, snapshotFor } from "../engine/dashboard";
 import { RATING_ZH, STATUS_ZH } from "../lib/copy";
 import { formatDateTime, percent } from "../lib/format";
+import { usePageTitle } from "../lib/pageTitle";
 import type { CardCategory } from "../types";
 import { useShop } from "../store";
 
@@ -12,6 +13,7 @@ export function AdminEmployee() {
   const { employeeId = "" } = useParams();
   const worker = workerById(employeeId);
   const { states, attempts, attemptsFor, stateFor } = useShop();
+  usePageTitle(worker ? `${worker.name} · 主管檢核` : "主管檢核");
   if (!worker) return <Navigate to="/admin" replace />;
   const snap = snapshotFor(worker, states, attempts);
   const recent = [...attemptsFor(worker.id)].sort((a, b) => b.completedAt.localeCompare(a.completedAt)).slice(0, 8);

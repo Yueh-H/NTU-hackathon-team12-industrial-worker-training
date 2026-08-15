@@ -2,11 +2,13 @@ import { Link, useSearchParams } from "react-router-dom";
 import { trainingSet, workers } from "../data/catalog";
 import { rankSnapshots, snapshotFor } from "../engine/dashboard";
 import { percent } from "../lib/format";
+import { usePageTitle } from "../lib/pageTitle";
 import { useShop } from "../store";
 
 const medals = ["🥇", "🥈", "🥉"];
 
 export function LearnRanking() {
+  usePageTitle("全員排行榜");
   const [params] = useSearchParams();
   const { states, attempts } = useShop();
   const ranking = rankSnapshots(workers.map((worker) => snapshotFor(worker, states, attempts)));

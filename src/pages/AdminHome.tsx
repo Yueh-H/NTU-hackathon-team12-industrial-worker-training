@@ -4,6 +4,7 @@ import { categoryLabels, parts, partsByCategory, trainingSet, workers } from "..
 import { partStatusLabel, rankSnapshots, snapshotFor } from "../engine/dashboard";
 import { STATUS_ZH } from "../lib/copy";
 import { formatDateTime, percent, relativeTime } from "../lib/format";
+import { usePageTitle } from "../lib/pageTitle";
 import type { CardCategory } from "../types";
 import { useShop } from "../store";
 
@@ -18,6 +19,7 @@ const HEAT_LEGEND = [
 ] as const;
 
 export function AdminHome() {
+  usePageTitle("主管檢核");
   const { states, attempts, resetDemo, stateFor } = useShop();
   const snaps = workers.map((worker) => snapshotFor(worker, states, attempts));
   const assigned = snaps.length;
