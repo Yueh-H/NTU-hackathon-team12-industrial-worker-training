@@ -22,11 +22,44 @@ const HOTSPOTS: Record<string, { x: number; y: number }> = {
 
 export const categoryLabels = deck.meta.categories as Record<CardCategory, { zh: string; idn: string }>;
 
-export const trainingSet = {
-  ...(seed.trainingSet as TrainingSet),
+export const trainingSet: TrainingSet = {
+  ...(seed.trainingSet as Omit<TrainingSet, "active">),
   summaryId: `Kenali ${deck.cards.length} kartu dari lembar ${seed.trainingSet.docNo}.`,
-  summaryZh: `工單 ${seed.trainingSet.docNo} 共 ${deck.cards.length} 張單字卡。`
+  summaryZh: `工單 ${seed.trainingSet.docNo} 共 ${deck.cards.length} 張單字卡。`,
+  active: true
 };
+
+export const trainingSets: TrainingSet[] = [
+  trainingSet,
+  {
+    id: "fm720088",
+    version: 1,
+    docNo: "FM720088 / 11506821-3",
+    titleId: "Pintu tahan api",
+    titleZh: "FM720088 防火門扇",
+    machine: "15-D6 單扇",
+    station: "組立",
+    summaryId: "",
+    summaryZh: "下一張指派工單，教材尚未開放。",
+    active: false
+  },
+  {
+    id: "fm810012",
+    version: 1,
+    docNo: "FM810012 / 11507102-1",
+    titleId: "Frame pintu",
+    titleZh: "FM810012 玄關框組立",
+    machine: "框線-02",
+    station: "組立",
+    summaryId: "",
+    summaryZh: "下一張指派工單，教材尚未開放。",
+    active: false
+  }
+];
+
+export function trainingSetById(id: string): TrainingSet | undefined {
+  return trainingSets.find((item) => item.id === id);
+}
 
 export const profiles = seed.profiles as Profile[];
 export const assignments = seed.assignments as Assignment[];
