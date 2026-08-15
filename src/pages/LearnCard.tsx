@@ -3,9 +3,9 @@ import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-r
 import { FlipCard } from "../components/FlipCard";
 import { sheetSrc } from "../components/PartArt";
 import { categoryLabels, partById, workerById } from "../data/catalog";
-import { partStatusLabel } from "../engine/dashboard";
 import { lessonById } from "../engine/path";
-import { STATUS_ZH } from "../lib/copy";
+import { reviewStageHint, reviewStageOf } from "../engine/reviewEngine";
+import { REVIEW_STAGE_ZH } from "../lib/copy";
 import {
   hasCompletedZhSpeech,
   isZhRecognitionSupported,
@@ -61,7 +61,7 @@ export function LearnCard() {
 
   if (!worker || !part) return <Navigate to="/learn" replace />;
   const state = stateFor(worker.id, part.id);
-  const status = partStatusLabel(state);
+  const stage = reviewStageOf(state);
   const category = categoryLabels[part.category];
   const step = lesson ? lesson.partIds.indexOf(part.id) + 1 : 0;
   const speechComplete = speechState === "complete";
@@ -111,9 +111,11 @@ export function LearnCard() {
         <p className="eyebrow">
           {lesson
             ? `${categoryLabels[lesson.unit].zh} · ${lesson.title} · ${step}/${lesson.partIds.length}`
-            : `${category.zh} · #${part.callout} · ${STATUS_ZH[status]}`}
+            : `${category.zh} · #${part.callout}`}
+          {` · ${REVIEW_STAGE_ZH[stage]}`}
         </p>
         <h1>{part.nameZh}</h1>
+        {stage !== "inbox" ? <p>{reviewStageHint(state)}。再測一次可提前推進下一站，原定期日期不搬。</p> : null}
       </header>
       <FlipCard part={part} flipped={flipped} onFlip={() => setFlipped((value) => !value)} />
       <div className="name-block">

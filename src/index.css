@@ -639,7 +639,47 @@ td small { color: var(--muted); }
 }
 .mat-item small { color: var(--muted); font-size: 0.7rem; }
 .mat-item:hover { background: rgba(15, 44, 56, 0.05); }
-.mat-item.is-on { background: #fff4e6; }
+.mat-item.is-on { box-shadow: inset 0 0 0 2px #d96a32; }
+.mat-item.is-inbox .num { background: #8a8478; }
+.mat-item.is-d1 .num, .heat-swatch.is-d1 { background: #d96a32; }
+.mat-item.is-d3 .num, .heat-swatch.is-d3 { background: #315d92; }
+.mat-item.is-d7 .num, .heat-swatch.is-d7 { background: #237252; }
+.mat-item.is-d30 .num, .heat-swatch.is-d30 { background: #6b4c9a; }
+.mat-item.is-rescue .num, .heat-swatch.is-rescue { background: var(--rose); }
+.mat-item.is-mastered .num { background: var(--mint); }
+.mat-item.is-d1 { background: #fff4e6; }
+.mat-item.is-d3 { background: #e8eef8; }
+.mat-item.is-d7 { background: #e8f5ef; }
+.mat-item.is-d30 { background: #f3eaf8; }
+.mat-item.is-rescue { background: #fff1ee; }
+.mat-item.is-mastered { background: #eef8f1; }
+.review-folder {
+  margin-top: 8px;
+  padding: 6px 6px 8px;
+  border: 1px solid rgba(217, 106, 50, 0.22);
+  border-radius: 14px;
+  background: #fff8ee;
+}
+.review-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 0 6px 8px;
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+.review-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.review-group { margin: 8px 4px 0; }
+.review-group h3 {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0 0 4px;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.review-group h3 small { font-weight: 500; }
+.review-empty { margin: 4px 8px 8px; }
 .card-pane { min-width: 0; }
 .card-empty {
   display: grid;
@@ -1087,6 +1127,12 @@ td small { color: var(--muted); }
   background: #237252;
   box-shadow: 0 7px 0 #18553d;
 }
+.path-node.is-d1 { background: #d96a32; box-shadow: 0 7px 0 #a84b1e; }
+.path-node.is-d3 { background: #315d92; box-shadow: 0 7px 0 #23416a; }
+.path-node.is-d7 { background: #237252; box-shadow: 0 7px 0 #18553d; }
+.path-node.is-d30 { background: #6b4c9a; box-shadow: 0 7px 0 #4c346e; }
+.path-node.is-rescue { background: var(--rose); box-shadow: 0 7px 0 #6f2c24; }
+.path-node.is-mastered { background: #237252; box-shadow: 0 7px 0 #18553d; }
 
 @media (max-width: 720px) {
   .stat-row { grid-template-columns: 1fr 1fr; }

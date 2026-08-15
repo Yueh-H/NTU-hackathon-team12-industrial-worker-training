@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.0] - 2026-08-15
+
+### Added
+- Review folder for cards learned once, grouped and colored by D+1 / D+3 / D+7 / D+30
+- Early review from the folder so a later quiz can advance the next milestone without moving later dates
+
 ## [0.3.1] - 2026-08-15
 
 ### Fixed
