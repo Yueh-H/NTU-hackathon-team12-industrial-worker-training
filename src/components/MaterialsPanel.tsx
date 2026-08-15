@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { categoryLabels, parts } from "../data/catalog";
-import { UNIT_ORDER } from "../engine/path";
+import { firstOpenPart, lessonForPart, UNIT_ORDER } from "../engine/path";
 import { partStatusLabel } from "../engine/dashboard";
 import { STATUS_ZH } from "../lib/copy";
 import type { CardCategory, ReviewState, TrainingSet } from "../types";
@@ -33,7 +33,7 @@ export function MaterialsPanel({
     <aside className="materials-panel">
       <p className="eyebrow">材料</p>
       <h2>{training.titleZh}</h2>
-      <p className="fine">{visible.length} 項 · 點一項打開右邊卡片</p>
+      <p className="fine">{visible.length} 項 · 點一項從對應檢核站開始</p>
       {UNIT_ORDER.map((category) => (
         <CategoryBlock
           key={category}
@@ -67,11 +67,15 @@ function CategoryBlock({
         {items.map((part) => {
           const state = states.find((item) => item.partId === part.id);
           const status = state ? partStatusLabel(state) : "new";
+          const lesson = lessonForPart(part.id);
+          const href = lesson
+            ? `/learn/${employeeId}/part/${firstOpenPart(lesson, states)}?lesson=${lesson.id}`
+            : `/learn/${employeeId}/part/${part.id}`;
           return (
             <li key={part.id}>
               <Link
                 className={`mat-item is-${status}${selectedPartId === part.id ? " is-on" : ""}`}
-                to={`/learn/${employeeId}/part/${part.id}`}
+                to={href}
               >
                 <span className="num">{part.callout}</span>
                 <span>{part.nameZh}</span>
