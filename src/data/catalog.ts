@@ -149,14 +149,37 @@ interface DemoScenario {
   partIds: string[];
   learnedDaysAgo: number;
   steps: DemoStep[];
+  masteredPartIds?: string[];
 }
 
+const MASTERED_STEPS: DemoStep[] = [
+  { offset: 1, rating: "remembered", daysAgo: 34 },
+  { offset: 3, rating: "remembered", daysAgo: 32 },
+  { offset: 7, rating: "remembered", daysAgo: 28 },
+  { offset: 30, rating: "remembered", daysAgo: 5 }
+];
+
 const EXTRA_DEMO_SCENARIOS: DemoScenario[] = [
+  {
+    employeeId: "budi",
+    partIds: [],
+    learnedDaysAgo: 35,
+    steps: [],
+    masteredPartIds: ["pin-anti-congkel"]
+  },
+  {
+    employeeId: "sari",
+    partIds: [],
+    learnedDaysAgo: 35,
+    steps: [],
+    masteredPartIds: ["seal-bawah"]
+  },
   {
     employeeId: "agus",
     partIds: ["daun-anak", "daun-induk", "engsel-bendera", "grendel-3-titik", "papan-perlit", "lis-kaca"],
     learnedDaysAgo: 0,
-    steps: []
+    steps: [],
+    masteredPartIds: ["penutup-tepi"]
   },
   {
     employeeId: "dwi",
@@ -166,13 +189,15 @@ const EXTRA_DEMO_SCENARIOS: DemoScenario[] = [
       { offset: 1, rating: "remembered", daysAgo: 6 },
       { offset: 3, rating: "remembered", daysAgo: 4 },
       { offset: 7, rating: "remembered", daysAgo: 0 }
-    ]
+    ],
+    masteredPartIds: ["papan-mgo"]
   },
   {
     employeeId: "rina",
     partIds: ["engsel-bendera", "pin-anti-congkel", "grendel-3-titik", "papan-perlit", "papan-mgo"],
     learnedDaysAgo: 3,
-    steps: [{ offset: 1, rating: "remembered", daysAgo: 2 }]
+    steps: [{ offset: 1, rating: "remembered", daysAgo: 2 }],
+    masteredPartIds: ["lis-kaca"]
   },
   {
     employeeId: "joko",
@@ -182,7 +207,8 @@ const EXTRA_DEMO_SCENARIOS: DemoScenario[] = [
       { offset: 1, rating: "remembered", daysAgo: 9 },
       { offset: 3, rating: "fuzzy", daysAgo: 7 },
       { offset: 7, rating: "forgot", daysAgo: 3 }
-    ]
+    ],
+    masteredPartIds: ["papan-perlit"]
   },
   {
     employeeId: "maya",
@@ -199,7 +225,8 @@ const EXTRA_DEMO_SCENARIOS: DemoScenario[] = [
     employeeId: "arif",
     partIds: ["penutup-tepi", "seal-bawah", "gagang-tanam", "papan-mgo"],
     learnedDaysAgo: 2,
-    steps: []
+    steps: [],
+    masteredPartIds: ["lis-kaca"]
   },
   {
     employeeId: "dewi",
@@ -209,7 +236,15 @@ const EXTRA_DEMO_SCENARIOS: DemoScenario[] = [
       { offset: 1, rating: "remembered", daysAgo: 11 },
       { offset: 3, rating: "remembered", daysAgo: 9 },
       { offset: 7, rating: "fuzzy", daysAgo: 5 }
-    ]
+    ],
+    masteredPartIds: ["papan-mgo"]
+  },
+  {
+    employeeId: "yusuf",
+    partIds: ["daun-induk", "kaca-tahan-api"],
+    learnedDaysAgo: 1,
+    steps: [],
+    masteredPartIds: ["daun-anak"]
   }
 ];
 
@@ -221,6 +256,11 @@ function appendScenario(
 ): void {
   for (const partId of scenario.partIds) {
     const result = replay(scenario.employeeId, partId, today, scenario.learnedDaysAgo, scenario.steps);
+    states.push(result.state);
+    attempts.push(...result.attempts);
+  }
+  for (const partId of scenario.masteredPartIds ?? []) {
+    const result = replay(scenario.employeeId, partId, today, 35, MASTERED_STEPS);
     states.push(result.state);
     attempts.push(...result.attempts);
   }
