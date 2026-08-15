@@ -21,17 +21,9 @@ export function LearnHome() {
 
   return (
     <section className="path-stage">
-      <header className="path-head">
-        <p className="eyebrow">{worker.name} · {worker.station}</p>
-        <h1>選一站開始學</h1>
-        <p>點關卡標題展開或收合。每一顆都可以直接進去學。</p>
-        <Link className="btn dark path-rank-btn" to={`/learn/ranking?from=${worker.id}`}>
-          全員排行榜
-        </Link>
-      </header>
-      <article className="path-unit" id="unit-review">
+      <article className="path-unit is-review" id="unit-review">
         <button
-          className="path-unit-banner"
+          className="path-unit-banner review-banner"
           type="button"
           aria-expanded={openUnit === "review"}
           onClick={() => setOpenUnit((current) => (current === "review" ? "" : "review"))}
@@ -69,6 +61,14 @@ export function LearnHome() {
           )
         ) : null}
       </article>
+      <header className="path-head">
+        <p className="eyebrow">{worker.name} · {worker.station}</p>
+        <h1>選一站開始學</h1>
+        <p>點關卡標題展開或收合。每一顆都可以直接進去學。</p>
+        <Link className="btn dark path-rank-btn" to={`/learn/ranking?from=${worker.id}`}>
+          全員排行榜
+        </Link>
+      </header>
       {units.map((unit, unitIndex) => {
         const progress = unitProgress(unit, mine);
         const expanded = openUnit === unit.id;
