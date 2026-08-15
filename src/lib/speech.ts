@@ -13,11 +13,6 @@ export function speakZh(text: string): void {
   window.speechSynthesis.speak(utterance);
 }
 
-export function stopZhSpeech(): void {
-  if (typeof window === "undefined" || !window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-}
-
 interface RecognitionAlternative {
   transcript: string;
 }
