@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { AlisPet } from "../components/AlisPet";
 import { EmployeeSidebar } from "../components/EmployeeSidebar";
 
 export function LearnLayout() {
@@ -8,6 +9,7 @@ export function LearnLayout() {
       <section className="learn-main">
         <Outlet />
       </section>
+      <AlisPet />
     </div>
   );
 }

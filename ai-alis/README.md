@@ -21,9 +21,11 @@ cd /Users/jenyueh/Developer/ai-alis
 
 建立 demo 狀態。桌寵會顯示在所有 Space 的最上層；點擊查看學習情況，拖曳移動位置，右鍵開啟選單。
 
-## 讀取工訓平台的目前狀態
+## 網頁版與獨立版的資料邊界
 
-工訓 Web App 的學習路徑頁已提供「同步目前學習情況」按鈕；開發伺服器會透過本機 Vite bridge 直接寫入這個檔案。
+工訓 Web App 的 `/learn/:employeeId` 頁面會直接把 AI Alis 固定顯示在右下角，從 React `useShop()` 讀取目前學習狀態；網頁互動不需要 JSON bridge，也不需要另外按同步按鈕。
+
+這個資料夾的 macOS 獨立桌寵則是另一種 always-on-top 模式。它不讀瀏覽器狀態，仍可透過一個本機 JSON 狀態檔獨立運作，適合要把桌寵放在其他 App 上方的情境。
 
 AI Alis 只讀一個 JSON 檔，不讀瀏覽器 localStorage，也不把資料送到雲端。把 Web App 產出的 snapshot 放到上面的路徑，或啟動時指定檔案：
 
