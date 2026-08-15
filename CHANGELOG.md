@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.0] - 2026-08-15
+
+### Added
+- Ranking entry on the worker path and work-order rail, with a back link to the same learner
+
 ## [0.2.0] - 2026-08-15
 
 ### Added

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { trainingSet, workers } from "../data/catalog";
 import { rankSnapshots, snapshotFor } from "../engine/dashboard";
 import { percent } from "../lib/format";
@@ -7,8 +7,12 @@ import { useShop } from "../store";
 const medals = ["🥇", "🥈", "🥉"];
 
 export function LearnRanking() {
+  const [params] = useSearchParams();
   const { states, attempts } = useShop();
   const ranking = rankSnapshots(workers.map((worker) => snapshotFor(worker, states, attempts)));
+  const backTo = workers.some((worker) => worker.id === params.get("from"))
+    ? `/learn/${params.get("from")}`
+    : "/learn";
 
   return (
     <section className="ranking-stage">
@@ -17,7 +21,7 @@ export function LearnRanking() {
         <h1>全員學習排行榜</h1>
         <p>{trainingSet.titleZh}</p>
         <p className="fine">掌握卡片、答對測驗與按時複習，會反映在學習積分上。</p>
-        <Link className="btn ghost" to="/learn">
+        <Link className="btn ghost" to={backTo}>
           回到學習路徑
         </Link>
       </header>
