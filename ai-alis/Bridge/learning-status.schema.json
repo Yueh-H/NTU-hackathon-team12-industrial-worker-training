@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AI Alis learning status",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "generatedAt",
+    "learnerID",
+    "learnerName",
+    "courseTitle",
+    "totalItems",
+    "freshItems",
+    "dueToday",
+    "overdue",
+    "mastered",
+    "accuracy",
+    "streakDays",
+    "lastActivityAt",
+    "nextFocus",
+    "weakItems",
+    "source"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "learnerID": { "type": "string" },
+    "learnerName": { "type": "string" },
+    "courseTitle": { "type": "string" },
+    "totalItems": { "type": "integer", "minimum": 0 },
+    "freshItems": { "type": "integer", "minimum": 0 },
+    "dueToday": { "type": "integer", "minimum": 0 },
+    "overdue": { "type": "integer", "minimum": 0 },
+    "mastered": { "type": "integer", "minimum": 0 },
+    "accuracy": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
+    "streakDays": { "type": "integer", "minimum": 0 },
+    "lastActivityAt": { "type": ["string", "null"], "format": "date-time" },
+    "nextFocus": { "type": ["string", "null"] },
+    "weakItems": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 3
+    },
+    "source": { "const": "training-web" }
+  },
+  "additionalProperties": false
+}
