@@ -13,6 +13,13 @@ export function AdminHome() {
   const due = snaps.reduce((sum, snap) => sum + snap.dueToday, 0);
   const overdue = snaps.reduce((sum, snap) => sum + snap.overdue, 0);
   const help = snaps.filter((snap) => snap.needsHelp);
+  const recentViewing = snaps.filter((snap) => snap.viewingStatus === "recent" || snap.viewingStatus === "active");
+  const ranking = [...snaps].sort(
+    (a, b) =>
+      b.learningScore - a.learningScore ||
+      b.mastered - a.mastered ||
+      (b.accuracy ?? -1) - (a.accuracy ?? -1)
+  );
 
   return (
     <main className="page admin">
@@ -37,6 +44,10 @@ export function AdminHome() {
           <small>需要協助</small>
           <strong className={help.length ? "warn" : ""}>{help.length}</strong>
         </div>
+        <div>
+          <small>近期觀看</small>
+          <strong>{recentViewing.length}</strong>
+        </div>
       </div>
       {help.length ? (
         <section className="help-box">
@@ -53,6 +64,22 @@ export function AdminHome() {
           </ul>
         </section>
       ) : null}
+      <section className="info-card">
+        <h2>學習動機／本課程排行</h2>
+        <p>積分獎勵持續學習、掌握關鍵零件與按時複習，不以答題速度或答錯扣分。</p>
+        <ol className="attempt-list">
+          {ranking.map((snap, index) => (
+            <li key={snap.employee.id}>
+              <strong>
+                #{index + 1} {snap.employee.name} · {snap.learningScore} 分
+              </strong>
+              <span>
+                {snap.motivationLabel} · {snap.motivationHint}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </section>
       <div className="table-wrap">
         <table>
           <thead>
@@ -61,7 +88,8 @@ export function AdminHome() {
               <th>進度</th>
               <th>今日 / 逾期</th>
               <th>測驗正確率</th>
-              <th>最後學習</th>
+              <th>學習動機</th>
+              <th>觀看情況</th>
               <th>弱項</th>
             </tr>
           </thead>
@@ -84,14 +112,23 @@ export function AdminHome() {
                   {snap.dueToday} / <span className={snap.overdue ? "warn" : ""}>{snap.overdue}</span>
                 </td>
                 <td>{percent(snap.accuracy)}</td>
-                <td title={formatDateTime(snap.lastAt, "zh-TW")}>{relativeTime(snap.lastAt, "zh")}</td>
+                <td>
+                  <strong>{snap.learningScore} 分</strong>
+                  <small>{snap.motivationLabel}</small>
+                </td>
+                <td title={formatDateTime(snap.lastAt, "zh-TW")}>
+                  <strong>{snap.viewingLabel}</strong>
+                  <small>
+                    {snap.viewedCount}/{snap.assigned} 張 · {relativeTime(snap.lastAt, "zh")}
+                  </small>
+                </td>
                 <td>{snap.weakParts.map((part) => part.nameZh).join("、") || "—"}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <p className="fine">這是輔導看板，不是監視器。不會記錄是否在線。</p>
+      <p className="fine">觀看情況依開始學習、作答與複習活動推算，不記錄是否在線，也不代表實際停留時間。</p>
       <div className="admin-foot">
         <Link className="text-btn" to="/">
           回首頁

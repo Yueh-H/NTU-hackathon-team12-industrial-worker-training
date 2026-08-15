@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { parts, trainingSet, workerById } from "../data/catalog";
+import { parts, trainingSet, workerById, workers } from "../data/catalog";
 import { queueFor, snapshotFor } from "../engine/dashboard";
+import { relativeTime } from "../lib/format";
 import { useShop } from "../store";
 
 export function LearnHome() {
@@ -11,6 +12,10 @@ export function LearnHome() {
   const mine = states.filter((state) => state.employeeId === worker.id);
   const snap = snapshotFor(worker, mine, attempts);
   const queue = queueFor(worker.id, mine);
+  const ranking = workers
+    .map((item) => snapshotFor(item, states, attempts))
+    .sort((a, b) => b.learningScore - a.learningScore || b.mastered - a.mastered);
+  const rank = ranking.findIndex((item) => item.employee.id === worker.id) + 1;
   const first =
     queue.overdue[0] ?? queue.today[0] ?? queue.fresh[0] ?? mine.find((state) => state.status === "learning");
 
@@ -51,6 +56,16 @@ export function LearnHome() {
           <strong>{snap.mastered}</strong>
         </div>
       </div>
+      <section className="info-card">
+        <h2>你的學習動力</h2>
+        <p>
+          <strong>{snap.learningScore} 分</strong> · 本課程第 {rank} 名 · {snap.motivationLabel}
+        </p>
+        <p>{snap.motivationHint}</p>
+        <p className="fine">
+          已開始 {snap.viewedCount}/{snap.assigned} 張 · 最近{relativeTime(snap.lastAt, "zh")}
+        </p>
+      </section>
       {first ? (
         <Link className="btn dark wide" to={`/learn/${worker.id}/part/${first.partId}`}>
           繼續：{parts.find((part) => part.id === first.partId)?.nameZh}

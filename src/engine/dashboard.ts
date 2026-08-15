@@ -2,6 +2,22 @@ import { parts } from "../data/catalog";
 import type { Attempt, Part, Profile, ReviewState } from "../types";
 import { dueReview, pendingReviews, todayKey } from "./reviewEngine";
 
+export type ViewingStatus = "not_started" | "recent" | "active" | "stale";
+export type MotivationStatus = "steady" | "building" | "encourage";
+
+export const VIEWING_STATUS_ZH: Record<ViewingStatus, string> = {
+  not_started: "尚未觀看",
+  recent: "最近看過",
+  active: "持續觀看",
+  stale: "需要回看"
+};
+
+export const MOTIVATION_STATUS_ZH: Record<MotivationStatus, string> = {
+  steady: "學習節奏穩定",
+  building: "持續建立中",
+  encourage: "需要鼓勵"
+};
+
 export interface EmployeeSnapshot {
   employee: Profile;
   assigned: number;
@@ -15,6 +31,13 @@ export interface EmployeeSnapshot {
   weakParts: Part[];
   needsHelp: boolean;
   notStarted: boolean;
+  learningScore: number;
+  motivationStatus: MotivationStatus;
+  motivationLabel: string;
+  motivationHint: string;
+  viewingStatus: ViewingStatus;
+  viewingLabel: string;
+  viewedCount: number;
 }
 
 function quizAttempts(attempts: Attempt[], employeeId: string): Attempt[] {
@@ -33,6 +56,56 @@ export function lastActivity(states: ReviewState[], attempts: Attempt[], employe
     ...attempts.filter((attempt) => attempt.employeeId === employeeId).map((attempt) => attempt.completedAt)
   ].filter(Boolean);
   return times.sort().at(-1) ?? "";
+}
+
+export function viewingStatusFor(lastAt: string, started: number, now = new Date()): ViewingStatus {
+  if (!started || !lastAt) return "not_started";
+  const lastTime = new Date(lastAt).getTime();
+  if (Number.isNaN(lastTime)) return "stale";
+  const hoursSinceLastActivity = Math.max(0, now.getTime() - lastTime) / (1000 * 60 * 60);
+  if (hoursSinceLastActivity <= 24) return "recent";
+  if (hoursSinceLastActivity <= 72) return "active";
+  return "stale";
+}
+
+export function learningScoreFor(input: {
+  assigned: number;
+  started: number;
+  mastered: number;
+  accuracy: number | null;
+  overdue: number;
+  viewingStatus: ViewingStatus;
+}): number {
+  if (!input.assigned || !input.started) return 0;
+  const startedRatio = Math.min(1, input.started / input.assigned);
+  const masteredRatio = Math.min(1, input.mastered / input.assigned);
+  const accuracy = input.accuracy ?? 0;
+  const reviewDiscipline = input.overdue === 0 ? 10 : Math.max(0, 10 - input.overdue * 2);
+  const recentActivityBonus = input.viewingStatus === "recent" ? 5 : input.viewingStatus === "active" ? 3 : 0;
+  return Math.max(
+    0,
+    Math.min(100, Math.round(startedRatio * 30 + masteredRatio * 35 + accuracy * 20 + reviewDiscipline + recentActivityBonus))
+  );
+}
+
+function motivationHint(
+  status: MotivationStatus,
+  viewingStatus: ViewingStatus,
+  mastered: number,
+  assigned: number,
+  overdue: number
+): string {
+  if (status === "encourage" && viewingStatus === "not_started") return "安排一個 5 分鐘入門任務，先讓他開始。";
+  if (overdue > 0) return `有 ${overdue} 張複習待完成，適合用提醒代替催促。`;
+  if (status === "steady") return "可以給予認可，再挑戰下一個關鍵零件。";
+  const remaining = Math.max(0, assigned - mastered);
+  return remaining ? `再掌握 ${remaining} 張卡片，就能再前進一格。` : "保持節奏，繼續完成下一次複習。";
+}
+
+function motivationStatusFor(score: number, viewingStatus: ViewingStatus, overdue: number): MotivationStatus {
+  if (score >= 70 && viewingStatus !== "stale" && overdue === 0) return "steady";
+  if (score >= 35 && viewingStatus !== "not_started") return "building";
+  return "encourage";
 }
 
 export function weakPartsFor(attempts: Attempt[], employeeId: string, limit = 3): Part[] {
@@ -70,6 +143,16 @@ export function snapshotFor(
   const quizzes = quizAttempts(attempts, employee.id);
   const accuracy = quizzes.length ? quizzes.filter((attempt) => attempt.quizCorrect).length / quizzes.length : null;
   const lastAt = lastActivity(mine, attempts, employee.id);
+  const viewingStatus = viewingStatusFor(lastAt, started);
+  const learningScore = learningScoreFor({
+    assigned: mine.length || parts.length,
+    started,
+    mastered,
+    accuracy,
+    overdue,
+    viewingStatus
+  });
+  const motivationStatus = motivationStatusFor(learningScore, viewingStatus, overdue);
   const stale =
     lastAt !== "" && (Date.now() - new Date(lastAt).getTime()) / (1000 * 60 * 60 * 24) >= 2;
   const notStarted = started === 0;
@@ -86,7 +169,14 @@ export function snapshotFor(
     lastAt,
     weakParts: weakPartsFor(attempts, employee.id),
     needsHelp,
-    notStarted
+    notStarted,
+    learningScore,
+    motivationStatus,
+    motivationLabel: MOTIVATION_STATUS_ZH[motivationStatus],
+    motivationHint: motivationHint(motivationStatus, viewingStatus, mastered, mine.length || parts.length, overdue),
+    viewingStatus,
+    viewingLabel: VIEWING_STATUS_ZH[viewingStatus],
+    viewedCount: started
   };
 }
 

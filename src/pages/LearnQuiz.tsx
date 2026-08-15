@@ -7,6 +7,7 @@ import { parts, partById, workerById } from "../data/catalog";
 import { pickQuizKind } from "../engine/reviewEngine";
 import { QUIZ_KIND_ZH } from "../lib/copy";
 import { nameChoices, partChoices } from "../lib/quiz";
+import { hasCompletedZhSpeech } from "../lib/speech";
 import type { Rating } from "../types";
 import { useShop } from "../store";
 
@@ -27,6 +28,9 @@ export function LearnQuiz() {
   const grid = useMemo(() => (part ? partChoices(part, parts) : []), [part]);
 
   if (!worker || !part) return <Navigate to="/learn" replace />;
+  if (!hasCompletedZhSpeech(worker.id, part.id)) {
+    return <Navigate to={`/learn/${worker.id}/part/${part.id}`} replace />;
+  }
 
   const correct =
     kind === "name_to_image" || kind === "hotspot" ? picked === part.id : picked === part.nameZh;

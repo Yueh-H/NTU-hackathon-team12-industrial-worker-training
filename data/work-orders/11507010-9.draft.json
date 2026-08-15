@@ -1,0 +1,899 @@
+{
+  "schema_version": "0.1.0",
+  "publication_status": "draft_needs_review",
+  "generated_date": "2026-08-15",
+  "source": {
+    "file_name": "11507010-9-模型.pdf",
+    "absolute_path": "/Users/jenyueh/hackathon_20260815/11507010-9-模型.pdf",
+    "sha256": "7e9cc4558956e1e1b34a79ee61da21bb3dd1fd66fd639a306558b17b623c6f7c",
+    "pages_in_file": 1,
+    "sheet_label_in_drawing": "P9/9",
+    "source_pages": [1],
+    "completeness_warning": "檔案只有 1 頁，但圖面標示 P9/9；可能缺少前 8 張圖，不能視為完整工單。"
+  },
+  "document": {
+    "document_type": [
+      "production_manufacturing_sheet",
+      "cutting_folding_drawing",
+      "hardware_and_material_schedule"
+    ],
+    "title": "生產製造表／折法圖一",
+    "form_code": "FM720102",
+    "work_order_number": "11507010-9",
+    "order_date_roc": "114.07.06",
+    "order_date_iso": "2025-07-06",
+    "delivery_date_raw": "114.08.",
+    "delivery_date_complete": false,
+    "machine_name": null,
+    "model": null,
+    "version": null,
+    "page_count": 1,
+    "page_size": "A3 portrait",
+    "ocr_quality": "partial",
+    "ocr_note": "PDF 有可抽取的向量文字，但表格欄位、換行與圖面標註的閱讀順序不可靠，已搭配整頁與四區放大圖核對。",
+    "summary_zh_tw": "子母扇平面防火遮煙視窗扇的生產製造與裁折圖，包含門扇尺寸、左右方向、五金、材料裁切清單、孔位、焊點及封邊做法。",
+    "summary_id_id": "Lembar produksi dan gambar potong-lipat untuk pintu tahan api dan penghalang asap dengan dua daun berukuran tidak sama. Dokumen memuat ukuran, arah kiri/kanan, perangkat keras, daftar potongan bahan, posisi lubang, titik las, dan detail penutup tepi.",
+    "summary_translation_status": "draft_needs_bilingual_review"
+  },
+  "privacy": {
+    "sensitive_fields_detected": [
+      "customer_name",
+      "project_name",
+      "contact_person",
+      "telephone"
+    ],
+    "included_in_training_cards": false,
+    "note": "客戶與工程識別資訊只存在來源圖面，不應進入員工學習卡。"
+  },
+  "training_scope": {
+    "suitable_for": [
+      "零件與區位辨識",
+      "尺寸與材料規格回想",
+      "孔位／焊點圖面閱讀",
+      "主管發布前內容審核"
+    ],
+    "not_sufficient_for": [
+      "完整施工順序",
+      "機台操作教學",
+      "PPE 與 K3 安全訓練",
+      "品質驗收與公差判定",
+      "獨立作業資格認證"
+    ]
+  },
+  "assembly": {
+    "item_number": "15",
+    "mark": "D9",
+    "name_zh_tw": "子母扇平面防火遮煙視窗扇",
+    "name_id_id": "Pintu dua daun tidak sama besar, tahan api dan penghalang asap, dengan panel kaca",
+    "translation_status": "draft_needs_bilingual_review",
+    "finished_size": {
+      "width": 1724,
+      "height": 2202,
+      "unit": "mm",
+      "unit_needs_confirmation": true
+    },
+    "quantity": {
+      "value": 8,
+      "unit_zh_tw": "組",
+      "unit_id_id": "set"
+    },
+    "color_code": "8251",
+    "opening_direction_zh_tw": "開外",
+    "opening_direction_id_id": "membuka ke luar",
+    "style_code": "60A (064)",
+    "leaf_rows": [
+      {
+        "leaf_type": "mother_leaf",
+        "name_zh_tw": "母扇",
+        "name_id_id": "daun pintu utama",
+        "finished_size_mm": [1022, 2202],
+        "processing_size_mm": [1074, 2276],
+        "processing_reference": "折法圖一",
+        "quantity_raw": "16片",
+        "handing_raw": "4左／4右",
+        "translation_status": "draft_needs_bilingual_review"
+      },
+      {
+        "leaf_type": "child_leaf",
+        "name_zh_tw": "子扇",
+        "name_id_id": "daun pintu anak／sekunder",
+        "finished_size_mm": [701, 2202],
+        "processing_size_mm": [753, 2276],
+        "processing_reference": "折法圖一",
+        "quantity_raw": "16片",
+        "handing_raw": "4左／4右",
+        "translation_status": "draft_needs_bilingual_review"
+      }
+    ],
+    "raw_hardware_notes": [
+      "防撬栓*1 (TH-720)",
+      "下降條 (東鐵 DW-900)",
+      "旗形鉸鏈 OK-602-4\"*3",
+      "母扇：P-167-51（雙面轉扭）、鉸側凹把 OK-702A、陽極鎖、開外三押",
+      "子扇：鉸側凹把 OK-702A、三押暗閂（東鐵 POWER-2612B）",
+      "鎖上扇"
+    ],
+    "hardware_mapping_needs_confirmation": true,
+    "source_pages": [1]
+  },
+  "explicit_requirements": [
+    {
+      "id": "REQ-001",
+      "requirement_zh_tw": "板厚 1.0，門厚 50。",
+      "requirement_id_id": "Ketebalan pelat 1,0; ketebalan pintu 50.",
+      "source_pages": [1],
+      "needs_unit_confirmation": true
+    },
+    {
+      "id": "REQ-002",
+      "requirement_zh_tw": "鉸鏈側使用 48 mm 珍珠岩複合板。",
+      "requirement_id_id": "Gunakan papan komposit perlit 48 mm pada sisi engsel.",
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "id": "REQ-003",
+      "requirement_zh_tw": "鎖側使用 1 層 40 mm 珍珠岩複合板，加 2 層 4 mm 碳酸鎂。",
+      "requirement_id_id": "Pada sisi kunci, gunakan 1 lapis papan komposit perlit 40 mm dan 2 lapis papan magnesium karbonat 4 mm.",
+      "source_pages": [1],
+      "needs_material_name_confirmation": true
+    },
+    {
+      "id": "REQ-004",
+      "requirement_zh_tw": "下降壓條 GD-3033：1018 mm 長 8 組、697 mm 長 8 組。",
+      "requirement_id_id": "Seal tekan bawah GD-3033: panjang 1018 mm sebanyak 8 set dan panjang 697 mm sebanyak 8 set.",
+      "source_pages": [1],
+      "needs_translation_review": true
+    },
+    {
+      "id": "REQ-005",
+      "requirement_zh_tw": "柏肯防火玻璃 31 mm × 226 mm × 1226 mm，共 16 片。",
+      "requirement_id_id": "Kaca tahan api Baiken 31 mm × 226 mm × 1226 mm, total 16 lembar.",
+      "source_pages": [1],
+      "needs_brand_and_dimension_confirmation": true
+    },
+    {
+      "id": "REQ-006",
+      "requirement_zh_tw": "內封邊 F-59，外封邊 F-17。",
+      "requirement_id_id": "Profil penutup tepi bagian dalam F-59 dan bagian luar F-17.",
+      "source_pages": [1],
+      "needs_translation_review": true
+    },
+    {
+      "id": "REQ-007",
+      "requirement_zh_tw": "上方貼嘉士豪 GD-1043（1.0t × 43 mm），倉管須訂。",
+      "requirement_id_id": "Pasang bahan Jiashihau GD-1043 (1,0t × 43 mm) pada bagian atas; bagian gudang harus memesannya.",
+      "source_pages": [1],
+      "needs_brand_confirmation": true
+    },
+    {
+      "id": "REQ-008",
+      "requirement_zh_tw": "上方鎖 M4.7 × 19 mm 螺絲，並須塞 4.0t 碳酸鎂。",
+      "requirement_id_id": "Pada bagian atas, pasang sekrup M4.7 × 19 mm dan isi dengan papan magnesium karbonat 4,0t.",
+      "source_pages": [1],
+      "needs_material_name_confirmation": true
+    },
+    {
+      "id": "REQ-009",
+      "requirement_zh_tw": "下方不需塞 4.0t 碳酸鎂。",
+      "requirement_id_id": "Bagian bawah tidak perlu diisi papan magnesium karbonat 4,0t.",
+      "source_pages": [1],
+      "needs_material_name_confirmation": true
+    },
+    {
+      "id": "REQ-010",
+      "requirement_zh_tw": "下封邊非鉸鏈側鎖 M4.7 × 50 mm 螺絲 4 支。",
+      "requirement_id_id": "Pada penutup tepi bawah di sisi yang bukan sisi engsel, pasang 4 sekrup M4.7 × 50 mm.",
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "id": "REQ-011",
+      "requirement_zh_tw": "下方封邊貼嘉士豪 GD-1025（1.0t × 25 mm），倉管須訂。",
+      "requirement_id_id": "Pasang Jiashihau GD-1025 (1,0t × 25 mm) pada penutup tepi bawah; bagian gudang harus memesannya.",
+      "source_pages": [1],
+      "needs_brand_confirmation": true
+    },
+    {
+      "id": "REQ-012",
+      "requirement_zh_tw": "兩側貼嘉士豪 GD-1043（1.0t × 43 mm）；兩側封邊不需塞棉。",
+      "requirement_id_id": "Pasang Jiashihau GD-1043 (1,0t × 43 mm) pada kedua sisi; penutup tepi kedua sisi tidak perlu diisi kapas isolasi.",
+      "source_pages": [1],
+      "needs_translation_review": true
+    },
+    {
+      "id": "REQ-013",
+      "requirement_zh_tw": "子扇檔板上切角 19。",
+      "requirement_id_id": "Potong sudut 19 pada bagian atas pelat penahan daun pintu anak.",
+      "source_pages": [1],
+      "needs_unit_and_term_confirmation": true
+    },
+    {
+      "id": "REQ-014",
+      "requirement_zh_tw": "點焊前通知副總。",
+      "requirement_id_id": "Beri tahu Wakil Direktur／VP sebelum melakukan las titik.",
+      "source_pages": [1],
+      "needs_role_confirmation": true,
+      "must_master": true
+    }
+  ],
+  "parts": [
+    {
+      "part_code": "LEAF-MOTHER",
+      "name_zh_tw": "母扇",
+      "name_id_id": "daun pintu utama",
+      "function_id_id": "Daun utama pada pasangan pintu dua daun yang ukurannya tidak sama.",
+      "location_description_id_id": "Daun yang lebarnya 1022 mm pada gambar rakitan.",
+      "key_specification": "1022 × 2202 mm; ukuran proses 1074 × 2276 mm",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "圖面中央偏右、標示 1022 的母扇正視圖"
+      },
+      "confusable_with": ["LEAF-CHILD"],
+      "safety_note_id_id": null,
+      "source_pages": [1],
+      "confidence": 0.96,
+      "needs_translation_review": true,
+      "needs_human_review": true
+    },
+    {
+      "part_code": "LEAF-CHILD",
+      "name_zh_tw": "子扇",
+      "name_id_id": "daun pintu anak／sekunder",
+      "function_id_id": "Daun sekunder pada pasangan pintu dua daun yang ukurannya tidak sama.",
+      "location_description_id_id": "Daun yang lebarnya 701 mm pada gambar rakitan.",
+      "key_specification": "701 × 2202 mm; ukuran proses 753 × 2276 mm",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "圖面中央偏左、標示 701 的子扇正視圖"
+      },
+      "confusable_with": ["LEAF-MOTHER"],
+      "safety_note_id_id": null,
+      "source_pages": [1],
+      "confidence": 0.96,
+      "needs_translation_review": true,
+      "needs_human_review": true
+    },
+    {
+      "part_code": "HINGE-SIDE",
+      "name_zh_tw": "鉸鏈側",
+      "name_id_id": "sisi engsel",
+      "function_id_id": "Sisi daun pintu tempat engsel dipasang.",
+      "location_description_id_id": "Ikuti tanda titik las sisi engsel pada gambar.",
+      "key_specification": "芯材標示為 48 mm 珍珠岩複合板",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "正視圖外側，鄰近『鉸側封邊焊點位置／旗形鉸鏈焊點位置』標示"
+      },
+      "confusable_with": ["LOCK-SIDE"],
+      "safety_note_id_id": null,
+      "source_pages": [1],
+      "confidence": 0.98,
+      "needs_translation_review": false,
+      "needs_human_review": true
+    },
+    {
+      "part_code": "LOCK-SIDE",
+      "name_zh_tw": "鎖側",
+      "name_id_id": "sisi kunci",
+      "function_id_id": "Sisi daun pintu tempat perangkat kunci dan lubang kunci berada.",
+      "location_description_id_id": "Ikuti tanda posisi las penutup tepi sisi kunci pada gambar.",
+      "key_specification": "1 層 40 mm 珍珠岩複合板 + 2 層 4 mm 碳酸鎂",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "正視圖中間相接側，鄰近『鎖側封邊焊點位置』標示"
+      },
+      "confusable_with": ["HINGE-SIDE"],
+      "safety_note_id_id": null,
+      "source_pages": [1],
+      "confidence": 0.98,
+      "needs_translation_review": false,
+      "needs_human_review": true
+    },
+    {
+      "part_code": "TH-720",
+      "name_zh_tw": "防撬栓",
+      "name_id_id": "pin anti-congkel",
+      "function_id_id": "Pin untuk membantu mencegah daun pintu dicongkel dari sisi tepi.",
+      "location_description_id_id": "Lokasi lubang ditunjukkan pada profil 1-1 bersama lubang engsel.",
+      "key_specification": "每組標示 1 支；圖面料件 1-1 標示沖防撬栓孔",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "下半部左側，料件 1-1 與『沖防撬栓』標示"
+      },
+      "confusable_with": ["TOP-BOTTOM-BOLT"],
+      "safety_note_id_id": null,
+      "source_pages": [1],
+      "confidence": 0.88,
+      "needs_translation_review": true,
+      "needs_human_review": true
+    },
+    {
+      "part_code": "FLAG-HINGE",
+      "name_zh_tw": "旗形鉸鏈",
+      "name_id_id": "engsel bendera",
+      "function_id_id": "Engsel berbentuk bendera yang menghubungkan daun pintu dengan rangka.",
+      "location_description_id_id": "Titik lasnya ditandai pada sisi engsel.",
+      "key_specification": "表格原文：旗形鉸鏈 OK-602-4\"*3",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "圖面中央、標示『旗形鉸鏈焊點位置』的紅色焊點區"
+      },
+      "confusable_with": [],
+      "safety_note_id_id": "Instruksi APD dan metode pengelasan tidak tersedia pada sumber ini.",
+      "source_pages": [1],
+      "confidence": 0.86,
+      "needs_translation_review": true,
+      "needs_human_review": true
+    },
+    {
+      "part_code": "DW-900",
+      "name_zh_tw": "下降條／下降壓條",
+      "name_id_id": "seal bawah otomatis／drop seal",
+      "function_id_id": "Seal yang turun pada bagian bawah pintu untuk membantu menutup celah.",
+      "location_description_id_id": "Dipasang pada bagian bawah daun pintu.",
+      "key_specification": "東鐵 DW-900；另有 GD-3033 長度 1018 mm × 8 組、697 mm × 8 組",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "表格五金欄與門扇下方區域"
+      },
+      "confusable_with": ["EDGE-SEAL"],
+      "safety_note_id_id": null,
+      "source_pages": [1],
+      "confidence": 0.8,
+      "needs_translation_review": true,
+      "needs_human_review": true
+    },
+    {
+      "part_code": "PERLITE-BOARD",
+      "name_zh_tw": "珍珠岩複合板",
+      "name_id_id": "papan komposit perlit",
+      "function_id_id": "Bahan inti komposit di dalam daun pintu.",
+      "location_description_id_id": "Digunakan dengan ketebalan berbeda pada sisi engsel dan sisi kunci.",
+      "key_specification": "鉸鏈側 48 mm；鎖側 40 mm × 1 層",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "門扇橫剖面材料引線及右側 6、7 系列材料表"
+      },
+      "confusable_with": ["MAGNESIUM-CARBONATE-BOARD"],
+      "safety_note_id_id": null,
+      "source_pages": [1],
+      "confidence": 0.96,
+      "needs_translation_review": false,
+      "needs_human_review": true
+    },
+    {
+      "part_code": "MAGNESIUM-CARBONATE-BOARD",
+      "name_zh_tw": "4.0t 碳酸鎂",
+      "name_id_id": "papan magnesium karbonat 4,0t",
+      "function_id_id": "Lapisan bahan inti yang ditempatkan pada posisi tertentu sesuai gambar.",
+      "location_description_id_id": "Bagian atas harus diisi; bagian bawah tidak perlu diisi. Sisi kunci menggunakan dua lapis 4 mm.",
+      "key_specification": "圖面 8-1 至 8-10 有多種裁切尺寸",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "門扇橫剖面材料引線及右側 8-1 至 8-10 材料表"
+      },
+      "confusable_with": ["PERLITE-BOARD"],
+      "safety_note_id_id": null,
+      "source_pages": [1],
+      "confidence": 0.82,
+      "needs_translation_review": true,
+      "needs_human_review": true
+    },
+    {
+      "part_code": "FIRE-GLASS",
+      "name_zh_tw": "柏肯防火玻璃",
+      "name_id_id": "kaca tahan api Baiken",
+      "function_id_id": "Panel kaca tahan api pada bukaan daun pintu.",
+      "location_description_id_id": "Panel vertikal pada bukaan masing-masing daun pintu.",
+      "key_specification": "31 × 226 × 1226 mm，共 16 片",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "母扇與子扇正視圖中的綠色長方形開窗區"
+      },
+      "confusable_with": [],
+      "safety_note_id_id": "Sumber tidak memuat prosedur penanganan kaca atau APD.",
+      "source_pages": [1],
+      "confidence": 0.9,
+      "needs_translation_review": true,
+      "needs_human_review": true
+    },
+    {
+      "part_code": "GALV-RECT-TUBE",
+      "name_zh_tw": "鍍鋅扁管",
+      "name_id_id": "pipa persegi panjang galvanis",
+      "function_id_id": "Komponen rangka internal daun pintu.",
+      "location_description_id_id": "Daftar bahan 4-1 sampai 4-3 dan rangka empat sisi pada potongan melintang.",
+      "key_specification": "1.4t × 20 × 40，多種長度；圖面另標四周 1.5t × 20/40 扁管",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "右側 4-1 至 4-3 材料表及中央橫剖面"
+      },
+      "confusable_with": ["FLAT-BAR"],
+      "safety_note_id_id": null,
+      "source_pages": [1],
+      "confidence": 0.9,
+      "needs_translation_review": true,
+      "needs_human_review": true
+    },
+    {
+      "part_code": "GLAZING-BEAD",
+      "name_zh_tw": "鍍鋅玻璃壓",
+      "name_id_id": "lis penahan kaca galvanis",
+      "function_id_id": "Profil untuk menahan panel kaca pada bukaan pintu.",
+      "location_description_id_id": "Detail profil berada di kanan bawah gambar.",
+      "key_specification": "1.2t；W=65.4 × 280 與 W=65.4 × 1280，各 64 支；切 45 度並沖螺絲擴孔",
+      "image_candidate": {
+        "page": 1,
+        "region_description": "右下角『1.2t 鍍鋅玻璃壓』剖面圖"
+      },
+      "confusable_with": ["EDGE-SEAL"],
+      "safety_note_id_id": null,
+      "source_pages": [1],
+      "confidence": 0.86,
+      "needs_translation_review": true,
+      "needs_human_review": true
+    }
+  ],
+  "material_schedule": {
+    "magnesium_carbonate_4t_raw": [
+      "8-1 4.0碳酸鎂*20*534*16片-子下用",
+      "8-2 4.0碳酸鎂*20*855*16片-母下用",
+      "8-3 4.0碳酸鎂*23*534*16片-子上用",
+      "8-4 4.0碳酸鎂*23*855*16片-母上用",
+      "8-5 4.0碳酸鎂*19*2164*32片-鉸鏈側",
+      "8-6 4.0碳酸鎂*40*674*8片-子上用",
+      "8-7 4.0碳酸鎂*40*995*8片-母上用",
+      "8-8 4.0碳酸鎂*119*2164*32片-鉋鎖孔及凹把（分配註記需確認）",
+      "8-9 4.0碳酸鎂*41*2174*8片-子扇門檔用",
+      "8-10 4.0碳酸鎂*41*2193*8片-母扇門檔用"
+    ],
+    "perlite_composite_40mm_raw": [
+      "7-1 40m/m珍珠岩複合板*90*286*48片-下",
+      "7-2 40m/m珍珠岩複合板*90*300*64片-上*48／鎖區*16"
+    ],
+    "perlite_composite_48mm_raw": [
+      "6-1 48m/m珍珠岩複合板*243*210*16片-開窗上",
+      "6-2 48m/m珍珠岩複合板*243*662*16片-開窗下",
+      "6-3 48m/m珍珠岩複合板*62*(2100+16)*16片",
+      "6-4 48m/m珍珠岩複合板*223*(2100+16)*8片",
+      "6-5 48m/m珍珠岩複合板*544*(2100+16)*8片"
+    ],
+    "flat_bar_4_5t_raw": [
+      "5-1 4.5t扁鐵*38*95=96支-鎖側橫骨用",
+      "5-2 4.5t扁鐵*38*2120=16支-中間用"
+    ],
+    "galvanized_rectangular_tube_1_4t_raw": [
+      "4-1 1.4t鍍鋅扁管*20*40*674=16支-沖吊孔及暗閂",
+      "4-2 1.4t鍍鋅扁管*20*40*995=16支-沖吊孔及陽極",
+      "4-3 1.4t鍍鋅扁管*20*40*2121=32支-8支開鎖孔／8支開天地栓"
+    ],
+    "profile_and_edge_parts_raw": [
+      "1-1 W=63*2201=32支-沖防撬栓及鉸鏈孔=8左8右／沖天地栓=8支／沖鎖孔=8支／手工打凹",
+      "2-1 W=81*238=32支",
+      "2-1 W=81*1238=32支",
+      "W=89*673=8支-沖螺絲孔及天地栓=4左4右",
+      "W=89*994=8支-沖螺絲孔=8支",
+      "2-3 W=80*2176=8支-子",
+      "2-4 W=80*2195=8支-母",
+      "2-1 W=77*2182=8支-子",
+      "2-2 W=77*2201=8支-母",
+      "上下須封板：1.2t鍍鋅封板*14*41=32片",
+      "1.2t鍍鋅玻璃壓 W=65.4*280=64支-切45度沖螺絲擴孔",
+      "1.2t鍍鋅玻璃壓 W=65.4*1280=64支-切45度沖螺絲擴孔"
+    ],
+    "source_pages": [1],
+    "note": "原圖以 m/m、t、W 等現場記法標示；未經主管確認前不應自動正規化為採購或加工指令。"
+  },
+  "work_operations": [
+    {
+      "operation_id": "OP-001",
+      "sequence": null,
+      "sequence_confirmed": false,
+      "title_zh_tw": "依折法圖裁折母扇與子扇板材",
+      "instruction_id_id": "Potong dan tekuk bahan daun utama dan daun anak sesuai gambar lipatan.",
+      "evidence_type": "explicit_table_and_drawing",
+      "source_evidence_zh_tw": "母扇加工尺寸 1074×2276；子扇加工尺寸 753×2276；折法圖一。",
+      "source_pages": [1],
+      "needs_process_owner_review": true,
+      "needs_safety_content": true
+    },
+    {
+      "operation_id": "OP-002",
+      "sequence": null,
+      "sequence_confirmed": false,
+      "title_zh_tw": "依 1-1 料件標註沖孔並手工打凹",
+      "instruction_id_id": "Buat lubang dan cekungan manual pada komponen 1-1 sesuai tanda gambar.",
+      "evidence_type": "explicit_callout",
+      "source_evidence_zh_tw": "沖防撬栓及鉸鏈孔、沖天地栓、沖鎖孔、手工打凹。",
+      "source_pages": [1],
+      "needs_process_owner_review": true,
+      "needs_safety_content": true
+    },
+    {
+      "operation_id": "OP-003",
+      "sequence": null,
+      "sequence_confirmed": false,
+      "title_zh_tw": "加工鍍鋅扁管的吊孔、暗閂、陽極鎖與天地栓孔",
+      "instruction_id_id": "Kerjakan lubang gantung, grendel tersembunyi, kunci elektrik, dan grendel atas-bawah pada pipa galvanis sesuai daftar 4-1 sampai 4-3.",
+      "evidence_type": "explicit_material_schedule",
+      "source_evidence_zh_tw": "4-1 至 4-3 的沖吊孔、暗閂、陽極、開鎖孔及天地栓註記。",
+      "source_pages": [1],
+      "needs_process_owner_review": true,
+      "needs_translation_review": true,
+      "needs_safety_content": true
+    },
+    {
+      "operation_id": "OP-004",
+      "sequence": null,
+      "sequence_confirmed": false,
+      "title_zh_tw": "依圖面配置珍珠岩複合板與碳酸鎂材料",
+      "instruction_id_id": "Tempatkan papan komposit perlit dan papan magnesium karbonat sesuai sisi dan posisi yang ditunjukkan pada gambar.",
+      "evidence_type": "explicit_notes_and_section_view",
+      "source_evidence_zh_tw": "鉸鏈側 48 mm 珍珠岩複合板；鎖側 40 mm 珍珠岩複合板 1 層 + 4 mm 碳酸鎂 2 層。",
+      "source_pages": [1],
+      "needs_process_owner_review": true,
+      "needs_material_name_confirmation": true
+    },
+    {
+      "operation_id": "OP-005",
+      "sequence": null,
+      "sequence_confirmed": false,
+      "title_zh_tw": "依上、下、兩側封邊註記配置材料與螺絲",
+      "instruction_id_id": "Pasang bahan penutup tepi dan sekrup pada bagian atas, bawah, dan kedua sisi sesuai catatan gambar.",
+      "evidence_type": "explicit_callouts",
+      "source_evidence_zh_tw": "上方 GD-1043、M4.7×19、須塞 4.0t 碳酸鎂；下方不塞 4.0t、非鉸鏈側 M4.7×50 螺絲 4 支、GD-1025；兩側 GD-1043 且不塞棉。",
+      "source_pages": [1],
+      "needs_process_owner_review": true
+    },
+    {
+      "operation_id": "OP-006",
+      "sequence": null,
+      "sequence_confirmed": false,
+      "title_zh_tw": "安裝防火玻璃與玻璃壓條",
+      "instruction_id_id": "Pasang kaca tahan api dan lis penahan kaca sesuai ukuran dan detail profil.",
+      "evidence_type": "material_note_and_profile_detail",
+      "source_evidence_zh_tw": "柏肯防火玻璃 31×226×1226×16片；玻璃壓 W=65.4×280／1280，各64支，切45度沖螺絲擴孔。",
+      "source_pages": [1],
+      "needs_process_owner_review": true,
+      "needs_safety_content": true
+    },
+    {
+      "operation_id": "OP-007",
+      "sequence": null,
+      "sequence_confirmed": false,
+      "title_zh_tw": "依標示位置執行點焊",
+      "instruction_id_id": "Lakukan las titik hanya pada posisi yang ditandai dan setelah pemberitahuan internal yang diwajibkan.",
+      "evidence_type": "explicit_weld_point_callouts",
+      "source_evidence_zh_tw": "鎖側封邊焊點位置、鉸側封邊焊點位置、旗形鉸鏈焊點位置；點焊前通知副總。",
+      "source_pages": [1],
+      "needs_process_owner_review": true,
+      "needs_safety_content": true,
+      "must_master": true
+    },
+    {
+      "operation_id": "OP-008",
+      "sequence": null,
+      "sequence_confirmed": false,
+      "title_zh_tw": "依母扇／子扇配置安裝五金",
+      "instruction_id_id": "Pasang perangkat keras sesuai pembagian daun utama dan daun anak setelah pemetaan komponen dikonfirmasi supervisor.",
+      "evidence_type": "top_hardware_table",
+      "source_evidence_zh_tw": "P-167-51、OK-702A、陽極鎖、三押暗閂 POWER-2612B、防撬栓 TH-720、下降條 DW-900、旗形鉸鏈。",
+      "source_pages": [1],
+      "needs_process_owner_review": true,
+      "needs_translation_review": true,
+      "hardware_mapping_needs_confirmation": true
+    }
+  ],
+  "tools_and_ppe": {
+    "tools_explicitly_listed": [],
+    "ppe_explicitly_listed": [],
+    "source_present": false,
+    "blocking_note": "來源沒有列出機台、治具、刀模、焊接設備、玻璃搬運工具或 PPE。不得由本圖面推定安全作業方式。"
+  },
+  "quality_checks": {
+    "explicit_checks": [
+      "成品總尺寸 1724×2202",
+      "母扇尺寸 1022×2202",
+      "子扇尺寸 701×2202",
+      "門厚 50",
+      "圖面多處標示實際開孔 243",
+      "顏色代碼 8251",
+      "左右向原文 4左／4右",
+      "防火玻璃規格 31×226×1226，共16片"
+    ],
+    "tolerances_present": false,
+    "acceptance_criteria_complete": false,
+    "blocking_note": "尺寸有標示，但沒有公差、量測工具、抽檢比例、焊點驗收或最終放行條件。"
+  },
+  "training_cards": [
+    {
+      "card_id": "CARD-001-ASSEMBLY",
+      "card_type": "part_recognition",
+      "learning_objective_id_id": "Mengenali jenis rakitan pintu pada lembar produksi.",
+      "front_text_id_id": "Rakitan pintu jenis apa yang ditunjukkan pada gambar ini?",
+      "back_text_id_id": "Pintu dua daun tidak sama besar, tahan api dan penghalang asap, dengan panel kaca.",
+      "image_part_code": "ASSEMBLY-D9",
+      "question_id_id": "Berapa ukuran keseluruhan rakitan D9?",
+      "correct_answer_id_id": "1724 × 2202 mm.",
+      "distractors_id_id": ["1022 × 2202 mm", "701 × 2202 mm", "1074 × 2276 mm"],
+      "must_master": true,
+      "source_evidence_zh_tw": "項次15／D9；1724×2202；子母扇。",
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-002-MOTHER-LEAF",
+      "card_type": "terminology",
+      "learning_objective_id_id": "Mengenali daun pintu utama dan ukurannya.",
+      "front_text_id_id": "Bagian mana yang disebut daun pintu utama?",
+      "back_text_id_id": "母扇 = daun pintu utama. Ukuran jadi: 1022 × 2202 mm.",
+      "image_part_code": "LEAF-MOTHER",
+      "question_id_id": "Berapa ukuran jadi daun pintu utama?",
+      "correct_answer_id_id": "1022 × 2202 mm.",
+      "distractors_id_id": ["701 × 2202 mm", "1074 × 2276 mm", "753 × 2276 mm"],
+      "must_master": true,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-003-CHILD-LEAF",
+      "card_type": "terminology",
+      "learning_objective_id_id": "Mengenali daun pintu anak dan ukurannya.",
+      "front_text_id_id": "Bagian mana yang disebut daun pintu anak／sekunder?",
+      "back_text_id_id": "子扇 = daun pintu anak／sekunder. Ukuran jadi: 701 × 2202 mm.",
+      "image_part_code": "LEAF-CHILD",
+      "question_id_id": "Berapa ukuran jadi daun pintu anak?",
+      "correct_answer_id_id": "701 × 2202 mm.",
+      "distractors_id_id": ["1022 × 2202 mm", "753 × 2276 mm", "1724 × 2202 mm"],
+      "must_master": true,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-004-HINGE-SIDE",
+      "card_type": "part_recognition",
+      "learning_objective_id_id": "Membedakan sisi engsel dari sisi kunci.",
+      "front_text_id_id": "Tunjukkan sisi engsel pada gambar daun pintu.",
+      "back_text_id_id": "Sisi engsel adalah sisi tempat engsel dan titik las engsel ditandai.",
+      "image_part_code": "HINGE-SIDE",
+      "question_id_id": "Bahan inti utama apa yang ditunjukkan pada sisi engsel?",
+      "correct_answer_id_id": "Papan komposit perlit 48 mm.",
+      "distractors_id_id": ["Papan komposit perlit 40 mm", "Pelat galvanis 1,2t", "Besi datar 4,5t"],
+      "must_master": true,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-005-LOCK-SIDE",
+      "card_type": "quality",
+      "learning_objective_id_id": "Mengingat susunan bahan inti pada sisi kunci.",
+      "front_text_id_id": "Susunan bahan apa yang digunakan pada sisi kunci?",
+      "back_text_id_id": "1 lapis papan komposit perlit 40 mm + 2 lapis papan magnesium karbonat 4 mm.",
+      "image_part_code": "LOCK-SIDE",
+      "question_id_id": "Berapa lapis papan magnesium karbonat 4 mm pada sisi kunci?",
+      "correct_answer_id_id": "2 lapis.",
+      "distractors_id_id": ["Tidak ada", "1 lapis", "4 lapis"],
+      "must_master": true,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-006-TOP-BOTTOM-FILL",
+      "card_type": "quality",
+      "learning_objective_id_id": "Membedakan kebutuhan isi bagian atas dan bawah.",
+      "front_text_id_id": "Apakah bagian bawah harus diisi papan magnesium karbonat 4,0t?",
+      "back_text_id_id": "Tidak. Gambar menyatakan bagian atas harus diisi, sedangkan bagian bawah tidak perlu diisi.",
+      "image_part_code": "MAGNESIUM-CARBONATE-BOARD",
+      "question_id_id": "Bagian mana yang harus diisi papan magnesium karbonat 4,0t?",
+      "correct_answer_id_id": "Bagian atas.",
+      "distractors_id_id": ["Bagian bawah", "Kedua sisi", "Tidak ada bagian"],
+      "must_master": true,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-007-FIRE-GLASS",
+      "card_type": "quality",
+      "learning_objective_id_id": "Mengingat spesifikasi kaca tahan api.",
+      "front_text_id_id": "Apa spesifikasi kaca tahan api Baiken pada lembar ini?",
+      "back_text_id_id": "31 × 226 × 1226 mm, total 16 lembar.",
+      "image_part_code": "FIRE-GLASS",
+      "question_id_id": "Berapa jumlah kaca tahan api yang tercantum?",
+      "correct_answer_id_id": "16 lembar.",
+      "distractors_id_id": ["8 lembar", "32 lembar", "64 lembar"],
+      "must_master": true,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-008-ANTI-PRY",
+      "card_type": "part_recognition",
+      "learning_objective_id_id": "Mengenali pin anti-congkel dan area lubangnya.",
+      "front_text_id_id": "Komponen TH-720 digunakan sebagai apa?",
+      "back_text_id_id": "防撬栓 = pin anti-congkel. Lubangnya ditunjukkan bersama lubang engsel pada profil 1-1.",
+      "image_part_code": "TH-720",
+      "question_id_id": "Kode komponen pin anti-congkel pada tabel adalah?",
+      "correct_answer_id_id": "TH-720.",
+      "distractors_id_id": ["DW-900", "GD-1043", "OK-702A"],
+      "must_master": false,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-009-DROP-SEAL",
+      "card_type": "terminology",
+      "learning_objective_id_id": "Mengenali seal bawah otomatis.",
+      "front_text_id_id": "Apa nama Bahasa Indonesia untuk 下降條 pada konteks pintu ini?",
+      "back_text_id_id": "Draft: seal bawah otomatis／drop seal. Kode yang tercantum: Dongtie DW-900.",
+      "image_part_code": "DW-900",
+      "question_id_id": "Di bagian mana komponen ini dipasang?",
+      "correct_answer_id_id": "Pada bagian bawah daun pintu.",
+      "distractors_id_id": ["Pada bagian atas kaca", "Pada sisi engsel", "Di tengah rangka"],
+      "must_master": false,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-010-WELD-APPROVAL",
+      "card_type": "safety",
+      "learning_objective_id_id": "Mengingat persyaratan internal sebelum las titik.",
+      "front_text_id_id": "Apa yang harus dilakukan sebelum melakukan las titik?",
+      "back_text_id_id": "Beri tahu Wakil Direktur／VP terlebih dahulu. Prosedur las dan APD harus berasal dari SOP keselamatan terpisah.",
+      "image_part_code": "FLAG-HINGE",
+      "question_id_id": "Bolehkah las titik dimulai sebelum pemberitahuan internal?",
+      "correct_answer_id_id": "Tidak.",
+      "distractors_id_id": ["Ya", "Hanya untuk daun anak", "Hanya untuk sisi kunci"],
+      "must_master": true,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-011-LOWER-SCREWS",
+      "card_type": "quality",
+      "learning_objective_id_id": "Mengingat spesifikasi sekrup penutup tepi bawah.",
+      "front_text_id_id": "Sekrup apa yang dipasang pada penutup tepi bawah di sisi bukan engsel?",
+      "back_text_id_id": "4 sekrup M4.7 × 50 mm.",
+      "image_part_code": "LOWER-EDGE",
+      "question_id_id": "Berapa jumlah sekrup M4.7 × 50 mm yang tercantum?",
+      "correct_answer_id_id": "4 buah.",
+      "distractors_id_id": ["1 buah", "3 buah", "8 buah"],
+      "must_master": true,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-012-GLAZING-BEAD",
+      "card_type": "procedure",
+      "learning_objective_id_id": "Mengenali detail pemotongan lis penahan kaca.",
+      "front_text_id_id": "Berapa sudut potong lis penahan kaca galvanis?",
+      "back_text_id_id": "Potong 45 derajat dan buat lubang sekrup yang diperbesar sesuai gambar.",
+      "image_part_code": "GLAZING-BEAD",
+      "question_id_id": "Apa ketebalan bahan lis penahan kaca yang tercantum?",
+      "correct_answer_id_id": "1,2t.",
+      "distractors_id_id": ["1,0t", "1,4t", "4,5t"],
+      "must_master": false,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-013-OPENING-COLOR",
+      "card_type": "quality",
+      "learning_objective_id_id": "Mengingat arah buka dan kode warna pesanan.",
+      "front_text_id_id": "Ke arah mana pintu dibuka dan apa kode warnanya?",
+      "back_text_id_id": "Membuka ke luar; kode warna 8251.",
+      "image_part_code": "ASSEMBLY-D9",
+      "question_id_id": "Apa kode warna pada lembar produksi?",
+      "correct_answer_id_id": "8251.",
+      "distractors_id_id": ["064", "D9", "720"],
+      "must_master": false,
+      "source_pages": [1],
+      "needs_human_review": true
+    },
+    {
+      "card_id": "CARD-014-HARDWARE-DIFFERENCE",
+      "card_type": "part_recognition",
+      "learning_objective_id_id": "Membedakan perangkat keras daun utama dan daun anak.",
+      "front_text_id_id": "Perangkat mana yang tercantum khusus pada daun anak?",
+      "back_text_id_id": "Draft pemetaan: grendel tersembunyi tiga titik Dongtie POWER-2612B. Pemetaan tabel harus dikonfirmasi supervisor.",
+      "image_part_code": "LEAF-CHILD",
+      "question_id_id": "Kode perangkat grendel tersembunyi tiga titik pada daun anak adalah?",
+      "correct_answer_id_id": "POWER-2612B.",
+      "distractors_id_id": ["P-167-51", "TH-720", "DW-900"],
+      "must_master": false,
+      "source_pages": [1],
+      "needs_human_review": true
+    }
+  ],
+  "questions_for_supervisor": [
+    {
+      "id": "Q-001",
+      "blocking": true,
+      "question": "檔案只有一頁但標示 P9/9；是否能提供第 1 至第 8 張圖，或確認本頁可獨立成為訓練內容？"
+    },
+    {
+      "id": "Q-002",
+      "blocking": true,
+      "question": "本圖所有未明示單位的尺寸是否一律為 mm？t 與 W 的公司內部定義為何？"
+    },
+    {
+      "id": "Q-003",
+      "blocking": true,
+      "question": "請確認『母扇／子扇各 16 片』代表板片數，而非成品門扇數；並確認 8 組與 4左／4右的數量關係。"
+    },
+    {
+      "id": "Q-004",
+      "blocking": true,
+      "question": "來源沒有製程先後順序。裁切、沖孔、填芯、封邊、點焊、玻璃與五金安裝的正式 SOP 順序為何？"
+    },
+    {
+      "id": "Q-005",
+      "blocking": true,
+      "question": "請提供裁折、沖孔、點焊、玻璃搬運與鎖附作業所需機台、治具、PPE、K3 安全規範與停機／上鎖程序。"
+    },
+    {
+      "id": "Q-006",
+      "blocking": true,
+      "question": "請提供尺寸公差、焊點數量與外觀標準、量測工具、抽檢方式及最終放行條件。"
+    },
+    {
+      "id": "Q-007",
+      "blocking": true,
+      "question": "『點焊前通知副總』中的實際核准角色、通知方式與可稽核的完成證據是什麼？"
+    },
+    {
+      "id": "Q-008",
+      "blocking": true,
+      "question": "請確認圖面材料確實為『碳酸鎂』，以及公司核准的正式品名與 Bahasa Indonesia 譯名。"
+    },
+    {
+      "id": "Q-009",
+      "blocking": true,
+      "question": "請由雙語且熟悉現場的人員核准母扇、子扇、下降條、防撬栓、陽極鎖、暗閂、天地栓、封邊與玻璃壓等印尼文術語。"
+    },
+    {
+      "id": "Q-010",
+      "blocking": true,
+      "question": "請逐欄確認母扇與子扇的五金映射，特別是 P-167-51、OK-702A、POWER-2612B、TH-720、DW-900 與『鎖上扇』。"
+    },
+    {
+      "id": "Q-011",
+      "blocking": false,
+      "question": "交貨日期只顯示 114.08.，是否需要補上完整日期？"
+    },
+    {
+      "id": "Q-012",
+      "blocking": false,
+      "question": "教材是否需要永久排除客戶名稱、工程名稱、聯絡人與電話，僅保留工單編號與產品規格？"
+    },
+    {
+      "id": "Q-013",
+      "blocking": false,
+      "question": "這組教材的目標職務是裁折、沖床、焊接、組裝、品保，還是所有人？不同職務應收到不同卡片。"
+    },
+    {
+      "id": "Q-014",
+      "blocking": false,
+      "question": "請確認每張卡片應使用的圖面裁切區域；目前只提供頁碼與區域描述，尚未由主管核准實際圖片。"
+    }
+  ],
+  "translation_validation": {
+    "validated_term": {
+      "zh_tw": "防火門",
+      "id_id": "pintu tahan api",
+      "reference": "Badan Standardisasi Nasional, SNI 03-4360-1996"
+    },
+    "reference_url": "https://pesta.bsn.go.id/produk/detail/4777-sni03-4360-1996",
+    "safety_reference_note": "印尼勞工部 TemanK3 列有焊接與 APD 規範入口；本草稿沒有把外部規範改寫成工序，必須由公司 SOP／K3 負責人補入。",
+    "safety_reference_url": "https://temank3.kemnaker.go.id/page/perundangan"
+  },
+  "review_summary": {
+    "core_training_card_count": 14,
+    "part_concept_count": 12,
+    "explicit_requirement_count": 14,
+    "draft_operation_count": 8,
+    "blocking_question_count": 10,
+    "ready_to_publish": false,
+    "reason": "來源疑似缺頁，且缺少正式製程順序、PPE、安全 SOP、公差與驗收條件；技術印尼文尚未經雙語現場人員核准。"
+  }
+}
