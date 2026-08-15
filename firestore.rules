@@ -8,5 +8,14 @@ service cloud.firestore {
     match /review_attempts/{id} {
       allow read, write: if true;
     }
+
+    // Hackathon demo：每張大工單獨立一份文件，學習單元放在該工單的子集合。
+    // 正式上線要改成 Auth，並限制主管／員工對應的 orgId 與 workOrderId。
+    match /work_orders/{workOrderId} {
+      allow read, write: if true;
+      match /learning_modules/{moduleId} {
+        allow read, write: if true;
+      }
+    }
   }
 }
