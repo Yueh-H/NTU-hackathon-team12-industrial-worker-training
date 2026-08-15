@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="fire-rated glass">
   <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M129 44 C141 60 145 70 145 79 C145 90 138 97 129 97 C120 97 113 90 113 79 C113 66 124 58 129 44 Z" fill="#e5e7eb"/>
-    <rect x="34" y="22" width="72" height="76" rx="3" fill="#fbbf24"/>
-    <path d="M48 70 L72 42 M62 74 L80 53"/>
+    <path d="M124 28 C124 40 133 44 138 54 C146 70 138 96 120 96 C106 96 98 85 98 72 C98 60 108 54 110 42 C112 52 118 56 121 51 C124 46 124 36 124 28 Z M120 62 C124 70 127 74 127 80 C127 86 124 90 119 90 C114 90 111 86 111 80 C111 74 116 69 120 62 Z" fill="#e5e7eb" fill-rule="evenodd"/>
+    <rect x="26" y="22" width="70" height="76" rx="3" fill="#fbbf24"/>
+    <path d="M38 70 L60 44 M52 74 L68 55"/>
   </g>
 </svg>

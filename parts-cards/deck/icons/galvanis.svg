@@ -3,6 +3,7 @@
     <rect x="32" y="66" width="96" height="32" fill="#fbbf24" stroke="none"/>
     <path d="M32 66 L128 66"/>
     <polygon points="61,17 49,24 89,93 101,86" fill="#e5e7eb"/>
+    <path d="M52.6 21.9 L92.6 90.9" stroke-width="2"/>
     <path d="M30 52 L30 100 L130 100 L130 52"/>
   </g>
 </svg>
