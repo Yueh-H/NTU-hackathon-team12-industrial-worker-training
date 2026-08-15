@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.1] - 2026-08-15
+
+### Added
+- Standalone model-sheet Level 1 trainer under `model_sheet_training_v0_7_components/`
+
 ## [0.6.0] - 2026-08-15
 
 ### Added
