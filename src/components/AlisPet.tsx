@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { parts, workerById } from "../data/catalog";
 import { queueFor, snapshotFor } from "../engine/dashboard";
-import { speakZh, stopZhSpeech } from "../lib/speech";
+import { speakZh } from "../lib/speech";
 import { useShop } from "../store";
 
 type PetMood = "calm" | "due" | "urgent" | "celebrate";
@@ -51,10 +51,6 @@ export function AlisPet() {
     if (spokenRef.current === spokenKey) return;
     spokenRef.current = spokenKey;
     speakZh(voiceMessage);
-    return () => {
-      if (spokenRef.current === spokenKey) spokenRef.current = "";
-      stopZhSpeech();
-    };
   }, [spokenKey, voiceMessage, workerId]);
 
   if (!worker || !snapshot || !queue) return null;
@@ -103,10 +99,7 @@ export function AlisPet() {
       <button
         className="alis-pet-button"
         type="button"
-        onClick={() => {
-          setOpen((value) => !value);
-          speakZh(voiceMessage);
-        }}
+        onClick={() => setOpen((value) => !value)}
         aria-label={`${PET_NAME}：${message}`}
         aria-expanded={open}
       >
