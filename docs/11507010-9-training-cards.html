@@ -1,0 +1,1792 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Prototype kartu belajar Bahasa Indonesia untuk work order 11507010-9.">
+  <title>WorkCard 11507010-9 | Kartu pelatihan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17332f;
+      --muted: #62716d;
+      --paper: #f3efe3;
+      --surface: #fffdf8;
+      --surface-strong: #ffffff;
+      --line: #d7d4c8;
+      --green: #14755e;
+      --green-soft: #dcefe7;
+      --duo-green: #58cc02;
+      --duo-green-dark: #46a302;
+      --duo-blue: #1cb0f6;
+      --duo-blue-dark: #168dcc;
+      --duo-yellow: #ffc800;
+      --duo-yellow-soft: #fff4c7;
+      --duo-purple: #ce82ff;
+      --orange: #d86933;
+      --orange-soft: #f7dfd1;
+      --red: #b73e32;
+      --red-soft: #f7dcda;
+      --blueprint: #e8f0ed;
+      --shadow: 0 18px 55px rgba(35, 52, 47, 0.12);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(circle at 14% 8%, rgba(20, 117, 94, 0.11), transparent 24rem),
+        radial-gradient(circle at 92% 20%, rgba(216, 105, 51, 0.09), transparent 21rem),
+        var(--paper);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Noto Sans", sans-serif;
+      line-height: 1.55;
+    }
+
+    button { font: inherit; }
+
+    button:focus-visible,
+    [role="tab"]:focus-visible {
+      outline: 3px solid rgba(20, 117, 94, 0.3);
+      outline-offset: 3px;
+    }
+
+    .app-shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 0 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--ink);
+      color: white;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .brand strong,
+    .brand small { display: block; }
+    .brand strong { letter-spacing: -0.02em; }
+    .brand small { color: var(--muted); }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .stat-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      min-height: 34px;
+      padding: 7px 10px;
+      border: 1px solid rgba(23, 51, 47, 0.12);
+      border-radius: 12px;
+      background: var(--surface-strong);
+      color: var(--ink);
+      font-size: 0.82rem;
+      font-weight: 800;
+      box-shadow: 0 3px 0 rgba(23, 51, 47, 0.08);
+    }
+
+    .stat-chip.xp { color: #9a6c00; background: var(--duo-yellow-soft); border-color: #f0d36c; }
+    .stat-chip.streak { color: #a4481c; background: var(--orange-soft); border-color: #e9bea5; }
+    .stat-chip.hearts { color: #a62f38; background: #fff0f0; border-color: #f0c5c5; }
+
+    .draft-badge,
+    .type-badge,
+    .source-badge,
+    .must-badge,
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .draft-badge {
+      padding: 8px 12px;
+      background: var(--orange-soft);
+      color: #833812;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.75fr);
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .hero-main,
+    .hero-summary {
+      padding: clamp(24px, 4vw, 44px);
+      border: 1px solid rgba(23, 51, 47, 0.12);
+      border-radius: var(--radius);
+      background: rgba(255, 253, 248, 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 12px;
+      max-width: 760px;
+      font-size: clamp(2rem, 5vw, 4.35rem);
+      line-height: 1.02;
+      letter-spacing: -0.055em;
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+    }
+
+    .hero-continue {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .hero-continue small { color: var(--muted); }
+
+    .hero-summary {
+      display: grid;
+      gap: 18px;
+      background: var(--ink);
+      color: white;
+    }
+
+    .summary-number {
+      display: block;
+      font-size: clamp(2.4rem, 7vw, 4.7rem);
+      font-weight: 820;
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .hero-summary small { color: #b9d0ca; }
+
+    .summary-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.17);
+    }
+
+    .summary-meta strong,
+    .summary-meta span { display: block; }
+    .summary-meta span { color: #b9d0ca; font-size: 0.78rem; }
+
+    .warning {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      margin: 18px 0;
+      padding: 16px 18px;
+      border: 1px solid #e9bea5;
+      border-radius: 18px;
+      background: var(--orange-soft);
+      color: #6f3517;
+    }
+
+    .warning-symbol {
+      flex: 0 0 auto;
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: white;
+      font-weight: 900;
+    }
+
+    .warning strong,
+    .warning span { display: block; }
+    .warning span { margin-top: 2px; }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 20px 0;
+      padding: 6px;
+      width: fit-content;
+      max-width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 253, 248, 0.75);
+    }
+
+    .tab-button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 17px;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 760;
+      cursor: pointer;
+    }
+
+    .tab-button[aria-selected="true"] {
+      background: var(--ink);
+      color: white;
+    }
+
+    [role="tabpanel"][hidden] { display: none; }
+
+    .path-section {
+      margin-bottom: 20px;
+      padding: clamp(20px, 3vw, 30px);
+      border: 1px solid rgba(23, 51, 47, 0.13);
+      border-bottom: 5px solid var(--duo-green);
+      border-radius: 24px;
+      background: var(--surface-strong);
+      box-shadow: 0 12px 34px rgba(35, 52, 47, 0.08);
+    }
+
+    .path-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .path-heading h2 { margin-bottom: 5px; font-size: clamp(1.35rem, 3vw, 2rem); letter-spacing: -0.035em; }
+    .path-heading p:not(.eyebrow) { margin-bottom: 0; color: var(--muted); }
+
+    .path-score {
+      flex: 0 1 240px;
+      min-width: 190px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 760;
+      text-align: right;
+    }
+
+    .path-score strong { display: block; margin-bottom: 6px; color: var(--ink); font-size: 1rem; }
+
+    .path-progress-track {
+      height: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8e8e8;
+      box-shadow: inset 0 1px 2px rgba(23, 51, 47, 0.12);
+    }
+
+    .path-progress-bar {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--duo-green), #8ce34c);
+      transition: width 260ms ease;
+    }
+
+    .lesson-path {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .lesson-path::before {
+      content: "";
+      position: absolute;
+      top: 44px;
+      right: 9%;
+      left: 9%;
+      height: 5px;
+      border-radius: 999px;
+      background: #e5e5e5;
+      box-shadow: inset 0 1px 1px rgba(23, 51, 47, 0.1);
+    }
+
+    .step-node {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
+      border: 2px solid #e5e5e5;
+      border-bottom-width: 5px;
+      border-radius: 20px;
+      padding: 14px 10px 13px;
+      background: #fff;
+      color: var(--ink);
+      text-align: center;
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+    }
+
+    .step-node:hover:not(:disabled) { transform: translateY(-3px); box-shadow: 0 7px 0 rgba(23, 51, 47, 0.08); }
+    .step-node:disabled { cursor: not-allowed; opacity: 0.58; }
+    .step-node.current { border-color: var(--duo-blue); background: #f3fbff; box-shadow: 0 5px 0 rgba(28, 176, 246, 0.18); }
+    .step-node.complete { border-color: var(--duo-green); background: #f5ffef; }
+    .step-node.complete .step-icon { background: var(--duo-green); box-shadow: inset 0 -4px 0 var(--duo-green-dark); }
+    .step-node.current .step-icon { background: var(--duo-blue); box-shadow: inset 0 -4px 0 var(--duo-blue-dark); }
+    .step-node.locked .step-icon { background: #c9c9c9; box-shadow: inset 0 -4px 0 #a6a6a6; }
+
+    .step-icon {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #e7e7e7;
+      color: #fff;
+      font-size: 1.45rem;
+      line-height: 1;
+      box-shadow: inset 0 -4px 0 #b0b0b0;
+    }
+
+    .step-node.complete .step-icon::after { content: "✓"; font-size: 1.6rem; }
+    .step-node.complete .step-icon > span { display: none; }
+    .step-node.locked .step-icon::after { content: "🔒"; filter: grayscale(1); font-size: 1.25rem; }
+    .step-node.locked .step-icon > span { display: none; }
+
+    .step-copy { display: grid; gap: 2px; min-height: 49px; }
+    .step-copy strong { font-size: 0.94rem; line-height: 1.22; }
+    .step-copy small { color: var(--muted); font-size: 0.72rem; line-height: 1.25; }
+    .step-status { color: var(--muted); font-size: 0.72rem; font-weight: 800; }
+    .step-node.current .step-status { color: var(--duo-blue-dark); }
+    .step-node.complete .step-status { color: var(--duo-green-dark); }
+
+    .step-reward {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 22px;
+      padding: 3px 7px;
+      border-radius: 8px;
+      background: var(--duo-yellow-soft);
+      color: #8c6500;
+      font-size: 0.68rem;
+      font-weight: 850;
+    }
+
+    .learn-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(270px, 0.55fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .study-card,
+    .side-panel,
+    .grid-card,
+    .review-block {
+      border: 1px solid rgba(23, 51, 47, 0.13);
+      background: var(--surface);
+      box-shadow: 0 12px 34px rgba(35, 52, 47, 0.08);
+    }
+
+    .study-card {
+      overflow: hidden;
+      border-radius: 28px;
+    }
+
+    .study-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 22px 24px 0;
+    }
+
+    .card-count { color: var(--muted); font-size: 0.86rem; }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 7px;
+    }
+
+    .type-badge,
+    .source-badge,
+    .must-badge,
+    .status-chip { padding: 5px 9px; }
+    .type-badge { background: var(--green-soft); color: #0b5e49; }
+    .source-badge { background: #eceae1; color: #5d5c54; }
+    .must-badge { background: var(--red-soft); color: #8e2d25; }
+
+    .diagram {
+      position: relative;
+      margin: 20px 24px;
+      min-height: 330px;
+      overflow: hidden;
+      border-radius: 22px;
+      background:
+        linear-gradient(rgba(20, 117, 94, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(20, 117, 94, 0.05) 1px, transparent 1px),
+        var(--blueprint);
+      background-size: 24px 24px;
+    }
+
+    .diagram svg {
+      display: block;
+      width: 100%;
+      min-height: 330px;
+    }
+
+    .diagram-note {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.88);
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    .question-area { padding: 0 24px 24px; }
+
+    .card-kicker {
+      margin-bottom: 7px;
+      color: var(--green);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .question-area h2 {
+      margin-bottom: 10px;
+      font-size: clamp(1.55rem, 4vw, 2.45rem);
+      line-height: 1.17;
+      letter-spacing: -0.035em;
+    }
+
+    .chinese-label { color: var(--muted); }
+
+    .answer-panel {
+      margin-top: 18px;
+      padding: 18px;
+      border-left: 4px solid var(--green);
+      border-radius: 0 16px 16px 0;
+      background: var(--green-soft);
+    }
+
+    .answer-panel[hidden] { display: none; }
+    .answer-panel strong { display: block; margin-bottom: 5px; }
+
+    .speech-gate {
+      margin-top: 18px;
+      padding: 18px;
+      border: 2px solid #c8dcd5;
+      border-radius: 18px;
+      background: #f4fbf7;
+    }
+
+    .speech-gate[data-state="complete"] {
+      border-color: var(--duo-green);
+      background: #f3ffec;
+    }
+
+    .speech-gate[data-state="error"],
+    .speech-gate[data-state="unsupported"] {
+      border-color: #e9bea5;
+      background: #fff7f0;
+    }
+
+    .speech-gate-header,
+    .speech-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .speech-eyebrow {
+      margin: 0 0 3px;
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.06em;
+    }
+
+    .speech-gate h3 { margin-bottom: 0; font-size: 1rem; }
+
+    .speech-status-chip {
+      flex: 0 0 auto;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #eceae1;
+      color: #5d5c54;
+      font-size: 0.75rem;
+      font-weight: 850;
+    }
+
+    .speech-status-chip[data-state="listening"] { background: #dff4ff; color: #1277ab; }
+    .speech-status-chip[data-state="complete"] { background: var(--green-soft); color: #0d5c49; }
+    .speech-status-chip[data-state="error"],
+    .speech-status-chip[data-state="unsupported"] { background: var(--orange-soft); color: #833812; }
+
+    .speech-target {
+      margin: 14px 0 8px;
+      padding: 13px 15px;
+      border-radius: 14px;
+      background: white;
+      color: var(--ink);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-align: center;
+    }
+
+    .speech-instruction,
+    .speech-transcript { margin-bottom: 12px; color: var(--muted); font-size: 0.86rem; }
+
+    .speech-transcript {
+      min-height: 1.4em;
+      margin: 12px 0 0;
+      padding-top: 10px;
+      border-top: 1px solid rgba(23, 51, 47, 0.12);
+    }
+
+    .speech-transcript[data-state="complete"] { color: #0d5c49; font-weight: 750; }
+    .speech-transcript[data-state="error"] { color: #833812; }
+
+    .speech-controls { justify-content: flex-start; flex-wrap: wrap; }
+
+    .speech-controls .action-button:disabled,
+    .reveal-button:disabled,
+    .rating-button:disabled,
+    .nav-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.55;
+    }
+
+    .quiz {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .quiz-question { margin-bottom: 12px; font-weight: 760; }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .option-button,
+    .action-button,
+    .rating-button,
+    .nav-button,
+    .grid-card {
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .option-button {
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 11px 13px;
+      background: white;
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .option-button:hover { border-color: var(--green); }
+    .option-button.is-correct { border-color: var(--green); background: var(--green-soft); }
+    .option-button.is-wrong { border-color: var(--red); background: var(--red-soft); }
+    .option-button:disabled { cursor: default; opacity: 1; }
+
+    .card-actions,
+    .rating-row,
+    .nav-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .card-actions { margin-top: 18px; }
+    .rating-row { margin-top: 16px; }
+
+    .action-button,
+    .rating-button,
+    .nav-button {
+      border: 0;
+      border-radius: 13px;
+      padding: 11px 15px;
+      font-weight: 760;
+    }
+
+    .action-button.primary { background: var(--ink); color: white; }
+    .action-button.secondary,
+    .nav-button { border: 1px solid var(--line); background: white; color: var(--ink); }
+
+    .rating-button { flex: 1 1 120px; }
+    .rating-button[data-rating="forgot"] { background: var(--red-soft); color: #852d25; }
+    .rating-button[data-rating="fuzzy"] { background: var(--orange-soft); color: #7b3917; }
+    .rating-button[data-rating="remembered"] { background: var(--green-soft); color: #0d5c49; }
+    .rating-button.is-selected { box-shadow: inset 0 0 0 3px currentColor; }
+
+    .side-panel {
+      position: sticky;
+      top: 16px;
+      border-radius: 22px;
+      padding: 22px;
+    }
+
+    .side-panel h3 { margin-bottom: 5px; }
+
+    .progress-track {
+      height: 10px;
+      margin: 15px 0 8px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e2e1d8;
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--green);
+      transition: width 220ms ease;
+    }
+
+    .progress-copy {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .status-list {
+      display: grid;
+      gap: 10px;
+      margin: 20px 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .status-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .status-list span { color: var(--muted); }
+
+    .nav-row { justify-content: space-between; }
+
+    .grid-toolbar,
+    .review-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .grid-toolbar p,
+    .review-head p { margin-bottom: 0; color: var(--muted); }
+
+    .filter-select {
+      min-width: 180px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: var(--surface);
+      color: var(--ink);
+      font: inherit;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .grid-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 215px;
+      border-radius: 18px;
+      padding: 18px;
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .grid-card:hover { transform: translateY(-2px); border-color: rgba(20, 117, 94, 0.5); }
+    .grid-card h3 { margin: 14px 0 8px; font-size: 1.04rem; }
+    .grid-card p { margin-bottom: 18px; color: var(--muted); font-size: 0.88rem; }
+
+    .grid-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .status-chip[data-state="remembered"] { background: var(--green-soft); color: #0d5c49; }
+    .status-chip[data-state="fuzzy"] { background: var(--orange-soft); color: #7b3917; }
+    .status-chip[data-state="forgot"] { background: var(--red-soft); color: #852d25; }
+    .status-chip[data-state="new"] { background: #eceae1; color: #5d5c54; }
+
+    .review-list { display: grid; gap: 12px; }
+
+    .review-block {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 13px;
+      align-items: start;
+      border-radius: 17px;
+      padding: 16px 18px;
+    }
+
+    .review-check {
+      width: 20px;
+      height: 20px;
+      margin-top: 3px;
+      accent-color: var(--green);
+    }
+
+    .review-block label { cursor: pointer; }
+    .review-block small { color: var(--muted); }
+
+    .blocking-label {
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--red-soft);
+      color: #8e2d25;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .footer-note {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .learn-layout { grid-template-columns: 1fr; }
+      .side-panel { position: static; }
+      .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .lesson-path { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .lesson-path::before { display: none; }
+    }
+
+    @media (max-width: 620px) {
+      .app-shell { width: min(100% - 20px, 1180px); padding-top: 10px; }
+      .topbar { align-items: flex-start; }
+      .topbar-actions { align-items: flex-end; flex-direction: column; gap: 5px; }
+      .topbar-actions .stat-chip { display: none; }
+      .brand small { display: none; }
+      .hero-main, .hero-summary { padding: 24px; }
+      .hero-continue { align-items: flex-start; flex-direction: column; gap: 7px; }
+      .tabs { width: 100%; border-radius: 18px; }
+      .tab-button { flex: 1 1 100%; }
+      .path-heading { align-items: stretch; flex-direction: column; gap: 15px; }
+      .path-score { flex-basis: auto; min-width: 0; text-align: left; }
+      .lesson-path { grid-template-columns: 1fr; gap: 8px; }
+      .step-node { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 11px; align-items: center; padding: 11px 13px; text-align: left; }
+      .step-icon { width: 46px; height: 46px; font-size: 1.2rem; }
+      .step-copy { min-height: 0; }
+      .step-status { justify-self: end; }
+      .step-reward { grid-column: 2 / 4; width: fit-content; }
+      .study-head { padding: 18px 17px 0; }
+      .diagram { margin: 16px; min-height: 260px; }
+      .diagram svg { min-height: 260px; }
+      .question-area { padding: 0 17px 18px; }
+      .options { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: 1fr; }
+      .grid-toolbar,
+      .review-head { align-items: stretch; flex-direction: column; }
+      .filter-select { width: 100%; }
+      .review-block { grid-template-columns: auto 1fr; }
+      .blocking-label { grid-column: 2; width: fit-content; }
+    }
+
+    @media print {
+      body { background: white; }
+      .app-shell { width: 100%; padding: 0; }
+      .topbar, .tabs, .warning, .side-panel, .card-actions, .speech-gate, .rating-row, .quiz { display: none !important; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-summary { background: white; color: var(--ink); box-shadow: none; }
+      .study-card { box-shadow: none; break-inside: avoid; }
+      .answer-panel { display: block !important; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">W</span>
+        <span><strong>WorkCard</strong><small>Pelatihan kerja yang dapat ditinjau</small></span>
+      </div>
+      <div class="topbar-actions" aria-label="Ringkasan pemain">
+        <span class="stat-chip streak">🔥 <span>3 hari</span></span>
+        <span class="stat-chip xp">⚡ <span id="xpValue">0 XP</span></span>
+        <span class="stat-chip hearts">♥ <span>5</span></span>
+        <span class="draft-badge">草稿 · Belum diterbitkan</span>
+      </div>
+    </header>
+
+    <section class="hero" aria-labelledby="pageTitle">
+      <div class="hero-main">
+        <p class="eyebrow">Work order 11507010-9 · D9</p>
+        <h1 id="pageTitle">Kenali pintu, bagian, dan spesifikasinya.</h1>
+        <p class="hero-copy">Kartu belajar Bahasa Indonesia untuk pintu dua daun tidak sama besar, tahan api dan penghalang asap. Materi ini adalah prototipe untuk ditinjau supervisor.</p>
+        <div class="hero-continue">
+          <button class="action-button primary" id="resumeButton" type="button">Mulai langkah 1 →</button>
+          <small>5 langkah · 14 kartu · belajar sedikit demi sedikit</small>
+        </div>
+      </div>
+      <aside class="hero-summary" aria-label="Ringkasan kartu">
+        <div>
+          <small>Total kartu</small>
+          <strong class="summary-number">14</strong>
+        </div>
+        <div class="summary-meta">
+          <div><strong>8 set</strong><span>Jumlah pesanan</span></div>
+          <div><strong>8251</strong><span>Kode warna</span></div>
+          <div><strong>1724×2202</strong><span>Ukuran rakitan</span></div>
+          <div><strong>Keluar</strong><span>Arah buka</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <aside class="warning" role="note">
+      <span class="warning-symbol" aria-hidden="true">!</span>
+      <span><strong>主管注意：來源檔只有 1 頁，但圖面標示 P9/9。</strong><span>缺少正式製程順序、PPE、公差與驗收條件；所有印尼文與五金映射都必須經雙語現場人員確認。</span></span>
+    </aside>
+
+    <nav class="tabs" role="tablist" aria-label="Tampilan">
+      <button class="tab-button" id="learnTab" type="button" role="tab" aria-selected="true" aria-controls="learnPanel">Belajar</button>
+      <button class="tab-button" id="gridTab" type="button" role="tab" aria-selected="false" aria-controls="gridPanel">Semua kartu</button>
+      <button class="tab-button" id="reviewTab" type="button" role="tab" aria-selected="false" aria-controls="reviewPanel">主管審核</button>
+    </nav>
+
+    <section id="learnPanel" role="tabpanel" aria-labelledby="learnTab">
+      <section class="path-section" aria-labelledby="pathTitle">
+        <div class="path-heading">
+          <div>
+            <p class="eyebrow">Jalur belajar · 學習路徑</p>
+            <h2 id="pathTitle">把一張工單，走成 5 個學習步驟</h2>
+            <p>先辨識，再確認規格，最後做安全與品質檢查。每完成一關，下一關就會解鎖。</p>
+          </div>
+          <div class="path-score">
+            <strong id="stepProgressLabel">0 / 5 langkah selesai</strong>
+            <div class="path-progress-track" role="progressbar" aria-label="Progres langkah" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" id="pathProgressTrack"><div class="path-progress-bar" id="pathProgressBar"></div></div>
+          </div>
+        </div>
+        <div class="lesson-path" id="lessonPath" aria-label="Lima langkah belajar"></div>
+      </section>
+
+      <div class="learn-layout">
+        <article class="study-card" aria-live="polite">
+          <div class="study-head">
+            <span class="card-count" id="cardCount">Kartu 1 dari 14</span>
+            <span class="badge-row" id="badgeRow"></span>
+          </div>
+          <div class="diagram" id="diagram" aria-label="Gambar skematik kartu"></div>
+          <div class="question-area">
+            <p class="card-kicker" id="cardTitleZh">總成辨識</p>
+            <h2 id="cardPrompt">Rakitan pintu jenis apa yang ditunjukkan pada gambar ini?</h2>
+            <p class="chinese-label" id="sourceZh">原圖：項次 15／D9；1724×2202；子母扇。</p>
+
+            <section class="speech-gate" id="speechGate" data-state="pending" aria-labelledby="speechGateTitle">
+              <div class="speech-gate-header">
+                <div>
+                  <p class="speech-eyebrow">中文朗讀通關 · Baca bahasa Mandarin</p>
+                  <h3 id="speechGateTitle">請看著卡片，朗讀一次中文</h3>
+                </div>
+                <span class="speech-status-chip" id="speechStatusChip" data-state="pending">尚未朗讀</span>
+              </div>
+              <p class="speech-target" id="speechTarget" lang="zh-TW">總成辨識</p>
+              <p class="speech-instruction" id="speechInstruction">按下麥克風，唸出上方中文。完成一次辨識後，才能查看答案與進入下一張。</p>
+              <div class="speech-controls">
+                <button class="action-button primary" id="speechButton" type="button">🎙 開始朗讀</button>
+              </div>
+              <p class="speech-transcript" id="speechTranscript" aria-live="polite">辨識結果會顯示在這裡。</p>
+            </section>
+
+            <div class="card-actions">
+              <button class="action-button primary reveal-button" id="revealButton" type="button">Lihat jawaban</button>
+              <button class="action-button secondary" id="speakButton" type="button">Dengarkan</button>
+            </div>
+
+            <div class="answer-panel" id="answerPanel" hidden>
+              <strong>Jawaban</strong>
+              <span id="answerText"></span>
+              <div class="quiz">
+                <p class="quiz-question" id="quizQuestion"></p>
+                <div class="options" id="quizOptions"></div>
+              </div>
+              <div class="rating-row" aria-label="Nilai ingatan">
+                <button class="rating-button" type="button" data-rating="forgot">Lupa</button>
+                <button class="rating-button" type="button" data-rating="fuzzy">Ragu-ragu</button>
+                <button class="rating-button" type="button" data-rating="remembered">Ingat</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <aside class="side-panel">
+          <p class="eyebrow">Sesi saat ini</p>
+          <h3>Progres belajar</h3>
+          <div class="progress-track" role="progressbar" aria-label="Progres kartu" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0" id="progressTrack"><div class="progress-bar" id="progressBar"></div></div>
+          <div class="progress-copy"><span id="progressLabel">0 dari 14 dinilai</span><span id="progressPercent">0%</span></div>
+          <ul class="status-list">
+            <li><span>Ingat</span><strong id="rememberedCount">0</strong></li>
+            <li><span>Ragu-ragu</span><strong id="fuzzyCount">0</strong></li>
+            <li><span>Lupa</span><strong id="forgotCount">0</strong></li>
+            <li><span>中文朗讀</span><strong id="speechCount">0 / 14</strong></li>
+            <li><span>Wajib dikuasai</span><strong>8</strong></li>
+          </ul>
+          <div class="nav-row">
+            <button class="nav-button" id="prevButton" type="button">← Sebelumnya</button>
+            <button class="nav-button" id="nextButton" type="button">Berikutnya →</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="gridPanel" role="tabpanel" aria-labelledby="gridTab" hidden>
+      <div class="grid-toolbar">
+        <div><h2>Semua kartu</h2><p>Pilih kartu untuk membuka sesi belajar.</p></div>
+        <label>Filter
+          <select class="filter-select" id="cardFilter">
+            <option value="all">Semua</option>
+            <option value="must">Wajib dikuasai</option>
+            <option value="review">Perlu diulang</option>
+            <option value="new">Belum dinilai</option>
+          </select>
+        </label>
+      </div>
+      <div class="card-grid" id="cardGrid"></div>
+    </section>
+
+    <section id="reviewPanel" role="tabpanel" aria-labelledby="reviewTab" hidden>
+      <div class="review-head">
+        <div><h2>主管發布前審核</h2><p>阻擋問題未完成前，不應把教材指派給員工。</p></div>
+        <span class="draft-badge" id="reviewProgress">0 / 14 已確認</span>
+      </div>
+      <div class="review-list" id="reviewList"></div>
+    </section>
+
+    <footer class="footer-note">資料只保存在這個瀏覽器的 localStorage。以上 5 個步驟是學習拆解示意，不代表正式製造順序；示意圖不是製造依據，尺寸、焊點、五金與安全要求以核准版工程圖和公司 SOP 為準。</footer>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const cards = [
+        {
+          id: "CARD-001-ASSEMBLY", type: "part_recognition", titleZh: "總成辨識", visual: "assembly", must: true,
+          prompt: "Rakitan pintu jenis apa yang ditunjukkan pada gambar ini?",
+          speechTextZh: "總成辨識",
+          answer: "Pintu dua daun tidak sama besar, tahan api dan penghalang asap, dengan panel kaca.",
+          sourceZh: "原圖：項次 15／D9；1724×2202；子母扇。",
+          quiz: "Berapa ukuran keseluruhan rakitan D9?", correct: "1724 × 2202 mm.",
+          options: ["1724 × 2202 mm.", "1022 × 2202 mm", "701 × 2202 mm", "1074 × 2276 mm"]
+        },
+        {
+          id: "CARD-002-MOTHER-LEAF", type: "terminology", titleZh: "母扇", visual: "mother", must: true,
+          prompt: "Bagian mana yang disebut daun pintu utama?",
+          speechTextZh: "母扇",
+          answer: "母扇 = daun pintu utama. Ukuran jadi: 1022 × 2202 mm.",
+          sourceZh: "原圖：母扇 1022×2202；加工尺寸 1074×2276。",
+          quiz: "Berapa ukuran jadi daun pintu utama?", correct: "1022 × 2202 mm.",
+          options: ["1022 × 2202 mm.", "701 × 2202 mm", "1074 × 2276 mm", "753 × 2276 mm"]
+        },
+        {
+          id: "CARD-003-CHILD-LEAF", type: "terminology", titleZh: "子扇", visual: "child", must: true,
+          prompt: "Bagian mana yang disebut daun pintu anak atau sekunder?",
+          speechTextZh: "子扇",
+          answer: "子扇 = daun pintu anak／sekunder. Ukuran jadi: 701 × 2202 mm.",
+          sourceZh: "原圖：子扇 701×2202；加工尺寸 753×2276。",
+          quiz: "Berapa ukuran jadi daun pintu anak?", correct: "701 × 2202 mm.",
+          options: ["701 × 2202 mm.", "1022 × 2202 mm", "753 × 2276 mm", "1724 × 2202 mm"]
+        },
+        {
+          id: "CARD-004-HINGE-SIDE", type: "part_recognition", titleZh: "鉸鏈側", visual: "hinge", must: true,
+          prompt: "Tunjukkan sisi engsel pada gambar daun pintu.",
+          speechTextZh: "鉸鏈側",
+          answer: "Sisi engsel adalah sisi tempat engsel dan titik las engsel ditandai.",
+          sourceZh: "原圖：鉸鏈側芯材為 48 mm 珍珠岩複合板。",
+          quiz: "Bahan inti utama apa yang ditunjukkan pada sisi engsel?", correct: "Papan komposit perlit 48 mm.",
+          options: ["Papan komposit perlit 48 mm.", "Papan komposit perlit 40 mm", "Pelat galvanis 1,2t", "Besi datar 4,5t"]
+        },
+        {
+          id: "CARD-005-LOCK-SIDE", type: "quality", titleZh: "鎖側材料", visual: "layers", must: true,
+          prompt: "Susunan bahan apa yang digunakan pada sisi kunci?",
+          speechTextZh: "鎖側材料",
+          answer: "1 lapis papan komposit perlit 40 mm + 2 lapis papan magnesium karbonat 4 mm.",
+          sourceZh: "原圖：鎖側 40 mm 珍珠岩複合板 1 層 + 4 mm 碳酸鎂 2 層。",
+          quiz: "Berapa lapis papan magnesium karbonat 4 mm pada sisi kunci?", correct: "2 lapis.",
+          options: ["2 lapis.", "Tidak ada", "1 lapis", "4 lapis"]
+        },
+        {
+          id: "CARD-006-TOP-BOTTOM-FILL", type: "quality", titleZh: "上、下方填料", visual: "top-bottom", must: true,
+          prompt: "Apakah bagian bawah harus diisi papan magnesium karbonat 4,0t?",
+          speechTextZh: "上方填料",
+          answer: "Tidak. Bagian atas harus diisi, sedangkan bagian bawah tidak perlu diisi.",
+          sourceZh: "原圖：上須塞 4.0t 碳酸鎂；下方不需塞 4.0t 碳酸鎂。",
+          quiz: "Bagian mana yang harus diisi papan magnesium karbonat 4,0t?", correct: "Bagian atas.",
+          options: ["Bagian atas.", "Bagian bawah", "Kedua sisi", "Tidak ada bagian"]
+        },
+        {
+          id: "CARD-007-FIRE-GLASS", type: "quality", titleZh: "防火玻璃", visual: "glass", must: true,
+          prompt: "Apa spesifikasi kaca tahan api Baiken pada lembar ini?",
+          speechTextZh: "防火玻璃",
+          answer: "31 × 226 × 1226 mm, total 16 lembar.",
+          sourceZh: "原圖：柏肯防火玻璃 31×226×1226，共 16 片。",
+          quiz: "Berapa jumlah kaca tahan api yang tercantum?", correct: "16 lembar.",
+          options: ["16 lembar.", "8 lembar", "32 lembar", "64 lembar"]
+        },
+        {
+          id: "CARD-008-ANTI-PRY", type: "part_recognition", titleZh: "防撬栓", visual: "anti-pry", must: false,
+          prompt: "Komponen TH-720 digunakan sebagai apa?",
+          speechTextZh: "防撬栓",
+          answer: "防撬栓 = pin anti-congkel. Lubangnya ditunjukkan bersama lubang engsel pada profil 1-1.",
+          sourceZh: "原圖：防撬栓 TH-720；料件 1-1 沖防撬栓及鉸鏈孔。",
+          quiz: "Kode komponen pin anti-congkel pada tabel adalah?", correct: "TH-720.",
+          options: ["TH-720.", "DW-900", "GD-1043", "OK-702A"]
+        },
+        {
+          id: "CARD-009-DROP-SEAL", type: "terminology", titleZh: "下降條", visual: "drop-seal", must: false,
+          prompt: "Apa nama Bahasa Indonesia untuk 下降條 pada konteks pintu ini?",
+          speechTextZh: "下降條",
+          answer: "Draft: seal bawah otomatis／drop seal. Kode yang tercantum: Dongtie DW-900.",
+          sourceZh: "原圖：下降條（東鐵 DW-900）；譯名待雙語現場人員確認。",
+          quiz: "Di bagian mana komponen ini dipasang?", correct: "Pada bagian bawah daun pintu.",
+          options: ["Pada bagian bawah daun pintu.", "Pada bagian atas kaca", "Pada sisi engsel", "Di tengah rangka"]
+        },
+        {
+          id: "CARD-010-WELD-APPROVAL", type: "safety", titleZh: "點焊前核准", visual: "weld", must: true,
+          prompt: "Apa yang harus dilakukan sebelum melakukan las titik?",
+          speechTextZh: "點焊前核准",
+          answer: "Beri tahu Wakil Direktur／VP terlebih dahulu. Prosedur las dan APD harus berasal dari SOP keselamatan terpisah.",
+          sourceZh: "原圖：點焊前通知副總。來源未提供焊接 SOP 或 PPE。",
+          quiz: "Bolehkah las titik dimulai sebelum pemberitahuan internal?", correct: "Tidak.",
+          options: ["Tidak.", "Ya", "Hanya untuk daun anak", "Hanya untuk sisi kunci"]
+        },
+        {
+          id: "CARD-011-LOWER-SCREWS", type: "quality", titleZh: "下封邊螺絲", visual: "lower-screws", must: true,
+          prompt: "Sekrup apa yang dipasang pada penutup tepi bawah di sisi bukan engsel?",
+          speechTextZh: "下封邊螺絲",
+          answer: "4 sekrup M4.7 × 50 mm.",
+          sourceZh: "原圖：下封邊非鉸鏈側鎖 M4.7×50 mm 螺絲 4 支。",
+          quiz: "Berapa jumlah sekrup M4.7 × 50 mm yang tercantum?", correct: "4 buah.",
+          options: ["4 buah.", "1 buah", "3 buah", "8 buah"]
+        },
+        {
+          id: "CARD-012-GLAZING-BEAD", type: "procedure", titleZh: "玻璃壓條", visual: "glazing", must: false,
+          prompt: "Berapa sudut potong lis penahan kaca galvanis?",
+          speechTextZh: "玻璃壓條",
+          answer: "Potong 45 derajat dan buat lubang sekrup yang diperbesar sesuai gambar.",
+          sourceZh: "原圖：1.2t 鍍鋅玻璃壓；切 45 度，沖螺絲擴孔。",
+          quiz: "Apa ketebalan bahan lis penahan kaca yang tercantum?", correct: "1,2t.",
+          options: ["1,2t.", "1,0t", "1,4t", "4,5t"]
+        },
+        {
+          id: "CARD-013-OPENING-COLOR", type: "quality", titleZh: "方向與顏色", visual: "opening", must: false,
+          prompt: "Ke arah mana pintu dibuka dan apa kode warnanya?",
+          speechTextZh: "方向與顏色",
+          answer: "Membuka ke luar; kode warna 8251.",
+          sourceZh: "原圖：開外；顏色代碼 8251。色塊僅為示意，不代表實際色樣。",
+          quiz: "Apa kode warna pada lembar produksi?", correct: "8251.",
+          options: ["8251.", "064", "D9", "720"]
+        },
+        {
+          id: "CARD-014-HARDWARE-DIFFERENCE", type: "part_recognition", titleZh: "子扇五金", visual: "child-hardware", must: false,
+          prompt: "Perangkat mana yang tercantum khusus pada daun anak?",
+          speechTextZh: "子扇五金",
+          answer: "Draft pemetaan: grendel tersembunyi tiga titik Dongtie POWER-2612B. Pemetaan tabel harus dikonfirmasi supervisor.",
+          sourceZh: "原圖：子扇欄位標示三押暗閂（東鐵 POWER-2612B），欄位映射待確認。",
+          quiz: "Kode perangkat grendel tersembunyi tiga titik pada daun anak adalah?", correct: "POWER-2612B.",
+          options: ["POWER-2612B.", "P-167-51", "TH-720", "DW-900"]
+        }
+      ];
+
+      // 學習順序是把工單轉成可教學的路徑，不等同於尚待補齊的正式製程 SOP。
+      const learningSteps = [
+        { id: "STEP-01", icon: "🚪", titleZh: "看懂總成", titleId: "Pahami rakitan", goal: "總成、母扇、子扇", cards: [0, 1, 2], reward: 10 },
+        { id: "STEP-02", icon: "🧩", titleZh: "找到部件", titleId: "Kenali bagian", goal: "鉸鏈側、鎖側、填料", cards: [3, 4, 5], reward: 10 },
+        { id: "STEP-03", icon: "📏", titleZh: "對材料規格", titleId: "Cek bahan", goal: "防火玻璃與五金", cards: [6, 7, 8], reward: 10 },
+        { id: "STEP-04", icon: "🦺", titleZh: "學安全製程", titleId: "Proses aman", goal: "點焊、封邊、玻璃壓條", cards: [9, 10, 11], reward: 10 },
+        { id: "STEP-05", icon: "✅", titleZh: "做最後檢查", titleId: "Periksa akhir", goal: "方向、顏色、子扇五金", cards: [12, 13], reward: 10 }
+      ];
+
+      const reviewQuestions = [
+        [true, "檔案只有一頁但標示 P9/9；請提供第 1 至第 8 張圖，或確認本頁可獨立成為訓練內容。"],
+        [true, "確認所有未明示單位的尺寸是否一律為 mm，以及 t、W 的公司內部定義。"],
+        [true, "確認母扇／子扇各 16 片代表板片數，並核對 8 組與 4左／4右的數量關係。"],
+        [true, "補上裁切、沖孔、填芯、封邊、點焊、玻璃與五金安裝的正式 SOP 順序。"],
+        [true, "補上機台、治具、PPE、K3 安全規範及停機／上鎖程序。"],
+        [true, "補上尺寸公差、焊點標準、量測工具、抽檢方式與最終放行條件。"],
+        [true, "確認『點焊前通知副總』的核准角色、通知方式與可稽核證據。"],
+        [true, "確認材料正式品名確實為『碳酸鎂』及核准的印尼文譯名。"],
+        [true, "由雙語現場人員核准下降條、防撬栓、陽極鎖、暗閂、天地栓、封邊等術語。"],
+        [true, "逐欄確認母扇與子扇的五金映射及 P-167-51、OK-702A、POWER-2612B、TH-720、DW-900。"],
+        [false, "補上完整交貨日期；來源只顯示 114.08.。"],
+        [false, "確認教材永久排除客戶、工程名稱、聯絡人與電話。"],
+        [false, "確認目標職務：裁折、沖床、焊接、組裝、品保，或所有人。"],
+        [false, "確認每張卡片要使用的正式圖面裁切區域。"]
+      ];
+
+      const storageKey = "workcard-11507010-9-v1";
+      const reviewStorageKey = "workcard-11507010-9-review-v1";
+      const speechStorageKey = "workcard-11507010-9-speech-v1";
+      const typeLabels = {
+        part_recognition: "Kenali bagian",
+        terminology: "Istilah",
+        quality: "Spesifikasi",
+        safety: "Keselamatan",
+        procedure: "Proses"
+      };
+      const typeZh = {
+        part_recognition: "零件辨識",
+        terminology: "術語",
+        quality: "品質規格",
+        safety: "安全",
+        procedure: "製程"
+      };
+
+      let currentIndex = 0;
+      let answerVisible = false;
+      let ratings = loadObject(storageKey);
+      let reviewChecks = loadObject(reviewStorageKey);
+      let speechCompletions = loadObject(speechStorageKey);
+      let speechRecognition = null;
+      let speechSession = 0;
+      const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const speechSupported = Boolean(SpeechRecognitionAPI);
+
+      const els = Object.fromEntries(Array.from(document.querySelectorAll("[id]")).map((element) => [element.id, element]));
+
+      function speechTarget(card) {
+        return card.speechTextZh || card.titleZh;
+      }
+
+      function hasCompletedSpeech(card) {
+        return Boolean(speechCompletions[card.id]);
+      }
+
+      function normalizeSpeechText(value) {
+        const simplifiedToTraditional = {
+          "总": "總", "识": "識", "链": "鏈", "侧": "側", "锁": "鎖", "条": "條",
+          "点": "點", "压": "壓", "边": "邊", "丝": "絲", "与": "與", "颜": "顏"
+        };
+        return String(value)
+          .toLowerCase()
+          .replace(/[\s，。！？、；：,.!?;:·／/]/g, "")
+          .replace(/[总识链侧锁条点压边丝与颜]/g, (character) => simplifiedToTraditional[character] || character);
+      }
+
+      function speechMatches(card, transcript) {
+        const target = normalizeSpeechText(speechTarget(card));
+        const recognized = normalizeSpeechText(transcript);
+        const targetCharacters = [...new Set([...target].filter((character) => /[\u3400-\u9fff]/.test(character)))];
+        const recognizedChinese = [...recognized].filter((character) => /[\u3400-\u9fff]/.test(character));
+        if (!targetCharacters.length || !recognizedChinese.length) return false;
+        if (recognized.includes(target)) return true;
+        const matchedCount = targetCharacters.filter((character) => recognized.includes(character)).length;
+        const requiredCount = targetCharacters.length <= 2 ? targetCharacters.length : Math.ceil(targetCharacters.length * 0.75);
+        return matchedCount >= requiredCount;
+      }
+
+      function setSpeechGateState(card, state, status, instruction, transcript) {
+        if (cards[currentIndex].id !== card.id) return;
+        els.speechGate.dataset.state = state;
+        els.speechStatusChip.dataset.state = state;
+        els.speechStatusChip.textContent = status;
+        els.speechInstruction.textContent = instruction;
+        els.speechTranscript.dataset.state = state;
+        els.speechTranscript.textContent = transcript;
+        els.speechButton.disabled = state === "complete" || state === "unsupported";
+        els.speechButton.textContent = state === "listening" ? "⏹ 停止辨識" : state === "complete" ? "✓ 已完成" : state === "error" ? "🎙 再試一次" : "🎙 開始朗讀";
+        updateAnswerControls(card);
+        updateCardNavigation();
+      }
+
+      function updateSpeechGate(card) {
+        els.speechTarget.textContent = speechTarget(card);
+        if (!speechSupported) {
+          setSpeechGateState(
+            card,
+            "unsupported",
+            "不支援",
+            "此瀏覽器沒有語音辨識。請改用支援 SpeechRecognition 的 Chrome／Edge，並允許麥克風；目前不能手動跳過。",
+            "語音辨識未啟用。"
+          );
+          return;
+        }
+        const completion = speechCompletions[card.id];
+        if (completion) {
+          setSpeechGateState(
+            card,
+            "complete",
+            "已通過",
+            "已完成一次中文朗讀；現在可以查看答案並繼續。",
+            `辨識到：「${completion.transcript || speechTarget(card)}」`
+          );
+          return;
+        }
+        setSpeechGateState(
+          card,
+          "pending",
+          "尚未朗讀",
+          "按下麥克風，唸出上方中文。完成一次辨識後，才能查看答案與進入下一張。",
+          "辨識結果會顯示在這裡。"
+        );
+      }
+
+      function updateAnswerControls(card) {
+        const speechComplete = hasCompletedSpeech(card);
+        els.revealButton.disabled = !speechComplete;
+        els.revealButton.title = speechComplete ? "" : "請先完成中文朗讀";
+        document.querySelectorAll(".rating-button").forEach((button) => {
+          button.disabled = !speechComplete || !answerVisible;
+        });
+      }
+
+      function stopSpeechRecognition() {
+        speechSession += 1;
+        if (!speechRecognition) return;
+        try { speechRecognition.abort(); } catch (_) {}
+        speechRecognition = null;
+      }
+
+      function startSpeechRecognition(card) {
+        if (!speechSupported) {
+          updateSpeechGate(card);
+          return;
+        }
+        stopSpeechRecognition();
+        const session = ++speechSession;
+        let finalTranscript = "";
+        let errorMessage = "";
+        const recognition = new SpeechRecognitionAPI();
+        speechRecognition = recognition;
+        recognition.lang = "zh-TW";
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        recognition.maxAlternatives = 3;
+        recognition.onstart = () => {
+          if (session !== speechSession || cards[currentIndex].id !== card.id) return;
+          setSpeechGateState(card, "listening", "辨識中…", "請看著卡片上的中文並唸出來，完成後會自動判斷。", "正在聆聽…");
+        };
+        recognition.onresult = (event) => {
+          if (session !== speechSession || cards[currentIndex].id !== card.id) return;
+          let interimTranscript = "";
+          for (let index = event.resultIndex; index < event.results.length; index += 1) {
+            const result = event.results[index];
+            const transcript = result[0] ? result[0].transcript : "";
+            if (result.isFinal) finalTranscript += transcript;
+            else interimTranscript += transcript;
+          }
+          const shownTranscript = `${finalTranscript}${interimTranscript}`.trim();
+          els.speechTranscript.dataset.state = "listening";
+          els.speechTranscript.textContent = shownTranscript ? `辨識中：「${shownTranscript}」` : "正在聆聽…";
+          if (finalTranscript && speechMatches(card, finalTranscript)) {
+            speechCompletions[card.id] = {
+              transcript: finalTranscript.trim(),
+              completedAt: new Date().toISOString()
+            };
+            saveObject(speechStorageKey, speechCompletions);
+            setSpeechGateState(
+              card,
+              "complete",
+              "已通過",
+              "已完成一次中文朗讀；現在可以查看答案並繼續。",
+              `辨識到：「${finalTranscript.trim()}」`
+            );
+            renderProgress();
+            try { recognition.stop(); } catch (_) {}
+          }
+        };
+        recognition.onerror = (event) => {
+          if (session !== speechSession || cards[currentIndex].id !== card.id) return;
+          const messages = {
+            "not-allowed": "麥克風權限被拒絕，請在瀏覽器設定允許麥克風後再試。",
+            "service-not-allowed": "語音辨識服務未被允許，請改用 Chrome／Edge 並再試。",
+            "audio-capture": "找不到可用的麥克風，請確認裝置已連接。",
+            "no-speech": "沒有聽到聲音，請看著卡片再朗讀一次。",
+            "network": "語音辨識服務連線失敗，請檢查網路後再試。"
+          };
+          errorMessage = messages[event.error] || `語音辨識失敗（${event.error}），請再試一次。`;
+          setSpeechGateState(card, "error", "請再試一次", errorMessage, "這次沒有完成中文朗讀。");
+        };
+        recognition.onend = () => {
+          if (session !== speechSession || cards[currentIndex].id !== card.id) return;
+          speechRecognition = null;
+          if (hasCompletedSpeech(card)) {
+            updateSpeechGate(card);
+          } else if (errorMessage) {
+            setSpeechGateState(card, "error", "請再試一次", errorMessage, "這次沒有完成中文朗讀。");
+          } else if (finalTranscript) {
+            setSpeechGateState(card, "error", "未通過", "沒有辨識到卡片上的中文詞語，請看著上方文字再朗讀一次。", `辨識到：「${finalTranscript.trim()}」`);
+          } else {
+            updateSpeechGate(card);
+          }
+        };
+        try {
+          recognition.start();
+        } catch (error) {
+          speechRecognition = null;
+          setSpeechGateState(card, "error", "請再試一次", "無法啟動麥克風，請確認瀏覽器權限後再試。", String(error.message || error));
+        }
+      }
+
+      function getStepState(index) {
+        const step = learningSteps[index];
+        const complete = step.cards.every((cardIndex) => cardIsMastered(cards[cardIndex]));
+        if (complete) return "complete";
+        if (index === 0) return "current";
+        const previousComplete = learningSteps[index - 1].cards.every((cardIndex) => cardIsMastered(cards[cardIndex]));
+        return previousComplete ? "current" : "locked";
+      }
+
+      function cardIsMastered(card) {
+        return ratings[card.id] === "remembered" && hasCompletedSpeech(card);
+      }
+
+      function renderLearningPath() {
+        const completedSteps = learningSteps.filter((_, index) => getStepState(index) === "complete").length;
+        const rememberedCards = cards.filter((card) => cardIsMastered(card)).length;
+        const percent = Math.round(completedSteps / learningSteps.length * 100);
+        els.stepProgressLabel.textContent = `${completedSteps} / ${learningSteps.length} langkah selesai`;
+        els.pathProgressBar.style.width = `${percent}%`;
+        els.pathProgressTrack.setAttribute("aria-valuenow", String(completedSteps));
+        els.xpValue.textContent = `${rememberedCards * 10} XP`;
+        els.lessonPath.innerHTML = learningSteps.map((step, index) => {
+          const state = getStepState(index);
+          const assessed = step.cards.filter((cardIndex) => ratings[cards[cardIndex].id]).length;
+          const status = state === "complete" ? "Selesai · 完成" : state === "locked" ? "Terkunci · 尚未解鎖" : assessed ? "Lanjutkan · 繼續" : "Mulai · 開始";
+          const ariaCurrent = state === "current" ? ' aria-current="step"' : "";
+          const disabled = state === "locked" ? " disabled" : "";
+          return `<button class="step-node ${state}" type="button" data-step-index="${index}" aria-label="Langkah ${index + 1}: ${escapeHtml(step.titleId)}${disabled ? ", terkunci" : ""}"${ariaCurrent}${disabled}>
+            <span class="step-icon" aria-hidden="true"><span>${step.icon}</span></span>
+            <span class="step-copy"><strong>${escapeHtml(step.titleZh)}</strong><small>${escapeHtml(step.titleId)} · ${escapeHtml(step.goal)}</small></span>
+            <span class="step-status">${status}</span>
+            <span class="step-reward">⚡ ${step.reward} XP</span>
+          </button>`;
+        }).join("");
+        els.lessonPath.querySelectorAll("[data-step-index]").forEach((button) => button.addEventListener("click", () => openStep(Number(button.dataset.stepIndex))));
+      }
+
+      function openStep(stepIndex) {
+        if (getStepState(stepIndex) === "locked") return;
+        const step = learningSteps[stepIndex];
+        const nextCard = step.cards.find((cardIndex) => !ratings[cards[cardIndex].id] || !hasCompletedSpeech(cards[cardIndex]));
+        currentIndex = nextCard === undefined ? step.cards[0] : nextCard;
+        activateTab("learn");
+        renderCard();
+        window.scrollTo({ top: els.learnPanel.offsetTop - 16, behavior: "smooth" });
+      }
+
+      function updateCardNavigation() {
+        const stepIndex = learningSteps.findIndex((step) => step.cards.includes(currentIndex));
+        const step = learningSteps[stepIndex];
+        const atStepEnd = step.cards[step.cards.length - 1] === currentIndex;
+        const nextLocked = atStepEnd && stepIndex < learningSteps.length - 1 && getStepState(stepIndex + 1) === "locked";
+        const speechLocked = !hasCompletedSpeech(cards[currentIndex]);
+        els.prevButton.disabled = currentIndex === 0;
+        els.nextButton.disabled = currentIndex === cards.length - 1 || speechLocked || nextLocked;
+        els.nextButton.textContent = speechLocked ? "先完成中文朗讀" : nextLocked ? "完成本關才能繼續" : atStepEnd ? "下一關 →" : "下一張 →";
+      }
+
+      function loadObject(key) {
+        try {
+          const parsed = JSON.parse(localStorage.getItem(key) || "{}");
+          return parsed && typeof parsed === "object" ? parsed : {};
+        } catch (_) { return {}; }
+      }
+
+      function saveObject(key, value) {
+        try { localStorage.setItem(key, JSON.stringify(value)); }
+        catch (_) {}
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
+      }
+
+      function doorSvg(mode) {
+        const childActive = ["assembly", "child", "glass", "weld", "child-hardware"].includes(mode);
+        const motherActive = ["assembly", "mother", "glass", "weld"].includes(mode);
+        const hingeActive = mode === "hinge";
+        const lockActive = mode === "lock";
+        const glassActive = mode === "glass";
+        const weldActive = mode === "weld";
+        return `
+          <svg viewBox="0 0 760 430" role="img" aria-label="Skema pintu dua daun">
+            <defs>
+              <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#14755e"/></marker>
+            </defs>
+            <g fill="none" stroke="#17332f" stroke-width="5" stroke-linejoin="round">
+              <rect x="91" y="55" width="578" height="307" rx="2" fill="#fffdf8"/>
+              <rect x="105" y="69" width="197" height="279" fill="${childActive ? "#f7dfd1" : "#f5f3ea"}"/>
+              <rect x="302" y="69" width="353" height="279" fill="${motherActive ? "#dcefe7" : "#f5f3ea"}"/>
+              <line x1="302" y1="69" x2="302" y2="348" stroke="${lockActive ? "#d86933" : "#17332f"}" stroke-width="${lockActive ? 13 : 5}"/>
+              <rect x="159" y="119" width="89" height="164" rx="2" fill="${glassActive ? "#7fc6ae" : "#dcefe7"}"/>
+              <rect x="424" y="119" width="109" height="164" rx="2" fill="${glassActive ? "#7fc6ae" : "#dcefe7"}"/>
+              <line x1="105" y1="69" x2="105" y2="348" stroke="${hingeActive ? "#14755e" : "#17332f"}" stroke-width="${hingeActive ? 13 : 5}"/>
+              <line x1="655" y1="69" x2="655" y2="348" stroke="${hingeActive ? "#14755e" : "#17332f"}" stroke-width="${hingeActive ? 13 : 5}"/>
+            </g>
+            <g fill="#17332f" font-family="sans-serif" font-size="20" text-anchor="middle">
+              <text x="203" y="390">子扇 · 701</text>
+              <text x="479" y="390">母扇 · 1022</text>
+            </g>
+            <g fill="#14755e">
+              <circle cx="105" cy="120" r="7"/><circle cx="105" cy="208" r="7"/><circle cx="105" cy="296" r="7"/>
+              <circle cx="655" cy="120" r="7"/><circle cx="655" cy="208" r="7"/><circle cx="655" cy="296" r="7"/>
+            </g>
+            ${weldActive ? `<g fill="#b73e32"><circle cx="116" cy="106" r="9"/><circle cx="116" cy="194" r="9"/><circle cx="116" cy="282" r="9"/><circle cx="644" cy="106" r="9"/><circle cx="644" cy="194" r="9"/><circle cx="644" cy="282" r="9"/><circle cx="290" cy="126" r="9"/><circle cx="290" cy="300" r="9"/></g><text x="380" y="32" text-anchor="middle" fill="#b73e32" font-family="sans-serif" font-size="21" font-weight="700">Titik las · 焊點示意</text>` : ""}
+            ${mode === "child-hardware" ? `<g><rect x="258" y="184" width="31" height="72" rx="5" fill="#d86933"/><path d="M289 220 H344" stroke="#d86933" stroke-width="6"/><text x="375" y="225" fill="#833812" font-family="sans-serif" font-size="18">POWER-2612B</text></g>` : ""}
+          </svg>`;
+      }
+
+      function renderVisual(mode) {
+        if (["assembly", "mother", "child", "hinge", "lock", "glass", "weld", "child-hardware"].includes(mode)) return doorSvg(mode);
+        if (mode === "layers") return `
+          <svg viewBox="0 0 760 430" role="img" aria-label="Susunan lapisan sisi kunci">
+            <g transform="translate(86 82)" font-family="sans-serif">
+              <rect width="588" height="265" rx="18" fill="#fffdf8" stroke="#17332f" stroke-width="4"/>
+              <rect x="54" y="52" width="300" height="160" rx="8" fill="#dcefe7" stroke="#14755e" stroke-width="3"/>
+              <rect x="354" y="52" width="70" height="160" fill="#f7dfd1" stroke="#d86933" stroke-width="3"/>
+              <rect x="424" y="52" width="70" height="160" fill="#f7dfd1" stroke="#d86933" stroke-width="3"/>
+              <text x="204" y="120" text-anchor="middle" fill="#17332f" font-size="25">Perlit 40 mm</text>
+              <text x="389" y="120" text-anchor="middle" fill="#833812" font-size="21" transform="rotate(-90 389 120)">4 mm</text>
+              <text x="459" y="120" text-anchor="middle" fill="#833812" font-size="21" transform="rotate(-90 459 120)">4 mm</text>
+              <text x="274" y="248" text-anchor="middle" fill="#62716d" font-size="20">Sisi kunci · 鎖側材料剖面示意</text>
+            </g>
+          </svg>`;
+        if (mode === "top-bottom") return `
+          <svg viewBox="0 0 760 430" role="img" aria-label="Perbedaan isi bagian atas dan bawah">
+            <g font-family="sans-serif" text-anchor="middle">
+              <rect x="110" y="68" width="220" height="285" rx="14" fill="#fffdf8" stroke="#17332f" stroke-width="5"/>
+              <rect x="430" y="68" width="220" height="285" rx="14" fill="#fffdf8" stroke="#17332f" stroke-width="5"/>
+              <rect x="132" y="92" width="176" height="64" rx="8" fill="#f7dfd1" stroke="#d86933" stroke-width="3"/>
+              <rect x="452" y="265" width="176" height="64" rx="8" fill="#eceae1" stroke="#62716d" stroke-width="3" stroke-dasharray="8 7"/>
+              <text x="220" y="125" fill="#833812" font-size="23">ISI 4.0t</text>
+              <text x="540" y="303" fill="#62716d" font-size="23">TIDAK DIISI</text>
+              <text x="220" y="390" fill="#17332f" font-size="24">Atas · 上</text>
+              <text x="540" y="390" fill="#17332f" font-size="24">Bawah · 下</text>
+            </g>
+          </svg>`;
+        if (mode === "anti-pry") return `
+          <svg viewBox="0 0 760 430" role="img" aria-label="Pin anti-congkel TH-720">
+            <g transform="translate(80 70)" font-family="sans-serif">
+              <rect x="0" y="70" width="480" height="170" rx="18" fill="#fffdf8" stroke="#17332f" stroke-width="5"/>
+              <rect x="480" y="105" width="45" height="100" fill="#dcefe7" stroke="#14755e" stroke-width="4"/>
+              <path d="M525 155 H620" stroke="#d86933" stroke-width="18" stroke-linecap="round"/>
+              <circle cx="620" cy="155" r="28" fill="#f7dfd1" stroke="#d86933" stroke-width="5"/>
+              <text x="240" y="160" text-anchor="middle" fill="#17332f" font-size="28">Profil 1-1</text>
+              <text x="570" y="265" text-anchor="middle" fill="#833812" font-size="22">TH-720</text>
+              <text x="300" y="315" text-anchor="middle" fill="#62716d" font-size="20">Pin anti-congkel · 防撬栓示意</text>
+            </g>
+          </svg>`;
+        if (mode === "drop-seal") return `
+          <svg viewBox="0 0 760 430" role="img" aria-label="Seal bawah otomatis DW-900">
+            <g transform="translate(75 70)" font-family="sans-serif">
+              <rect x="60" y="10" width="500" height="220" rx="14" fill="#fffdf8" stroke="#17332f" stroke-width="5"/>
+              <rect x="92" y="210" width="436" height="55" rx="10" fill="#dcefe7" stroke="#14755e" stroke-width="4"/>
+              <path d="M120 265 V320 M250 265 V320 M380 265 V320 M500 265 V320" stroke="#d86933" stroke-width="7"/>
+              <path d="M88 337 H532" stroke="#17332f" stroke-width="5"/>
+              <text x="310" y="158" text-anchor="middle" fill="#17332f" font-size="28">Daun pintu</text>
+              <text x="310" y="247" text-anchor="middle" fill="#0b5e49" font-size="21">DW-900 · drop seal</text>
+            </g>
+          </svg>`;
+        if (mode === "lower-screws") return `
+          <svg viewBox="0 0 760 430" role="img" aria-label="Empat sekrup pada penutup bawah">
+            <g transform="translate(80 72)" font-family="sans-serif">
+              <rect x="35" y="25" width="550" height="235" rx="14" fill="#fffdf8" stroke="#17332f" stroke-width="5"/>
+              <rect x="35" y="225" width="550" height="48" rx="7" fill="#dcefe7" stroke="#14755e" stroke-width="4"/>
+              <g fill="#d86933" stroke="#833812" stroke-width="3"><circle cx="145" cy="249" r="14"/><circle cx="255" cy="249" r="14"/><circle cx="365" cy="249" r="14"/><circle cx="475" cy="249" r="14"/></g>
+              <text x="310" y="140" text-anchor="middle" fill="#17332f" font-size="28">M4.7 × 50 mm</text>
+              <text x="310" y="322" text-anchor="middle" fill="#62716d" font-size="21">4 sekrup · 非鉸鏈側</text>
+            </g>
+          </svg>`;
+        if (mode === "glazing") return `
+          <svg viewBox="0 0 760 430" role="img" aria-label="Profil lis penahan kaca 45 derajat">
+            <g transform="translate(90 82)" font-family="sans-serif">
+              <path d="M70 235 L70 95 L220 95 L268 48 L505 48 L555 98 L555 235" fill="none" stroke="#17332f" stroke-width="18" stroke-linejoin="round"/>
+              <circle cx="386" cy="48" r="17" fill="#f7dfd1" stroke="#d86933" stroke-width="4"/>
+              <path d="M220 95 L268 48 M505 48 L555 98" stroke="#d86933" stroke-width="5"/>
+              <text x="242" y="126" fill="#833812" font-size="22">45°</text>
+              <text x="512" y="126" fill="#833812" font-size="22">45°</text>
+              <text x="315" y="285" text-anchor="middle" fill="#17332f" font-size="26">1.2t · lis penahan kaca</text>
+              <text x="315" y="321" text-anchor="middle" fill="#62716d" font-size="20">螺絲擴孔位置以核准圖面為準</text>
+            </g>
+          </svg>`;
+        if (mode === "opening") return `
+          <svg viewBox="0 0 760 430" role="img" aria-label="Arah buka keluar dan kode warna 8251">
+            <g font-family="sans-serif">
+              <path d="M260 315 V95 H475" fill="none" stroke="#17332f" stroke-width="13" stroke-linecap="round"/>
+              <path d="M260 315 A220 220 0 0 1 480 95" fill="none" stroke="#14755e" stroke-width="7" stroke-dasharray="12 10" marker-end="url(#arrow)"/>
+              <text x="230" y="360" text-anchor="middle" fill="#17332f" font-size="26">Membuka ke luar</text>
+              <rect x="535" y="130" width="120" height="120" rx="22" fill="#d6d2bc" stroke="#17332f" stroke-width="5"/>
+              <text x="595" y="194" text-anchor="middle" fill="#17332f" font-size="30" font-weight="700">8251</text>
+              <text x="595" y="282" text-anchor="middle" fill="#62716d" font-size="17">kode, bukan sampel warna</text>
+            </g>
+          </svg>`;
+        return doorSvg("assembly");
+      }
+
+      function shuffledOptions(card) {
+        const shift = currentIndex % card.options.length;
+        return card.options.slice(shift).concat(card.options.slice(0, shift));
+      }
+
+      function renderCard() {
+        stopSpeechRecognition();
+        const card = cards[currentIndex];
+        const stepIndex = learningSteps.findIndex((step) => step.cards.includes(currentIndex));
+        answerVisible = false;
+        els.cardCount.textContent = `Langkah ${stepIndex + 1} · Kartu ${currentIndex + 1} dari ${cards.length}`;
+        els.badgeRow.innerHTML = `<span class="type-badge">${escapeHtml(typeLabels[card.type])}</span><span class="source-badge">Sumber P1</span>${card.must ? '<span class="must-badge">Wajib</span>' : ""}`;
+        els.diagram.innerHTML = `${renderVisual(card.visual)}<span class="diagram-note">示意圖 · bukan gambar produksi</span>`;
+        els.cardTitleZh.textContent = `${card.titleZh} · ${typeZh[card.type]}`;
+        els.cardPrompt.textContent = card.prompt;
+        els.sourceZh.textContent = card.sourceZh;
+        els.answerText.textContent = card.answer;
+        els.quizQuestion.textContent = card.quiz;
+        els.answerPanel.hidden = true;
+        els.revealButton.textContent = "Lihat jawaban";
+        els.quizOptions.innerHTML = shuffledOptions(card).map((option) => `<button class="option-button" type="button" data-option="${escapeHtml(option)}">${escapeHtml(option)}</button>`).join("");
+        els.quizOptions.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => answerQuiz(button, card)));
+        document.querySelectorAll(".rating-button").forEach((button) => button.classList.toggle("is-selected", ratings[card.id] === button.dataset.rating));
+        updateSpeechGate(card);
+        renderProgress();
+      }
+
+      function answerQuiz(button, card) {
+        els.quizOptions.querySelectorAll("button").forEach((candidate) => {
+          candidate.disabled = true;
+          if (candidate.dataset.option === card.correct) candidate.classList.add("is-correct");
+        });
+        if (button.dataset.option !== card.correct) button.classList.add("is-wrong");
+      }
+
+      function renderProgress() {
+        const values = Object.values(ratings);
+        const completed = cards.filter((card) => ratings[card.id]).length;
+        const remembered = values.filter((value) => value === "remembered").length;
+        const fuzzy = values.filter((value) => value === "fuzzy").length;
+        const forgot = values.filter((value) => value === "forgot").length;
+        const spoken = cards.filter((card) => hasCompletedSpeech(card)).length;
+        const percent = Math.round(completed / cards.length * 100);
+        els.progressBar.style.width = `${percent}%`;
+        els.progressTrack.setAttribute("aria-valuenow", String(completed));
+        els.progressLabel.textContent = `${completed} dari ${cards.length} dinilai`;
+        els.progressPercent.textContent = `${percent}%`;
+        els.rememberedCount.textContent = String(remembered);
+        els.fuzzyCount.textContent = String(fuzzy);
+        els.forgotCount.textContent = String(forgot);
+        els.speechCount.textContent = `${spoken} / ${cards.length}`;
+        renderLearningPath();
+        updateCardNavigation();
+      }
+
+      function renderGrid() {
+        const filter = els.cardFilter.value;
+        const visible = cards.filter((card) => {
+          const rating = ratings[card.id] || "new";
+          if (filter === "must") return card.must;
+          if (filter === "review") return ["forgot", "fuzzy"].includes(rating);
+          if (filter === "new") return rating === "new";
+          return true;
+        });
+        els.cardGrid.innerHTML = visible.map((card) => {
+          const index = cards.indexOf(card);
+          const rating = ratings[card.id] || "new";
+          const label = { remembered: "Ingat", fuzzy: "Ragu-ragu", forgot: "Lupa", new: "Belum dinilai" }[rating];
+          return `<button class="grid-card" type="button" data-card-index="${index}">
+            <span class="badge-row"><span class="type-badge">${escapeHtml(typeLabels[card.type])}</span>${card.must ? '<span class="must-badge">Wajib</span>' : ""}</span>
+            <h3>${escapeHtml(card.titleZh)}</h3>
+            <p>${escapeHtml(card.prompt)}</p>
+            <span class="grid-card-footer"><span class="status-chip" data-state="${rating}">${label}</span><span aria-hidden="true">→</span></span>
+          </button>`;
+        }).join("") || '<p class="chinese-label">Tidak ada kartu dalam filter ini.</p>';
+        els.cardGrid.querySelectorAll("[data-card-index]").forEach((button) => button.addEventListener("click", () => {
+          currentIndex = Number(button.dataset.cardIndex);
+          activateTab("learn");
+          renderCard();
+          window.scrollTo({ top: els.learnPanel.offsetTop - 16, behavior: "smooth" });
+        }));
+      }
+
+      function renderReview() {
+        els.reviewList.innerHTML = reviewQuestions.map(([blocking, question], index) => {
+          const id = `review-${index + 1}`;
+          return `<div class="review-block">
+            <input class="review-check" id="${id}" type="checkbox" data-review-index="${index}" ${reviewChecks[index] ? "checked" : ""}>
+            <label for="${id}"><strong>Q-${String(index + 1).padStart(3, "0")}</strong><br>${escapeHtml(question)}</label>
+            ${blocking ? '<span class="blocking-label">阻擋發布</span>' : '<small>補充確認</small>'}
+          </div>`;
+        }).join("");
+        els.reviewList.querySelectorAll("[data-review-index]").forEach((checkbox) => checkbox.addEventListener("change", () => {
+          reviewChecks[checkbox.dataset.reviewIndex] = checkbox.checked;
+          saveObject(reviewStorageKey, reviewChecks);
+          updateReviewProgress();
+        }));
+        updateReviewProgress();
+      }
+
+      function updateReviewProgress() {
+        const checked = reviewQuestions.filter((_, index) => reviewChecks[index]).length;
+        els.reviewProgress.textContent = `${checked} / ${reviewQuestions.length} 已確認`;
+      }
+
+      function activateTab(name) {
+        const tabs = { learn: els.learnTab, grid: els.gridTab, review: els.reviewTab };
+        const panels = { learn: els.learnPanel, grid: els.gridPanel, review: els.reviewPanel };
+        Object.keys(tabs).forEach((key) => {
+          const active = key === name;
+          tabs[key].setAttribute("aria-selected", String(active));
+          panels[key].hidden = !active;
+        });
+        if (name === "grid") renderGrid();
+        if (name === "review") renderReview();
+      }
+
+      els.learnTab.addEventListener("click", () => activateTab("learn"));
+      els.gridTab.addEventListener("click", () => activateTab("grid"));
+      els.reviewTab.addEventListener("click", () => activateTab("review"));
+      els.cardFilter.addEventListener("change", renderGrid);
+      els.resumeButton.addEventListener("click", () => {
+        const nextCard = cards.findIndex((card) => !ratings[card.id] || !hasCompletedSpeech(card));
+        currentIndex = nextCard === -1 ? 0 : nextCard;
+        renderCard();
+        window.scrollTo({ top: els.learnPanel.offsetTop - 16, behavior: "smooth" });
+      });
+
+      els.speechButton.addEventListener("click", () => {
+        const card = cards[currentIndex];
+        if (speechRecognition) {
+          stopSpeechRecognition();
+          updateSpeechGate(card);
+          return;
+        }
+        startSpeechRecognition(card);
+      });
+
+      els.revealButton.addEventListener("click", () => {
+        const card = cards[currentIndex];
+        if (!hasCompletedSpeech(card)) return;
+        answerVisible = !answerVisible;
+        els.answerPanel.hidden = !answerVisible;
+        els.revealButton.textContent = answerVisible ? "Sembunyikan jawaban" : "Lihat jawaban";
+        updateAnswerControls(card);
+      });
+
+      els.speakButton.addEventListener("click", () => {
+        if (!("speechSynthesis" in window)) {
+          els.speakButton.textContent = "Audio tidak tersedia";
+          return;
+        }
+        speechSynthesis.cancel();
+        const card = cards[currentIndex];
+        const utterance = new SpeechSynthesisUtterance(`${card.prompt} ${card.answer}`);
+        utterance.lang = "id-ID";
+        speechSynthesis.speak(utterance);
+      });
+
+      document.querySelectorAll(".rating-button").forEach((button) => button.addEventListener("click", () => {
+        const card = cards[currentIndex];
+        if (!hasCompletedSpeech(card) || !answerVisible) return;
+        ratings[card.id] = button.dataset.rating;
+        saveObject(storageKey, ratings);
+        document.querySelectorAll(".rating-button").forEach((candidate) => candidate.classList.toggle("is-selected", candidate === button));
+        renderProgress();
+      }));
+
+      els.prevButton.addEventListener("click", () => {
+        if (currentIndex > 0) { currentIndex -= 1; renderCard(); }
+      });
+      els.nextButton.addEventListener("click", () => {
+        if (!hasCompletedSpeech(cards[currentIndex])) return;
+        if (currentIndex < cards.length - 1) { currentIndex += 1; renderCard(); }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.target.closest("button, select, input")) return;
+        if (event.key === "ArrowLeft" && currentIndex > 0) { currentIndex -= 1; renderCard(); }
+        if (event.key === "ArrowRight") els.nextButton.click();
+        if (event.key === " ") { event.preventDefault(); els.revealButton.click(); }
+      });
+
+      renderCard();
+      renderReview();
+    })();
+  </script>
+</body>
+</html>
