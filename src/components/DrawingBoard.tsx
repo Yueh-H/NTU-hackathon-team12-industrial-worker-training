@@ -1,5 +1,6 @@
 import { parts } from "../data/catalog";
 import { partStatusLabel } from "../engine/dashboard";
+import { assetUrl } from "../lib/asset";
 import type { ReviewState } from "../types";
 
 interface DrawingBoardProps {
@@ -21,7 +22,7 @@ export function DrawingBoard({
 }: DrawingBoardProps) {
   return (
     <div className="drawing-board">
-      <img className="drawing-image" src="/drawing.png" alt="FM720102 生產製造表 11507010-9" />
+      <img className="drawing-image" src={assetUrl("drawing.png")} alt="FM720102 生產製造表 11507010-9" />
       {parts.map((part) => {
         if (!part.hotspot) return null;
         const state = states.find((item) => item.partId === part.id);

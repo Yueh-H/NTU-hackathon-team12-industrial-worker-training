@@ -341,8 +341,8 @@ img { max-width: 100%; display: block; }
 }
 .sheet-scroller.short { max-height: 48vh; }
 .sheet-stage { position: relative; }
-.drawing-board { position: relative; }
-.drawing-image { width: 100%; height: auto; }
+.drawing-board { position: relative; min-height: 12rem; background: #fff; }
+.drawing-image { width: 100%; height: auto; display: block; }
 .hotspot {
   position: absolute;
   width: 28px;
