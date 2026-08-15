@@ -11,7 +11,7 @@ npm run ai:headless
 npm run dev
 ```
 
-服務只監聽 `127.0.0.1:8787`，預設設定是：
+服務只監聽 `127.0.0.1:8787`，本機開發頁與專案的 GitHub Pages 網址都已列入 CORS 白名單；預設設定是：
 
 - model：`gpt-5.6-luna`
 - reasoning effort：`low`
