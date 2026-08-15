@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="top, bottom, middle and both side positions on a door">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="55" y="15" width="50" height="90" rx="2" fill="#e5e7eb"/>
+    <g fill="#fbbf24" stroke-width="2">
+      <circle cx="80" cy="15" r="7"/>
+      <circle cx="80" cy="105" r="7"/>
+      <circle cx="55" cy="60" r="7"/>
+      <circle cx="105" cy="60" r="7"/>
+      <circle cx="80" cy="60" r="7"/>
+    </g>
+  </g>
+</svg>

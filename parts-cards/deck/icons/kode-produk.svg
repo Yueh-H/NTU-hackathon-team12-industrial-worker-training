@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="product code tag">
+  <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 28 L142 28 L142 92 L40 92 L18 60 Z" fill="#fbbf24"/>
+    <circle cx="38" cy="60" r="5"/>
+    <path d="M35 55 Q24 42 16 46" stroke-width="2"/>
+    <text x="93" y="58" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" fill="#1f2937" stroke="none">DW-900</text>
+    <polyline points="74,72 84,82 102,64"/>
+  </g>
+</svg>

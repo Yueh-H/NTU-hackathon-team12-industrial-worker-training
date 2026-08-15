@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="bend a sheet in a press brake">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <polygon points="68,12 92,12 92,56 80,72 68,56" fill="#e5e7eb"/>
+    <line x1="58" y1="20" x2="58" y2="32" stroke-width="2"/>
+    <line x1="102" y1="20" x2="102" y2="32" stroke-width="2"/>
+    <path d="M16 104 L16 74 L58 74 L80 96 L102 74 L144 74 L144 104 Z" fill="#e5e7eb"/>
+    <path d="M36 36 L80 80 L124 36 L124 47 L80 91 L36 47 Z" fill="#fbbf24"/>
+  </g>
+</svg>

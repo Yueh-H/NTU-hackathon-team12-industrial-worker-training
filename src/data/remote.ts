@@ -112,7 +112,7 @@ export async function seedCatalog(client: SupabaseClient): Promise<void> {
       name_en: part.nameEn,
       function_id: part.functionId,
       safety_id: part.safetyId,
-      hotspot: part.hotspot,
+      hotspot: part.hotspot ?? { x: 0, y: 0 },
       critical: part.critical
     }))
   );

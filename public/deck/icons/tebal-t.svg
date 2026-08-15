@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="thickness in mm">
+  <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="40,64 120,64 146,40 66,40" fill="#e5e7eb"/>
+    <polygon points="120,64 146,40 146,60 120,84" fill="#e5e7eb"/>
+    <polygon points="40,64 120,64 120,84 40,84" fill="#fbbf24"/>
+    <path d="M40 64 L20 64 M40 84 L20 84" stroke-width="2"/>
+    <path d="M27 64 L27 84" stroke-width="2"/>
+    <path d="M23 69 L27 64 L31 69" stroke-width="2"/>
+    <path d="M23 79 L27 84 L31 79" stroke-width="2"/>
+    <text x="11" y="80" text-anchor="middle" font-family="system-ui, sans-serif" font-size="18" fill="#1f2937" stroke="none">t</text>
+  </g>
+</svg>

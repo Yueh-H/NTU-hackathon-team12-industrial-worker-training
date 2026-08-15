@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="flag hinge (lift-off)">
+  <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M80 24 L80 12"/>
+    <rect x="88" y="28" width="42" height="24" fill="#fbbf24"/>
+    <rect x="30" y="68" width="42" height="24" fill="#fbbf24"/>
+    <rect x="72" y="24" width="16" height="32" rx="6" fill="#fbbf24"/>
+    <rect x="72" y="60" width="16" height="38" rx="6" fill="#fbbf24"/>
+    <circle cx="101" cy="40" r="2.6" fill="#1f2937" stroke="none"/>
+    <circle cx="117" cy="40" r="2.6" fill="#1f2937" stroke="none"/>
+    <circle cx="43" cy="80" r="2.6" fill="#1f2937" stroke="none"/>
+    <circle cx="59" cy="80" r="2.6" fill="#1f2937" stroke="none"/>
+  </g>
+</svg>

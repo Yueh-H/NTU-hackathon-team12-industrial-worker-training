@@ -27,7 +27,7 @@ export function LearnHome() {
         <div>
           <small>Lembar produksi</small>
           <strong>{trainingSet.titleId}</strong>
-          <p>12 suku cadang · versi {trainingSet.version}</p>
+          <p>{parts.length} kartu dari lembar produksi · versi {trainingSet.version}</p>
         </div>
         <Link className="btn primary" to={`/learn/${worker.id}/sheet`}>
           Buka gambar mesin
@@ -60,7 +60,7 @@ export function LearnHome() {
       )}
       <Queue title="Terlambat" items={queue.overdue} employeeId={worker.id} tone="warn" />
       <Queue title="Ulangan hari ini" items={queue.today} employeeId={worker.id} />
-      <Queue title="Kartu baru" items={queue.fresh} employeeId={worker.id} />
+      <Queue title="Kartu baru" items={queue.fresh} employeeId={worker.id} limit={8} />
       <Link className="text-btn" to="/learn">
         Ganti orang
       </Link>
@@ -72,31 +72,40 @@ function Queue({
   title,
   items,
   employeeId,
-  tone
+  tone,
+  limit
 }: {
   title: string;
   items: { partId: string }[];
   employeeId: string;
   tone?: "warn";
+  limit?: number;
 }) {
   if (!items.length) return null;
+  const shown = limit ? items.slice(0, limit) : items;
   return (
     <section className="queue">
-      <h2 className={tone}>{title}</h2>
+      <h2 className={tone}>
+        {title} · {items.length}
+      </h2>
       <ul>
-        {items.map((item) => {
+        {shown.map((item) => {
           const part = parts.find((entry) => entry.id === item.partId);
           if (!part) return null;
           return (
             <li key={part.id}>
               <Link to={`/learn/${employeeId}/part/${part.id}`}>
                 <span className="num">{part.callout}</span>
-                <span>{part.nameId}</span>
+                <span>
+                  {part.nameId}
+                  <small> {part.nameZh}</small>
+                </span>
               </Link>
             </li>
           );
         })}
       </ul>
+      {limit && items.length > limit ? <p className="fine">Dan {items.length - limit} kartu lagi di lembar.</p> : null}
     </section>
   );
 }

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="door leaf thickness">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <polygon points="76,24 110,8 110,80 76,96" fill="#e5e7eb"/>
+    <polygon points="48,24 76,24 110,8 82,8" fill="#e5e7eb"/>
+    <rect x="48" y="24" width="28" height="72" fill="#fbbf24"/>
+    <g stroke-width="2">
+      <line x1="48" y1="98" x2="48" y2="110"/>
+      <line x1="76" y1="98" x2="76" y2="110"/>
+      <line x1="48" y1="106" x2="76" y2="106"/>
+      <polyline points="54,102 48,106 54,110"/>
+      <polyline points="70,102 76,106 70,110"/>
+    </g>
+    <text x="86" y="112" font-family="system-ui, sans-serif" font-size="16" fill="#1f2937" stroke="none">50</text>
+  </g>
+</svg>

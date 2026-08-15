@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="cut a bar with a shear blade">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M80 8 L80 22"/>
+    <path d="M74 16 L80 22 L86 16"/>
+    <polygon points="62,26 98,26 98,48 80,64 62,48" fill="#fbbf24"/>
+    <rect x="14" y="74" width="56" height="22" fill="#e5e7eb"/>
+    <rect x="90" y="74" width="56" height="22" fill="#e5e7eb"/>
+    <line x1="80" y1="70" x2="80" y2="76" stroke-width="2"/>
+    <line x1="80" y1="94" x2="80" y2="100" stroke-width="2"/>
+  </g>
+</svg>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="perlite composite board">
+  <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="26,66 106,66 106,86 26,86" fill="#e5e7eb"/>
+    <polygon points="106,66 136,42 136,62 106,86" fill="#e5e7eb"/>
+    <polygon points="26,66 106,66 136,42 56,42" fill="#fbbf24"/>
+    <circle cx="49.5" cy="60" r="2.6" fill="#1f2937" stroke="none"/>
+    <circle cx="68" cy="61.2" r="2.6" fill="#1f2937" stroke="none"/>
+    <circle cx="91" cy="58.8" r="2.6" fill="#1f2937" stroke="none"/>
+    <circle cx="66.5" cy="52.8" r="2.6" fill="#1f2937" stroke="none"/>
+    <circle cx="85" cy="54" r="2.6" fill="#1f2937" stroke="none"/>
+    <circle cx="107" cy="51.6" r="2.6" fill="#1f2937" stroke="none"/>
+    <circle cx="66" cy="46.8" r="2.6" fill="#1f2937" stroke="none"/>
+    <circle cx="98" cy="46.8" r="2.6" fill="#1f2937" stroke="none"/>
+  </g>
+</svg>

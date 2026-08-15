@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="door stop lip on the frame">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="14" y="14" width="38" height="92" rx="2" fill="#e5e7eb"/>
+    <rect x="52" y="48" width="92" height="34" rx="2" fill="#e5e7eb"/>
+    <rect x="52" y="14" width="18" height="32" fill="#fbbf24"/>
+    <g stroke-width="2.5">
+      <line x1="126" y1="30" x2="80" y2="30"/>
+      <polyline points="86,24 80,30 86,36"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,843 @@
+{
+ "meta": {
+  "title": "防火門生產製造表 單字圖卡",
+  "source": "聯立/立延/延寶 生產製造表 11507010-9（60A 平面防火遮煙視窗扇・子母扇）；客戶／工程名稱已遮蔽",
+  "direction": "front = 中文（單子原字）+ 圖；back = 印尼文 + 英文 + 說明",
+  "translation_status": "印尼文為 best-effort，未經母語者校對；uncertain=true 者尤其要問師傅",
+  "categories": {
+   "struktur": {
+    "zh": "門構造",
+    "idn": "Struktur pintu"
+   },
+   "bahan": {
+    "zh": "材料",
+    "idn": "Bahan"
+   },
+   "hardware": {
+    "zh": "五金",
+    "idn": "Perangkat keras"
+   },
+   "proses": {
+    "zh": "加工動詞",
+    "idn": "Proses kerja"
+   },
+   "lembar": {
+    "zh": "欄位／單位",
+    "idn": "Kolom & satuan"
+   },
+   "baris": {
+    "zh": "讀行卡",
+    "idn": "Baca satu baris"
+   }
+  }
+ },
+ "cards": [
+  {
+   "id": "pintu-induk-anak",
+   "cat": "struktur",
+   "zh": "子母扇",
+   "idn": "pintu dua daun (daun induk + daun anak)",
+   "en": "unequal double-leaf door",
+   "hint": "一大一小兩片門；單子上「8組」= 8 套子母扇",
+   "icon": "pintu-induk-anak.svg",
+   "sheet": "sheet-elevation.png"
+  },
+  {
+   "id": "daun-induk",
+   "cat": "struktur",
+   "zh": "母扇（母）",
+   "idn": "daun induk (daun besar)",
+   "en": "mother leaf (larger)",
+   "hint": "1022×2202，16片",
+   "icon": "daun-induk.svg",
+   "sheet": null
+  },
+  {
+   "id": "daun-anak",
+   "cat": "struktur",
+   "zh": "子扇（子）",
+   "idn": "daun anak (daun kecil)",
+   "en": "child leaf (smaller)",
+   "hint": "701×2202，16片",
+   "icon": "daun-anak.svg",
+   "sheet": null
+  },
+  {
+   "id": "buka-keluar",
+   "cat": "struktur",
+   "zh": "開外／開內",
+   "idn": "buka keluar / buka ke dalam",
+   "en": "outward / inward opening",
+   "hint": "方向欄；這張單是「開外」",
+   "icon": "buka-keluar.svg",
+   "sheet": null
+  },
+  {
+   "id": "kiri-kanan",
+   "cat": "struktur",
+   "zh": "左／右",
+   "idn": "kiri / kanan",
+   "en": "left / right",
+   "hint": "4左 4右 = 左開4片、右開4片",
+   "icon": "kiri-kanan.svg",
+   "sheet": null
+  },
+  {
+   "id": "sisi-engsel",
+   "cat": "struktur",
+   "zh": "鉸鍊側",
+   "idn": "sisi engsel",
+   "en": "hinge side",
+   "hint": "裝鉸鍊的那一邊；48m/m 珍珠岩複合板",
+   "icon": "sisi-engsel.svg",
+   "sheet": null
+  },
+  {
+   "id": "sisi-kunci",
+   "cat": "struktur",
+   "zh": "鎖側",
+   "idn": "sisi kunci",
+   "en": "lock side",
+   "hint": "裝鎖的那一邊；40m/m 珍珠岩複合板 + 4m/m 碳酸鎂×2",
+   "icon": "sisi-kunci.svg",
+   "sheet": null
+  },
+  {
+   "id": "jendela",
+   "cat": "struktur",
+   "zh": "開窗（視窗）",
+   "idn": "jendela kaca / bukaan kaca",
+   "en": "vision panel",
+   "hint": "門片上的玻璃窗；「實際開孔 243」",
+   "icon": "jendela.svg",
+   "sheet": null
+  },
+  {
+   "id": "penahan-pintu",
+   "cat": "struktur",
+   "zh": "門檔",
+   "idn": "penahan pintu (door stop)",
+   "en": "door stop",
+   "hint": "8-9／8-10 子扇門檔用、母扇門檔用",
+   "icon": "penahan-pintu.svg",
+   "sheet": null
+  },
+  {
+   "id": "penutup-tepi",
+   "cat": "struktur",
+   "zh": "封邊（上／下／兩側）",
+   "idn": "penutup tepi",
+   "en": "edge cap / edge channel",
+   "hint": "1.0t 鍍鋅兩側封邊、下封邊；內封邊F-59 外封邊F-17",
+   "icon": "penutup-tepi.svg",
+   "sheet": "sheet-profiles.png"
+  },
+  {
+   "id": "lis-kaca",
+   "cat": "struktur",
+   "zh": "玻璃壓",
+   "idn": "lis kaca",
+   "en": "glass bead / glass stop",
+   "hint": "1.2t 鍍鋅玻璃壓，切45度",
+   "icon": "lis-kaca.svg",
+   "sheet": "sheet-glassbead.png"
+  },
+  {
+   "id": "atas-bawah",
+   "cat": "struktur",
+   "zh": "上／下／中間／兩側",
+   "idn": "atas / bawah / tengah / kedua sisi",
+   "en": "top / bottom / middle / both sides",
+   "hint": "「上貼…」「下方不需塞…」「兩側封邊…」",
+   "icon": "atas-bawah.svg",
+   "sheet": null
+  },
+  {
+   "id": "tebal-pintu",
+   "cat": "struktur",
+   "zh": "門厚",
+   "idn": "tebal pintu",
+   "en": "door thickness",
+   "hint": "備註 2. 門厚 50",
+   "icon": "tebal-pintu.svg",
+   "sheet": null
+  },
+  {
+   "id": "plat",
+   "cat": "bahan",
+   "zh": "1.0板（鐵板）",
+   "idn": "plat besi 1.0 mm",
+   "en": "1.0 mm steel sheet",
+   "hint": "備註 1. 1.0板 = 門面板厚 1.0mm",
+   "icon": "plat.svg",
+   "sheet": null
+  },
+  {
+   "id": "tebal-t",
+   "cat": "bahan",
+   "zh": "t（厚度）1.2t／4.5t",
+   "idn": "tebal (mm)",
+   "en": "thickness in mm",
+   "hint": "數字後面的 t 就是厚度；m/m 也是 mm",
+   "icon": "tebal-t.svg",
+   "sheet": null
+  },
+  {
+   "id": "galvanis",
+   "cat": "bahan",
+   "zh": "鍍鋅",
+   "idn": "galvanis",
+   "en": "galvanized",
+   "hint": "鍍鋅扁管、鍍鋅封邊、鍍鋅封板",
+   "icon": "galvanis.svg",
+   "sheet": null
+  },
+  {
+   "id": "hollow",
+   "cat": "bahan",
+   "zh": "鍍鋅扁管 20*40",
+   "idn": "hollow galvanis 20×40",
+   "en": "galvanized rectangular tube 20×40",
+   "hint": "4-1～4-3；1.4t",
+   "icon": "hollow.svg",
+   "sheet": null
+  },
+  {
+   "id": "plat-strip",
+   "cat": "bahan",
+   "zh": "扁鐵",
+   "idn": "plat strip",
+   "en": "flat bar",
+   "hint": "5-1 4.5t 扁鐵*38*95 鎖側橫骨用",
+   "icon": "plat-strip.svg",
+   "sheet": null
+  },
+  {
+   "id": "papan-perlit",
+   "cat": "bahan",
+   "zh": "珍珠岩複合板",
+   "idn": "papan komposit perlit",
+   "en": "perlite composite board",
+   "hint": "40m/m 與 48m/m 兩種；6-x、7-x",
+   "icon": "papan-perlit.svg",
+   "sheet": null
+  },
+  {
+   "id": "papan-mgo",
+   "cat": "bahan",
+   "zh": "碳酸鎂板",
+   "idn": "papan MgO (magnesium)",
+   "en": "MgO board",
+   "hint": "4.0t；8-1～8-10 全部是它",
+   "icon": "papan-mgo.svg",
+   "sheet": null
+  },
+  {
+   "id": "kalsium-silikat",
+   "cat": "bahan",
+   "zh": "矽酸鈣板",
+   "idn": "papan kalsium silikat",
+   "en": "calcium silicate board",
+   "hint": "4.0t 矽酸鈣（斷面圖）",
+   "icon": "kalsium-silikat.svg",
+   "sheet": null
+  },
+  {
+   "id": "kaca-tahan-api",
+   "cat": "bahan",
+   "zh": "防火玻璃",
+   "idn": "kaca tahan api",
+   "en": "fire-rated glass",
+   "hint": "柏肯防火玻璃 31mm*226*1226*16片",
+   "icon": "kaca-tahan-api.svg",
+   "sheet": null
+  },
+  {
+   "id": "sekrup",
+   "cat": "bahan",
+   "zh": "螺絲（白鐵螺絲）M4.7*19",
+   "idn": "sekrup (stainless) M4.7×19",
+   "en": "screw (stainless)",
+   "hint": "M4.7*19m/m、M4.7*50m/m*4支、M4.7*1\"",
+   "icon": "sekrup.svg",
+   "sheet": null
+  },
+  {
+   "id": "wol",
+   "cat": "bahan",
+   "zh": "棉",
+   "idn": "wol isolasi",
+   "en": "insulation wool",
+   "hint": "「兩側封邊 不需塞棉」",
+   "icon": "wol.svg",
+   "sheet": null
+  },
+  {
+   "id": "papan-lapis",
+   "cat": "bahan",
+   "zh": "層（板材疊層）",
+   "idn": "lapis",
+   "en": "layer",
+   "hint": "40m/m 珍珠岩*1層 + 4m/m 碳酸鎂*2層",
+   "icon": "papan-lapis.svg",
+   "sheet": "sheet-section.png"
+  },
+  {
+   "id": "engsel-bendera",
+   "cat": "hardware",
+   "zh": "旗形鉸鍊（旗 OK-602-4\"*3）",
+   "idn": "engsel bendera",
+   "en": "flag hinge (lift-off)",
+   "hint": "每片 3 個 4 吋；「旗形鉸鍊焊點位置」",
+   "icon": "engsel-bendera.svg",
+   "sheet": null
+  },
+  {
+   "id": "gagang-tanam",
+   "cat": "hardware",
+   "zh": "凹把（OK-702A）",
+   "idn": "gagang tanam",
+   "en": "recessed handle",
+   "hint": "鉸側凹把；8-8「鉋凹把」",
+   "icon": "gagang-tanam.svg",
+   "sheet": null
+  },
+  {
+   "id": "putaran-dua-sisi",
+   "cat": "hardware",
+   "zh": "雙面轉扭（P-167-51）",
+   "idn": "putaran kunci dua sisi",
+   "en": "double-sided thumbturn",
+   "hint": "鎖孔欄",
+   "icon": "putaran-dua-sisi.svg",
+   "sheet": null
+  },
+  {
+   "id": "grendel-3-titik",
+   "cat": "hardware",
+   "zh": "三押暗閂",
+   "idn": "grendel tanam tiga titik",
+   "en": "concealed three-point bolt",
+   "hint": "東鐵 POWER-2612B；子扇用",
+   "icon": "grendel-3-titik.svg",
+   "sheet": null,
+   "uncertain": true
+  },
+  {
+   "id": "grendel-atas-bawah",
+   "cat": "hardware",
+   "zh": "天地栓",
+   "idn": "grendel atas-bawah",
+   "en": "top & bottom bolt",
+   "hint": "「沖天地栓 = 8支」「8支開天地栓」",
+   "icon": "grendel-atas-bawah.svg",
+   "sheet": null
+  },
+  {
+   "id": "pin-anti-congkel",
+   "cat": "hardware",
+   "zh": "防撬栓（TH-720）",
+   "idn": "pin anti congkel",
+   "en": "anti-pry pin / dog bolt",
+   "hint": "每片 +防撬栓*1；1-1「沖防撬栓」",
+   "icon": "pin-anti-congkel.svg",
+   "sheet": null
+  },
+  {
+   "id": "seal-bawah",
+   "cat": "hardware",
+   "zh": "下降條／下降壓條",
+   "idn": "seal bawah otomatis (drop seal)",
+   "en": "automatic drop seal",
+   "hint": "東鐵 DW-900；GD-3033 1018mm*8組、697mm*8組",
+   "icon": "seal-bawah.svg",
+   "sheet": null
+  },
+  {
+   "id": "magnet",
+   "cat": "hardware",
+   "zh": "磁力扣",
+   "idn": "magnet penahan",
+   "en": "magnetic catch",
+   "hint": "「鉸鍊側磁力扣補強」",
+   "icon": "magnet.svg",
+   "sheet": null
+  },
+  {
+   "id": "kunci-tanam",
+   "cat": "hardware",
+   "zh": "陽極鎖",
+   "idn": "kunci tanam (?)",
+   "en": "mortise lock (?)",
+   "hint": "「陽極鎖 開外三押」；4-2「沖吊孔及陽極」",
+   "icon": "kunci-tanam.svg",
+   "sheet": null,
+   "uncertain": true
+  },
+  {
+   "id": "kode-produk",
+   "cat": "hardware",
+   "zh": "型號代碼（東鐵DW-900／OK-602／TH-720／GD-1043）",
+   "idn": "kode produk — tidak perlu diterjemahkan, cocokkan hurufnya",
+   "en": "product codes — match as-is",
+   "hint": "不用翻，認得字母數字、對得上就好",
+   "icon": "kode-produk.svg",
+   "sheet": null
+  },
+  {
+   "id": "potong",
+   "cat": "proses",
+   "zh": "裁（切）／切45度",
+   "idn": "potong / potong 45°",
+   "en": "cut / miter 45°",
+   "hint": "「裁A裁」「共8裁折圖」「切45度」",
+   "icon": "potong.svg",
+   "sheet": null
+  },
+  {
+   "id": "tekuk",
+   "cat": "proses",
+   "zh": "折／折法圖",
+   "idn": "tekuk / gambar tekukan",
+   "en": "bend / bending diagram",
+   "hint": "「折法圖一」「折34」",
+   "icon": "tekuk.svg",
+   "sheet": "sheet-bend.png"
+  },
+  {
+   "id": "pons",
+   "cat": "proses",
+   "zh": "沖（孔）",
+   "idn": "pons / lubangi",
+   "en": "punch (hole)",
+   "hint": "沖鎖孔、沖吊孔、沖天地栓、沖螺絲孔",
+   "icon": "pons.svg",
+   "sheet": null
+  },
+  {
+   "id": "frais",
+   "cat": "proses",
+   "zh": "鉋",
+   "idn": "frais (buat alur)",
+   "en": "rout / mill out",
+   "hint": "8-8「鉋鎖孔及凹把」",
+   "icon": "frais.svg",
+   "sheet": null
+  },
+  {
+   "id": "las-titik",
+   "cat": "proses",
+   "zh": "點焊／焊點位置",
+   "idn": "las titik / posisi titik las",
+   "en": "spot weld / weld points",
+   "hint": "「點焊前通知副總」「鎖側封邊焊點位置」",
+   "icon": "las-titik.svg",
+   "sheet": null
+  },
+  {
+   "id": "isi",
+   "cat": "proses",
+   "zh": "塞",
+   "idn": "isi / sumbat",
+   "en": "fill / insert",
+   "hint": "「上須塞4.0t碳酸鎂」「下方不需塞」",
+   "icon": "isi.svg",
+   "sheet": null
+  },
+  {
+   "id": "tempel",
+   "cat": "proses",
+   "zh": "貼",
+   "idn": "tempel",
+   "en": "stick / paste on",
+   "hint": "「上貼嘉士豪GD-1043」「兩側貼」",
+   "icon": "tempel.svg",
+   "sheet": null
+  },
+  {
+   "id": "pasang-sekrup",
+   "cat": "proses",
+   "zh": "鎖（螺絲）",
+   "idn": "pasang sekrup",
+   "en": "screw in / fasten",
+   "hint": "「上鎖M4.7*19螺絲」— 這裡的「鎖」是動詞",
+   "icon": "pasang-sekrup.svg",
+   "sheet": null
+  },
+  {
+   "id": "cekung",
+   "cat": "proses",
+   "zh": "打凹（手工）",
+   "idn": "cekungkan (manual)",
+   "en": "dent / recess by hand",
+   "hint": "1-1「手工打凹」",
+   "icon": "cekung.svg",
+   "sheet": null
+  },
+  {
+   "id": "perkuat",
+   "cat": "proses",
+   "zh": "補強",
+   "idn": "perkuat",
+   "en": "reinforce",
+   "hint": "「鉸鍊側磁力扣補強」",
+   "icon": "perkuat.svg",
+   "sheet": null
+  },
+  {
+   "id": "perbesar-lubang",
+   "cat": "proses",
+   "zh": "擴孔",
+   "idn": "perbesar lubang",
+   "en": "enlarge hole / countersink",
+   "hint": "「切45度沖螺絲擴孔」",
+   "icon": "perbesar-lubang.svg",
+   "sheet": null
+  },
+  {
+   "id": "harus",
+   "cat": "proses",
+   "zh": "須／不需",
+   "idn": "harus / tidak perlu",
+   "en": "must / not needed",
+   "hint": "「上須塞」vs「下方不需塞」— 看錯就做反",
+   "icon": "harus.svg",
+   "sheet": null
+  },
+  {
+   "id": "beri-tahu",
+   "cat": "proses",
+   "zh": "通知（副總）",
+   "idn": "beri tahu (wakil direktur)",
+   "en": "notify (VP)",
+   "hint": "「點焊前通知副總」",
+   "icon": "beri-tahu.svg",
+   "sheet": null
+  },
+  {
+   "id": "gudang-pesan",
+   "cat": "proses",
+   "zh": "倉管須訂",
+   "idn": "gudang harus pesan",
+   "en": "warehouse must order",
+   "hint": "非常備料，先跟倉管說",
+   "icon": "gudang-pesan.svg",
+   "sheet": null
+  },
+  {
+   "id": "kolom-header",
+   "cat": "lembar",
+   "zh": "表頭：項次／製造規格／加工尺寸／數量／顏色／方向／鎖孔／樣式／鉸鍊／備註",
+   "idn": "no. / spesifikasi / ukuran proses / jumlah / warna / arah / lubang kunci / tipe / engsel / catatan",
+   "en": "table header",
+   "hint": "整張單子最上面那一列",
+   "icon": "kolom-header.svg",
+   "sheet": "sheet-header.png"
+  },
+  {
+   "id": "jumlah",
+   "cat": "lembar",
+   "zh": "數量",
+   "idn": "jumlah",
+   "en": "quantity",
+   "hint": "8組、16片、32支",
+   "icon": "jumlah.svg",
+   "sheet": null
+  },
+  {
+   "id": "ukuran",
+   "cat": "lembar",
+   "zh": "製造規格／加工尺寸",
+   "idn": "spesifikasi / ukuran proses",
+   "en": "spec size / process size",
+   "hint": "1022*2202（成品）vs 1074*2276（折前展開）",
+   "icon": "ukuran.svg",
+   "sheet": null
+  },
+  {
+   "id": "warna",
+   "cat": "lembar",
+   "zh": "顏色（8251）",
+   "idn": "warna",
+   "en": "color code",
+   "hint": "8251 是色號",
+   "icon": "warna.svg",
+   "sheet": null
+  },
+  {
+   "id": "arah",
+   "cat": "lembar",
+   "zh": "方向",
+   "idn": "arah",
+   "en": "direction",
+   "hint": "開外／開內、左／右",
+   "icon": "arah.svg",
+   "sheet": null
+  },
+  {
+   "id": "catatan",
+   "cat": "lembar",
+   "zh": "備註",
+   "idn": "catatan",
+   "en": "remarks",
+   "hint": "最重要的例外都寫在這裡",
+   "icon": "catatan.svg",
+   "sheet": null
+  },
+  {
+   "id": "satuan",
+   "cat": "lembar",
+   "zh": "組／片／支／層",
+   "idn": "set / lembar / batang / lapis",
+   "en": "set / sheet / piece(bar) / layer",
+   "hint": "組=整套門、片=門片或板、支=條狀料、層=疊層",
+   "icon": "satuan.svg",
+   "sheet": null
+  },
+  {
+   "id": "lebar-w",
+   "cat": "lembar",
+   "zh": "W=（寬）、*（×）、=（共）",
+   "idn": "lebar (W=) · kali (×) · total (=)",
+   "en": "width · times · total",
+   "hint": "1-1 W=63*2201=32支：寬63、長2201、共32支",
+   "icon": "lebar-w.svg",
+   "sheet": "sheet-cutlist.png"
+  },
+  {
+   "id": "untuk",
+   "cat": "lembar",
+   "zh": "…用（子下用／母上用／鉸鏈側）",
+   "idn": "untuk … (bagian bawah daun anak / atas daun induk / sisi engsel)",
+   "en": "for … (usage tag)",
+   "hint": "行尾的「-xx用」告訴你這批料裝哪裡",
+   "icon": "untuk.svg",
+   "sheet": null
+  },
+  {
+   "id": "tanggal",
+   "cat": "lembar",
+   "zh": "訂貨／交貨日期、本單編號",
+   "idn": "tanggal pesan / tanggal kirim, nomor lembar",
+   "en": "order / delivery date, sheet no.",
+   "hint": "114.07.06 = 民國114年（2025）7月6日",
+   "icon": "tanggal.svg",
+   "sheet": null
+  },
+  {
+   "id": "baris-8-5",
+   "cat": "baris",
+   "type": "line",
+   "raw": "8-5 4.0碳酸鎂*19*2164*32片-鉸鏈側",
+   "zh": "8-5 4.0碳酸鎂*19*2164*32片-鉸鏈側",
+   "idn": "papan MgO tebal 4.0 · lebar 19 × panjang 2164 · 32 lembar · untuk sisi engsel",
+   "en": "MgO board 4.0t, 19×2164, ×32, hinge side",
+   "hint": "裁切清單第 8 組第 5 行",
+   "icon": null,
+   "sheet": "line-8-5.png",
+   "parts": [
+    [
+     "8-5",
+     "nomor potong",
+     "裁切編號"
+    ],
+    [
+     "4.0",
+     "tebal 4.0 mm",
+     "厚度"
+    ],
+    [
+     "碳酸鎂",
+     "papan MgO",
+     "材料"
+    ],
+    [
+     "*19*2164",
+     "lebar 19 × panjang 2164",
+     "寬×長"
+    ],
+    [
+     "*32片",
+     "32 lembar",
+     "數量"
+    ],
+    [
+     "-鉸鏈側",
+     "untuk sisi engsel",
+     "用途"
+    ]
+   ]
+  },
+  {
+   "id": "baris-4-3",
+   "cat": "baris",
+   "type": "line",
+   "raw": "4-3 1.4t鍍鋅扁管*20*40*2121=32支 8支開鎖孔 8支開天地栓",
+   "zh": "4-3 1.4t鍍鋅扁管*20*40*2121=32支 8支開鎖孔 8支開天地栓",
+   "idn": "hollow galvanis tebal 1.4 · 20×40 · panjang 2121 · total 32 batang · 8 batang lubang kunci · 8 batang lubang grendel atas-bawah",
+   "en": "1.4t galv. tube 20×40×2121, 32 pcs; 8 with lock hole, 8 with top/bottom bolt hole",
+   "hint": "同一批料裡有兩種加工",
+   "icon": null,
+   "sheet": "line-4-3.png",
+   "parts": [
+    [
+     "4-3",
+     "nomor potong",
+     "裁切編號"
+    ],
+    [
+     "1.4t",
+     "tebal 1.4 mm",
+     "厚度"
+    ],
+    [
+     "鍍鋅扁管",
+     "hollow galvanis",
+     "材料"
+    ],
+    [
+     "*20*40*2121",
+     "20 × 40 × panjang 2121",
+     "斷面×長"
+    ],
+    [
+     "=32支",
+     "total 32 batang",
+     "數量"
+    ],
+    [
+     "8支開鎖孔",
+     "8 batang: lubang kunci",
+     "加工"
+    ],
+    [
+     "8支開天地栓",
+     "8 batang: lubang grendel atas-bawah",
+     "加工"
+    ]
+   ]
+  },
+  {
+   "id": "baris-6-3",
+   "cat": "baris",
+   "type": "line",
+   "raw": "6-3 48m/m珍珠岩複合板*62*(2100+16)*16片",
+   "zh": "6-3 48m/m珍珠岩複合板*62*(2100+16)*16片",
+   "idn": "papan komposit perlit tebal 48 mm · lebar 62 × panjang 2100+16 · 16 lembar",
+   "en": "48 mm perlite board, 62×(2100+16), ×16",
+   "hint": "(2100+16) = 2100 再加 16 的餘量",
+   "icon": null,
+   "sheet": "line-6-3.png",
+   "parts": [
+    [
+     "6-3",
+     "nomor potong",
+     "裁切編號"
+    ],
+    [
+     "48m/m",
+     "tebal 48 mm",
+     "厚度"
+    ],
+    [
+     "珍珠岩複合板",
+     "papan komposit perlit",
+     "材料"
+    ],
+    [
+     "*62*(2100+16)",
+     "lebar 62 × panjang 2100 (+16)",
+     "寬×長"
+    ],
+    [
+     "*16片",
+     "16 lembar",
+     "數量"
+    ]
+   ]
+  },
+  {
+   "id": "baris-5-1",
+   "cat": "baris",
+   "type": "line",
+   "raw": "5-1 4.5t扁鐵*38*95=96支 鎖側橫骨用",
+   "zh": "5-1 4.5t扁鐵*38*95=96支 鎖側橫骨用",
+   "idn": "plat strip tebal 4.5 · 38 × 95 · total 96 batang · untuk rangka melintang sisi kunci",
+   "en": "4.5t flat bar 38×95, 96 pcs, lock-side cross rib",
+   "hint": "「橫骨」= 橫向骨架",
+   "icon": null,
+   "sheet": "line-5-1.png",
+   "parts": [
+    [
+     "5-1",
+     "nomor potong",
+     "裁切編號"
+    ],
+    [
+     "4.5t",
+     "tebal 4.5 mm",
+     "厚度"
+    ],
+    [
+     "扁鐵",
+     "plat strip",
+     "材料"
+    ],
+    [
+     "*38*95",
+     "38 × 95",
+     "寬×長"
+    ],
+    [
+     "=96支",
+     "total 96 batang",
+     "數量"
+    ],
+    [
+     "鎖側橫骨用",
+     "untuk rangka melintang sisi kunci",
+     "用途"
+    ]
+   ]
+  },
+  {
+   "id": "baris-sekrup",
+   "cat": "baris",
+   "type": "line",
+   "raw": "下封邊非鉸鍊側鎖M4.7*50m/m螺絲*4支",
+   "zh": "下封邊非鉸鍊側鎖M4.7*50m/m螺絲*4支",
+   "idn": "penutup tepi bawah · sisi bukan engsel · pasang sekrup M4.7×50 mm · 4 batang",
+   "en": "bottom edge cap, non-hinge side, fasten M4.7×50 screws ×4",
+   "hint": "「非鉸鍊側」= 鎖側；「鎖」在這裡是動詞",
+   "icon": null,
+   "sheet": "line-sekrup.png",
+   "parts": [
+    [
+     "下封邊",
+     "penutup tepi bawah",
+     "位置"
+    ],
+    [
+     "非鉸鍊側",
+     "sisi bukan engsel (= sisi kunci)",
+     "位置"
+    ],
+    [
+     "鎖",
+     "pasang (sekrup)",
+     "動作"
+    ],
+    [
+     "M4.7*50m/m螺絲",
+     "sekrup M4.7 × 50 mm",
+     "料件"
+    ],
+    [
+     "*4支",
+     "4 batang",
+     "數量"
+    ]
+   ]
+  }
+ ]
+}

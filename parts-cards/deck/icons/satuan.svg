@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="units: set, sheet, bar, layer">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="12" y="12" width="136" height="96" rx="6" stroke-width="2"/>
+    <line x1="80" y1="12" x2="80" y2="108" stroke-width="2"/>
+    <line x1="12" y1="60" x2="148" y2="60" stroke-width="2"/>
+    <rect x="28" y="20" width="22" height="32" fill="#fbbf24"/>
+    <rect x="52" y="20" width="14" height="32" fill="#fbbf24"/>
+    <polygon points="90,40 108,28 140,28 122,40" fill="#fbbf24"/>
+    <rect x="20" y="78" width="54" height="12" rx="2" fill="#fbbf24"/>
+    <rect x="94" y="68" width="44" height="9" fill="#fbbf24"/>
+    <rect x="94" y="79" width="44" height="9" fill="#fbbf24"/>
+    <rect x="94" y="90" width="44" height="9" fill="#fbbf24"/>
+  </g>
+</svg>

@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { DrawingBoard } from "../components/DrawingBoard";
-import { parts, trainingSet, workerById } from "../data/catalog";
+import { categoryLabels, parts, trainingSet, workerById } from "../data/catalog";
+import type { CardCategory } from "../types";
 import { useShop } from "../store";
+
+const ORDER: CardCategory[] = ["struktur", "bahan", "hardware", "proses", "lembar", "baris"];
 
 export function LearnSheet() {
   const { employeeId = "" } = useParams();
@@ -17,8 +20,8 @@ export function LearnSheet() {
     <main className="page sheet-page">
       <header className="page-head compact">
         <p className="eyebrow">{trainingSet.docNo}</p>
-        <h1>Gambar mesin</h1>
-        <p>Sentuh nomor untuk membuka kartu suku cadang.</p>
+        <h1>Lembar produksi</h1>
+        <p>Nomor oranye = kartu yang ada di gambar. Daftar bawah = seluruh {parts.length} kartu.</p>
       </header>
       <div className="zoom-bar">
         <button type="button" onClick={() => setZoom((value) => Math.max(1, value - 0.4))}>
@@ -37,16 +40,27 @@ export function LearnSheet() {
           />
         </div>
       </div>
-      <ol className="legend">
-        {parts.map((part) => (
-          <li key={part.id}>
-            <Link to={`/learn/${worker.id}/part/${part.id}`}>
-              <span className="num">{part.callout}</span>
-              {part.nameId}
-            </Link>
-          </li>
-        ))}
-      </ol>
+      {ORDER.map((category) => {
+        const group = parts.filter((part) => part.category === category);
+        if (!group.length) return null;
+        return (
+          <section key={category} className="queue">
+            <h2>
+              {categoryLabels[category].idn} · {categoryLabels[category].zh}
+            </h2>
+            <ul className="legend">
+              {group.map((part) => (
+                <li key={part.id}>
+                  <Link to={`/learn/${worker.id}/part/${part.id}`}>
+                    <span className="num">{part.callout}</span>
+                    {part.nameId}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
       <Link className="text-btn" to={`/learn/${worker.id}`}>
         Kembali ke tugas
       </Link>

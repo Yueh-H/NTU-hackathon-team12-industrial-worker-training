@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="width W of a bar, times sign">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="18" y="34" width="84" height="30" rx="2" fill="#e5e7eb"/>
+    <line x1="18" y1="66" x2="18" y2="80" stroke-width="2"/>
+    <line x1="102" y1="66" x2="102" y2="80" stroke-width="2"/>
+    <path d="M18 84 L30 76 L30 81 L90 81 L90 76 L102 84 L90 92 L90 87 L30 87 L30 92 Z" fill="#fbbf24" stroke-width="2"/>
+    <text x="60" y="110" font-family="system-ui, sans-serif" font-size="18" fill="#1f2937" stroke="none" text-anchor="middle">W</text>
+    <line x1="118" y1="42" x2="138" y2="62"/>
+    <line x1="138" y1="42" x2="118" y2="62"/>
+  </g>
+</svg>

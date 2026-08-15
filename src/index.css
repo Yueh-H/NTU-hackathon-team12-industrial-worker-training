@@ -162,6 +162,20 @@ img { max-width: 100%; display: block; }
   overflow: hidden;
 }
 .part-art img { width: 100%; background: #fff; }
+.part-art.type-card {
+  min-height: 180px;
+  display: grid;
+  place-content: center;
+  gap: 8px;
+  text-align: center;
+  padding: 24px;
+}
+.part-art.type-card strong { font-size: 1.6rem; letter-spacing: -0.03em; }
+.part-art.type-card span { color: var(--muted); }
+.choice-tile .part-art { margin: 0; border: 0; box-shadow: none; }
+.choice-tile .part-art img { height: 88px; object-fit: contain; }
+.choice-tile .part-art.type-card { min-height: 88px; padding: 8px; }
+.choice-tile .part-art.type-card strong { font-size: 0.95rem; }
 .name-block { display: flex; gap: 8px; flex-wrap: wrap; }
 .zh-name { font-size: 1.15rem; font-weight: 700; }
 

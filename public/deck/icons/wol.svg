@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="insulation wool">
+  <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M24 24 H136 V96 H24 Z M34 34 H126 V86 H34 Z" fill="#e5e7eb" fill-rule="evenodd"/>
+    <path d="M44 46 A9 9 0 0 1 62 46 A9 9 0 0 1 80 46 A9 9 0 0 1 98 46 A9 9 0 0 1 116 46
+             A7.5 7.5 0 0 1 116 61 A7.5 7.5 0 0 1 116 76
+             A9 9 0 0 1 98 76 A9 9 0 0 1 80 76 A9 9 0 0 1 62 76 A9 9 0 0 1 44 76
+             A7.5 7.5 0 0 1 44 61 A7.5 7.5 0 0 1 44 46 Z" fill="#fbbf24"/>
+  </g>
+</svg>

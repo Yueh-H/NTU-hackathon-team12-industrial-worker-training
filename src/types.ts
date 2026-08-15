@@ -25,18 +25,24 @@ export interface TrainingSet {
   summaryZh: string;
 }
 
+export type CardCategory = "struktur" | "bahan" | "hardware" | "proses" | "lembar" | "baris";
+
 export interface Part {
   id: string;
   setId: string;
   version: number;
   callout: number;
+  category: CardCategory;
   nameId: string;
   nameZh: string;
   nameEn: string;
   functionId: string;
   safetyId: string;
-  hotspot: { x: number; y: number };
+  icon: string | null;
+  sheet: string | null;
+  hotspot: { x: number; y: number } | null;
   critical: boolean;
+  uncertain: boolean;
 }
 
 export interface Assignment {

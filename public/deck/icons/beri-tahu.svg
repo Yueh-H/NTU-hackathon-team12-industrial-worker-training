@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="notify a person, speech bubble with exclamation mark">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M14 104 C14 80 26 68 42 68 C58 68 70 80 70 104 Z" fill="#e5e7eb"/>
+    <circle cx="42" cy="42" r="16" fill="#e5e7eb"/>
+    <path d="M86 16 L138 16 A 8 8 0 0 1 146 24 L146 54 A 8 8 0 0 1 138 62 L104 62 L86 78 L92 62 L86 62 A 8 8 0 0 1 78 54 L78 24 A 8 8 0 0 1 86 16 Z" fill="#fbbf24"/>
+    <polygon points="108,26 116,26 114,46 110,46" fill="#1f2937" stroke="none"/>
+    <circle cx="112" cy="54" r="3.5" fill="#1f2937" stroke="none"/>
+  </g>
+</svg>

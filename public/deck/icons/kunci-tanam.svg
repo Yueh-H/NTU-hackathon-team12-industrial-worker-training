@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="mortise lock">
+  <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="20" y="10" width="70" height="100" fill="#e5e7eb"/>
+    <path d="M96 44 L108 44 L112 50 L112 57 L96 57 Z" fill="#e5e7eb"/>
+    <rect x="96" y="68" width="20" height="14" fill="#e5e7eb"/>
+    <rect x="60" y="34" width="30" height="52" rx="2" fill="#fbbf24"/>
+    <rect x="88" y="28" width="8" height="64" rx="1" fill="#fbbf24"/>
+    <circle cx="73" cy="52" r="5" stroke-width="2"/>
+    <circle cx="73" cy="72" r="4" stroke-width="2"/>
+  </g>
+</svg>

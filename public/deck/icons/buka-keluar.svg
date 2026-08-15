@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="outward opening door, plan view">
+  <g stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="8" y="74" width="42" height="12" fill="#e5e7eb"/>
+    <rect x="110" y="74" width="42" height="12" fill="#e5e7eb"/>
+    <path d="M94 80 A44 44 0 0 1 84 108" stroke-width="2" stroke-dasharray="5 5" opacity="0.35"/>
+    <path d="M108 80 A60 60 0 0 0 92 38" stroke-width="2.5"/>
+    <polyline points="103,42 92,38 96,49" stroke-width="2.5"/>
+    <polygon points="46,76 80,42 88,50 54,84" fill="#fbbf24" stroke-width="2"/>
+    <circle cx="50" cy="80" r="4.5" fill="#e5e7eb" stroke-width="2"/>
+    <text x="114" y="52" font-family="system-ui, sans-serif" font-size="13" fill="#1f2937" stroke="none">OUT</text>
+  </g>
+</svg>

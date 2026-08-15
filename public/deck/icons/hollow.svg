@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 120" role="img" aria-label="galvanized rectangular tube 20x40">
+  <g fill="none" stroke="#1f2937" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="14,40 104,40 104,92 14,92" fill="#e5e7eb"/>
+    <polygon points="14,40 104,40 126,22 36,22" fill="#e5e7eb"/>
+    <path d="M104 92 L104 40 L126 22 L126 74 Z M108.6 82.2 L108.6 42.2 L121.4 31.8 L121.4 71.8 Z" fill="#fbbf24" fill-rule="evenodd"/>
+  </g>
+</svg>
