@@ -789,11 +789,15 @@ td small { color: var(--muted); }
 .mat-item.is-rescue { background: #fff1ee; }
 .mat-item.is-mastered { background: #eef8f1; }
 .review-folder {
-  margin-top: 8px;
-  padding: 6px 6px 8px;
-  border: 1px solid rgba(217, 106, 50, 0.22);
+  margin: 0 0 14px;
+  padding: 8px 8px 10px;
+  border: 1px solid rgba(194, 65, 12, 0.28);
   border-radius: 14px;
-  background: #fff8ee;
+  background: #fff1e6;
+}
+.review-folder .mat-toggle {
+  color: #9a3412;
+  font-weight: 800;
 }
 .review-legend {
   display: flex;
@@ -1223,6 +1227,11 @@ td small { color: var(--muted); }
 .path-unit-banner small { display: block; opacity: 0.72; font-size: 0.75rem; }
 .path-unit-banner strong { display: block; }
 .path-unit-banner b { font-size: 1.2rem; opacity: 0.8; }
+.path-unit.is-review { margin-bottom: 22px; }
+.path-unit-banner.review-banner {
+  background: linear-gradient(145deg, #c2410c, #ea580c);
+  box-shadow: 0 6px 0 #9a3412;
+}
 .path-nodes { list-style: none; padding: 0; margin: 0; }
 .path-row { display: flex; margin: 0 0 18px; }
 .path-row.shift-0 { justify-content: center; }
