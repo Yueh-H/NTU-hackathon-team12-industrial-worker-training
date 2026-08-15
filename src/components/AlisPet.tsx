@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { parts, workerById } from "../data/catalog";
 import { queueFor, snapshotFor } from "../engine/dashboard";
 import { askAlisHeadless } from "../lib/alisHeadless";
-import { speakZh } from "../lib/speech";
+import { speakAuto, speakZh } from "../lib/speech";
 import { useShop } from "../store";
 
 type PetMood = "calm" | "due" | "urgent" | "celebrate";
@@ -52,6 +52,7 @@ export function AlisPet() {
   const { states, attempts } = useShop();
   const [open, setOpen] = useState(false);
   const [aiMessage, setAiMessage] = useState("");
+  const [aiQuestion, setAiQuestion] = useState("");
   const [aiBusy, setAiBusy] = useState(false);
   const worker = workerById(employeeId ?? "");
   const spokenRef = useRef("");
@@ -87,6 +88,7 @@ export function AlisPet() {
 
   useEffect(() => {
     setAiMessage("");
+    setAiQuestion("");
   }, [workerId]);
 
   useEffect(() => {
@@ -98,13 +100,15 @@ export function AlisPet() {
   }, [spokenKey, voiceMessage, workerId]);
 
   async function askHeadlessAssistant(): Promise<void> {
-    if (aiBusy || !aiPrompt) return;
+    const question = aiQuestion.trim();
+    if (aiBusy || !aiPrompt || !question) return;
     setAiBusy(true);
     setAiMessage("");
     try {
-      const answer = await askAlisHeadless(aiPrompt);
+      const answer = await askAlisHeadless(`${aiPrompt}\n\n使用者問題：\n${question}`);
       setAiMessage(answer);
-      speakZh(answer);
+      setAiQuestion("");
+      speakAuto(answer);
     } catch (error) {
       setAiMessage(
         error instanceof Error
@@ -148,17 +152,28 @@ export function AlisPet() {
             <span>{snapshot.learningScore} 分</span>
           </div>
           {aiMessage ? <p className="alis-pet-ai-message"><strong>AI：</strong>{aiMessage}</p> : null}
+          <form className="alis-pet-ask" onSubmit={(event) => { event.preventDefault(); void askHeadlessAssistant(); }}>
+            <label htmlFor="alis-pet-question">問學習小助手</label>
+            <textarea
+              id="alis-pet-question"
+              value={aiQuestion}
+              onChange={(event) => setAiQuestion(event.target.value.slice(0, 500))}
+              placeholder="用中文、English 或 Bahasa Indonesia 問問題"
+              rows={2}
+              disabled={aiBusy}
+            />
+            <button
+              className="alis-pet-ask-submit"
+              type="submit"
+              disabled={aiBusy || !aiQuestion.trim()}
+            >
+              {aiBusy ? "⏳ 回答中…" : "✨ 送出問題"}
+            </button>
+            <small>會用你的問題語言回答</small>
+          </form>
           <div className="alis-pet-tools">
             <button className="alis-pet-voice" type="button" onClick={() => speakZh(voiceMessage)}>
               🔊 再說一次
-            </button>
-            <button
-              className="alis-pet-voice"
-              type="button"
-              disabled={aiBusy}
-              onClick={() => void askHeadlessAssistant()}
-            >
-              {aiBusy ? "⏳ Codex 思考中…" : "✨ 問學習小助手"}
             </button>
           </div>
           {nextPart ? (
