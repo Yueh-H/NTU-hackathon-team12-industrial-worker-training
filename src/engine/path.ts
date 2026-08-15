@@ -1,5 +1,5 @@
 import { categoryLabels, parts } from "../data/catalog";
-import type { CardCategory, Part, ReviewState } from "../types";
+import type { Attempt, CardCategory, Part, ReviewState } from "../types";
 
 export const UNIT_ORDER: CardCategory[] = ["struktur", "bahan", "hardware", "proses", "lembar", "baris"];
 const CHUNK = 4;
@@ -60,33 +60,94 @@ export function partsInLesson(lesson: Lesson): Part[] {
   return lesson.partIds.map((id) => parts.find((part) => part.id === id)).filter((part): part is Part => Boolean(part));
 }
 
-export function isLessonDone(lesson: Lesson, states: ReviewState[]): boolean {
+export function isLessonDone(lesson: Lesson, states: ReviewState[]): boolean;
+export function isLessonDone(lesson: Lesson, attempts: Attempt[], employeeId: string): boolean;
+export function isLessonDone(lesson: Lesson, evidence: ReviewState[] | Attempt[], employeeId?: string): boolean {
+  if (employeeId !== undefined) {
+    return lesson.partIds.every((partId) => hasCorrectAttempt(evidence as Attempt[], employeeId, partId));
+  }
   return lesson.partIds.every((partId) => {
-    const state = states.find((item) => item.partId === partId);
+    const state = (evidence as ReviewState[]).find((item) => item.partId === partId);
     return Boolean(state && state.status !== "inbox");
   });
 }
 
-export function unitProgress(unit: UnitPath, states: ReviewState[]): { done: number; total: number } {
+function hasAttempt(attempts: Attempt[], employeeId: string, partId: string): boolean {
+  return attempts.some(
+    (attempt) => attempt.employeeId === employeeId && attempt.partId === partId && attempt.quizCorrect !== null
+  );
+}
+
+function hasCorrectAttempt(attempts: Attempt[], employeeId: string, partId: string): boolean {
+  return attempts.some(
+    (attempt) => attempt.employeeId === employeeId && attempt.partId === partId && attempt.quizCorrect === true
+  );
+}
+
+export function unitProgress(unit: UnitPath, states: ReviewState[]): { done: number; total: number };
+export function unitProgress(unit: UnitPath, attempts: Attempt[], employeeId: string): { done: number; total: number };
+export function unitProgress(
+  unit: UnitPath,
+  evidence: ReviewState[] | Attempt[],
+  employeeId?: string
+): { done: number; total: number } {
   const ids = unit.lessons.flatMap((lesson) => lesson.partIds);
-  const done = ids.filter((partId) => {
-    const state = states.find((item) => item.partId === partId);
-    return Boolean(state && state.status !== "inbox");
-  }).length;
+  const done = employeeId === undefined
+    ? ids.filter((partId) => {
+        const state = (evidence as ReviewState[]).find((item) => item.partId === partId);
+        return Boolean(state && state.status !== "inbox");
+      }).length
+    : ids.filter((partId) => hasAttempt(evidence as Attempt[], employeeId, partId)).length;
   return { done, total: ids.length };
 }
 
-export function nodeState(lesson: Lesson, states: ReviewState[]): NodeState {
-  return isLessonDone(lesson, states) ? "done" : "open";
+export function nodeState(lesson: Lesson, states: ReviewState[]): NodeState;
+export function nodeState(lesson: Lesson, attempts: Attempt[], employeeId: string): NodeState;
+export function nodeState(lesson: Lesson, evidence: ReviewState[] | Attempt[], employeeId?: string): NodeState {
+  const done = employeeId === undefined
+    ? isLessonDone(lesson, evidence as ReviewState[])
+    : isLessonDone(lesson, evidence as Attempt[], employeeId);
+  return done ? "done" : "open";
 }
 
-export function firstOpenPart(lesson: Lesson, states: ReviewState[]): string {
+export function firstOpenPart(lesson: Lesson, states: ReviewState[]): string;
+export function firstOpenPart(lesson: Lesson, attempts: Attempt[], employeeId: string): string;
+export function firstOpenPart(lesson: Lesson, evidence: ReviewState[] | Attempt[], employeeId?: string): string {
   return (
-    lesson.partIds.find((partId) => {
-      const state = states.find((item) => item.partId === partId);
-      return !state || state.status === "inbox";
-    }) ?? lesson.partIds[0]
+    employeeId === undefined
+      ? lesson.partIds.find((partId) => {
+          const state = (evidence as ReviewState[]).find((item) => item.partId === partId);
+          return !state || state.status === "inbox";
+        })
+      : lesson.partIds.find((partId) => !hasCorrectAttempt(evidence as Attempt[], employeeId, partId))
+  ) ?? lesson.partIds[0];
+}
+
+export function spokenSet(
+  employeeId: string,
+  hasCompletedSpeech: (employeeId: string, partId: string) => boolean
+): Set<string> {
+  return new Set(
+    parts
+      .map((part) => part.id)
+      .filter((partId) => hasCompletedSpeech(employeeId, partId))
   );
+}
+
+export function unitStars(unit: UnitPath, attempts: Attempt[], employeeId: string, spoken: Set<string>): number {
+  const ids = unit.lessons.flatMap((lesson) => lesson.partIds);
+  if (!ids.length) return 0;
+  const speechStar = ids.every((partId) => spoken.has(partId)) ? 1 : 0;
+  const quizStar = ids.every((partId) => hasCorrectAttempt(attempts, employeeId, partId)) ? 1 : 0;
+  return speechStar + quizStar;
+}
+
+export function isUnitUnlocked(unit: UnitPath, attempts: Attempt[], employeeId: string): boolean {
+  if (unit.order === 0) return true;
+  const previous = units.find((item) => item.order === unit.order - 1);
+  if (!previous) return true;
+  const ids = previous.lessons.flatMap((lesson) => lesson.partIds);
+  return ids.every((partId) => hasCorrectAttempt(attempts, employeeId, partId));
 }
 
 export function nextPartInLesson(lesson: Lesson, partId: string): string | undefined {
