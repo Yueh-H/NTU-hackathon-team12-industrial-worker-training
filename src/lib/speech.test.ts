@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { matchesZhTarget, normalizeSpeechText, zhSpeechTarget } from "./speech";
+import { detectSpeechLanguage, matchesZhTarget, normalizeSpeechText, zhSpeechTarget } from "./speech";
 
 describe("Chinese speech target matching", () => {
   it("accepts common simplified-character recognition output", () => {
@@ -31,5 +31,11 @@ describe("Chinese speech target matching", () => {
 
   it("accepts a short phrase with an extra polite prefix", () => {
     expect(matchesZhTarget("防火玻璃", "請說防火玻璃")).toBe(true);
+  });
+
+  it("detects the language for assistant replies", () => {
+    expect(detectSpeechLanguage("今天先複習一張卡片。")).toBe("zh-TW");
+    expect(detectSpeechLanguage("What should I review today?")).toBe("en-US");
+    expect(detectSpeechLanguage("Apa yang harus saya pelajari hari ini?")).toBe("id-ID");
   });
 });
