@@ -7,10 +7,11 @@ import "./index.css";
 
 const root = document.getElementById("root");
 if (!root) throw new Error("root missing");
+const basename = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
 
 createRoot(root).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={basename === "/" ? undefined : basename}>
       <ShopProvider>
         <App />
       </ShopProvider>
