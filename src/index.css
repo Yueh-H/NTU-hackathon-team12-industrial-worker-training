@@ -430,6 +430,22 @@ td small { color: var(--muted); }
   border-radius: 10px;
   background: #fffaf0;
 }
+.wo-rail-ranking {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0 0 12px;
+  padding: 10px;
+  border: 1px solid rgba(217, 106, 50, 0.24);
+  border-radius: 12px;
+  background: #fff4e6;
+  color: inherit;
+  text-decoration: none;
+}
+.wo-rail-ranking:hover { background: #ffead7; }
+.wo-rail-ranking.is-on { box-shadow: 0 0 0 2px #d96a32; }
+.wo-rail-ranking.is-collapsed { justify-content: center; padding-inline: 4px; }
 .wo-rail-list { display: grid; gap: 8px; }
 .wo-rail-item {
   display: grid;
