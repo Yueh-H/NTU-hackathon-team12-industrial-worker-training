@@ -187,6 +187,9 @@ export function AdminHome() {
       </div>
       <p className="fine">觀看情況依開始學習、作答與複習活動推算，不記錄是否在線，也不代表實際停留時間。</p>
       <div className="admin-foot">
+        <Link className="btn dark" to="/admin/cards">
+          編輯卡片模組
+        </Link>
         <Link className="text-btn" to="/">
           回首頁
         </Link>

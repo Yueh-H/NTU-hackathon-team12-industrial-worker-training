@@ -66,7 +66,46 @@ export const assignments = seed.assignments as Assignment[];
 export const workers = profiles.filter((profile) => profile.role === "worker");
 export const supervisors = profiles.filter((profile) => profile.role === "supervisor");
 
-export const parts: Part[] = deck.cards.map((card, index) => ({
+export type EditablePartFields = Pick<
+  Part,
+  "category" | "nameId" | "nameZh" | "nameEn" | "functionId" | "safetyId" | "icon" | "sheet" | "critical" | "uncertain"
+>;
+export type CardOverrides = Record<string, Partial<EditablePartFields>>;
+
+const CARD_OVERRIDES_KEY = "workcard-card-overrides-v1";
+
+function readCardOverrides(): CardOverrides {
+  if (typeof window === "undefined") return {};
+  try {
+    const raw = window.localStorage.getItem(CARD_OVERRIDES_KEY);
+    if (!raw) return {};
+    const parsed: unknown = JSON.parse(raw);
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
+    return parsed as CardOverrides;
+  } catch {
+    return {};
+  }
+}
+
+export function hasCardOverride(partId: string): boolean {
+  return Object.prototype.hasOwnProperty.call(readCardOverrides(), partId);
+}
+
+export function saveCardOverride(partId: string, patch: Partial<EditablePartFields>): void {
+  if (typeof window === "undefined") return;
+  const overrides = readCardOverrides();
+  overrides[partId] = { ...(overrides[partId] ?? {}), ...patch };
+  window.localStorage.setItem(CARD_OVERRIDES_KEY, JSON.stringify(overrides));
+}
+
+export function clearCardOverride(partId: string): void {
+  if (typeof window === "undefined") return;
+  const overrides = readCardOverrides();
+  delete overrides[partId];
+  window.localStorage.setItem(CARD_OVERRIDES_KEY, JSON.stringify(overrides));
+}
+
+const baseParts: Part[] = deck.cards.map((card, index) => ({
   id: card.id,
   setId: trainingSet.id,
   version: trainingSet.version,
@@ -85,6 +124,12 @@ export const parts: Part[] = deck.cards.map((card, index) => ({
   hotspot: HOTSPOTS[card.id] ?? null,
   critical: card.cat === "hardware" || card.cat === "baris" || Boolean(card.uncertain),
   uncertain: Boolean(card.uncertain)
+}));
+
+const cardOverrides = readCardOverrides();
+export const parts: Part[] = baseParts.map((part) => ({
+  ...part,
+  ...(cardOverrides[part.id] ?? {})
 }));
 
 export function partById(id: string): Part | undefined {

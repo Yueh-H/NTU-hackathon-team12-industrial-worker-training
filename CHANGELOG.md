@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.0] - 2026-08-15
+
+### Added
+- Supervisor card editor so each card can be edited on its own
+
 ## [0.5.0] - 2026-08-15
 
 ### Added
