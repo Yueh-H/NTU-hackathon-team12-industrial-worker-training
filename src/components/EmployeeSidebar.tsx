@@ -9,6 +9,13 @@ export function EmployeeSidebar() {
     <aside className="employee-side">
       <p className="eyebrow">選擇員工</p>
       <h1>{trainingSet.titleZh}</h1>
+      <NavLink
+        className={({ isActive }) => `leaderboard-link${isActive ? " is-on" : ""}`}
+        to="/learn/ranking"
+      >
+        <strong>全員學習排行榜</strong>
+        <small>看看誰在持續掌握工單</small>
+      </NavLink>
       <div className="employee-list">
         {workers.map((worker) => {
           const snap = snapshotFor(worker, states, attempts);

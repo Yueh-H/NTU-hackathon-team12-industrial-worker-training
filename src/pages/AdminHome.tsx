@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { BackendBadge } from "../components/BackendBadge";
 import { trainingSet, workers } from "../data/catalog";
-import { snapshotFor } from "../engine/dashboard";
+import { rankSnapshots, snapshotFor } from "../engine/dashboard";
 import { formatDateTime, percent, relativeTime } from "../lib/format";
 import { useShop } from "../store";
 
@@ -14,12 +14,7 @@ export function AdminHome() {
   const overdue = snaps.reduce((sum, snap) => sum + snap.overdue, 0);
   const help = snaps.filter((snap) => snap.needsHelp);
   const recentViewing = snaps.filter((snap) => snap.viewingStatus === "recent" || snap.viewingStatus === "active");
-  const ranking = [...snaps].sort(
-    (a, b) =>
-      b.learningScore - a.learningScore ||
-      b.mastered - a.mastered ||
-      (b.accuracy ?? -1) - (a.accuracy ?? -1)
-  );
+  const ranking = rankSnapshots(snaps);
 
   return (
     <main className="page admin">

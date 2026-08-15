@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { trainingSet, workerById, workers } from "../data/catalog";
-import { snapshotFor } from "../engine/dashboard";
+import { rankSnapshots, snapshotFor } from "../engine/dashboard";
 import { firstOpenPart, nodeState, unitProgress, units } from "../engine/path";
 import { buildAlisSnapshot, syncAlisSnapshot } from "../lib/alisSnapshot";
 import { relativeTime } from "../lib/format";
@@ -15,9 +15,7 @@ export function LearnHome() {
   if (!worker) return <Navigate to="/learn" replace />;
   const mine = states.filter((state) => state.employeeId === worker.id);
   const snap = snapshotFor(worker, mine, attempts);
-  const ranking = workers
-    .map((item) => snapshotFor(item, states, attempts))
-    .sort((a, b) => b.learningScore - a.learningScore || b.mastered - a.mastered);
+  const ranking = rankSnapshots(workers.map((item) => snapshotFor(item, states, attempts)));
   const rank = ranking.findIndex((item) => item.employee.id === worker.id) + 1;
 
   return (
@@ -39,6 +37,9 @@ export function LearnHome() {
         <p className="fine">
           已開始 {snap.viewedCount}/{snap.assigned} 張 · 最近{relativeTime(snap.lastAt, "zh")}
         </p>
+        <Link className="btn ghost" to="/learn/ranking">
+          查看全員排行榜
+        </Link>
       </section>
       <section className="info-card alis-card">
         <h2>AI Alis 桌寵</h2>
