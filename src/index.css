@@ -232,6 +232,62 @@ img { max-width: 100%; display: block; }
 .speech-reward small { display: block; }
 .speech-reward small { color: #8a6f25; font-size: 0.78rem; }
 
+/* Two-sided vocabulary card (front: pictogram + zh, back: id + en + notes) */
+.flip-card {
+  margin: 12px 0;
+  perspective: 1200px;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.flip-card:focus-visible .flip-inner { box-shadow: 0 0 0 3px rgba(35, 114, 82, 0.35); border-radius: 18px; }
+.flip-inner {
+  display: grid;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+.flip-card.is-flipped .flip-inner { transform: rotateY(180deg); }
+.flip-face {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  position: relative;
+  min-height: 300px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 4px solid #d96a32;
+  border-radius: 18px;
+  padding: 26px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.flip-front { justify-content: center; }
+.flip-back { transform: rotateY(180deg); align-items: stretch; text-align: left; border-top-color: var(--navy); }
+.flip-tag { position: absolute; top: 8px; left: 12px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; color: #d96a32; }
+.flip-back .flip-tag { color: var(--navy); }
+.flip-icon { width: min(240px, 80%); height: auto; margin-top: 4px; }
+.flip-icon-empty { display: grid; place-content: center; min-height: 160px; font-size: 1.4rem; font-weight: 700; }
+.flip-zh { margin: 12px 0 0; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.25; }
+.flip-raw { margin: 6px 0 12px; font-family: ui-monospace, Menlo, monospace; font-size: 1.05rem; font-weight: 700; word-break: break-all; }
+.flip-line { width: 100%; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.flip-hint { position: absolute; right: 12px; bottom: 8px; font-size: 0.68rem; color: var(--muted); }
+.flip-zh-small { margin: 0; color: var(--muted); font-size: 0.85rem; }
+.flip-idn { margin: 4px 0 0; font-size: 1.35rem; font-weight: 800; line-height: 1.3; }
+.flip-en { margin: 4px 0 0; color: var(--muted); font-size: 0.95rem; }
+.flip-unc {
+  display: inline-grid; place-content: center; margin-left: 6px; width: 20px; height: 20px;
+  border-radius: 50%; background: #fde2df; color: var(--rose); font-size: 0.8rem; vertical-align: middle;
+}
+.flip-segments { margin-top: 12px; width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.flip-segments td { padding: 5px 4px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.flip-segments .seg { font-family: ui-monospace, Menlo, monospace; font-weight: 700; white-space: nowrap; }
+.flip-segments .role { color: var(--muted); white-space: nowrap; }
+.flip-note { margin: auto 0 0; padding-top: 12px; font-size: 0.9rem; color: var(--ink); }
+.sheet-crop { display: block; max-width: 100%; max-height: 240px; width: auto; margin: 0 auto; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+
 .choice-list, .choice-grid { display: grid; gap: 8px; }
 .choice-grid { grid-template-columns: 1fr 1fr; }
 .choice, .choice-tile {

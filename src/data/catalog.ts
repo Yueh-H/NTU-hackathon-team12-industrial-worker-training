@@ -48,6 +48,7 @@ export const parts: Part[] = deck.cards.map((card, index) => ({
     : "組立前請先對過工單上的原文。",
   icon: card.icon,
   sheet: card.sheet,
+  segments: (card.parts ?? []).map(([seg, idn, role]) => ({ seg, idn, role })),
   hotspot: HOTSPOTS[card.id] ?? null,
   critical: card.cat === "hardware" || card.cat === "baris" || Boolean(card.uncertain),
   uncertain: Boolean(card.uncertain)
