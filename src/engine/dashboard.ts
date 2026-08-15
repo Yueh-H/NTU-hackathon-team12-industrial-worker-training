@@ -40,6 +40,15 @@ export interface EmployeeSnapshot {
   viewedCount: number;
 }
 
+export function rankSnapshots(snapshots: EmployeeSnapshot[]): EmployeeSnapshot[] {
+  return [...snapshots].sort(
+    (a, b) =>
+      b.learningScore - a.learningScore ||
+      b.mastered - a.mastered ||
+      (b.accuracy ?? -1) - (a.accuracy ?? -1)
+  );
+}
+
 function quizAttempts(attempts: Attempt[], employeeId: string): Attempt[] {
   return attempts.filter((attempt) => attempt.employeeId === employeeId && attempt.quizCorrect !== null);
 }

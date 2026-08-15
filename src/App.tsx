@@ -6,6 +6,7 @@ import { LearnCard } from "./pages/LearnCard";
 import { LearnHome } from "./pages/LearnHome";
 import { LearnLayout } from "./pages/LearnLayout";
 import { LearnPick } from "./pages/LearnPick";
+import { LearnRanking } from "./pages/LearnRanking";
 import { LearnQuiz } from "./pages/LearnQuiz";
 import { LearnSheet } from "./pages/LearnSheet";
 
@@ -15,6 +16,7 @@ export function App() {
       <Route path="/" element={<Gate />} />
       <Route path="/learn" element={<LearnLayout />}>
         <Route index element={<LearnPick />} />
+        <Route path="ranking" element={<LearnRanking />} />
         <Route path=":employeeId" element={<LearnHome />} />
         <Route path=":employeeId/sheet" element={<LearnSheet />} />
         <Route path=":employeeId/part/:partId" element={<LearnCard />} />
