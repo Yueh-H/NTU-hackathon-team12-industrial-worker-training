@@ -44,8 +44,8 @@ export const parts: Part[] = deck.cards.map((card, index) => ({
   nameEn: card.en,
   functionId: card.hint,
   safetyId: card.uncertain
-    ? "Terjemahan belum dikonfirmasi mandor. Cocokkan dengan tulisan di lembar."
-    : "Cocokkan ejaan dengan lembar produksi sebelum merakit.",
+    ? "譯名尚未經現場師傅確認，請以工單原文為準。"
+    : "組立前請先對過工單上的原文。",
   icon: card.icon,
   sheet: card.sheet,
   hotspot: HOTSPOTS[card.id] ?? null,

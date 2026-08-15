@@ -8,7 +8,7 @@ export function Gate() {
   return (
     <main className="page gate">
       <p className="eyebrow">Team 12 · NTU Hackathon</p>
-      <h1>Lembar Kerja Mesin</h1>
+      <h1>工程訓練單</h1>
       <p className="lede">
         {trainingSet.titleZh}
         <br />
@@ -17,17 +17,17 @@ export function Gate() {
       <BackendBadge />
       <div className="gate-actions">
         <Link className="btn primary" to="/learn">
-          Karyawan · Belajar suku cadang
+          員工學習
         </Link>
         <Link className="btn dark" to="/admin">
           主管監控
         </Link>
       </div>
       <p className="fine">
-        有設 Supabase 時，手機學、筆電看主管頁會打同一份資料。沒設就存在這個瀏覽器。
+        已接 Firebase 時，手機學習、筆電看主管頁會打同一份資料。沒接就存在這個瀏覽器。
       </p>
       <button className="text-btn" type="button" onClick={resetDemo}>
-        Reset data demo
+        重設示範資料
       </button>
     </main>
   );

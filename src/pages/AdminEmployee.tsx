@@ -1,16 +1,9 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { parts, workerById } from "../data/catalog";
 import { nextDueLabel, partStatusLabel, snapshotFor } from "../engine/dashboard";
+import { RATING_ZH, STATUS_ZH } from "../lib/copy";
 import { formatDateTime, percent } from "../lib/format";
 import { useShop } from "../store";
-
-const STATUS_ZH = {
-  new: "未學",
-  due: "今日應複習",
-  overdue: "逾期",
-  learning: "學習中",
-  mastered: "已掌握"
-};
 
 export function AdminEmployee() {
   const { employeeId = "" } = useParams();
@@ -55,7 +48,7 @@ export function AdminEmployee() {
                 <strong>{part?.nameZh ?? attempt.partId}</strong>
                 <span>
                   {attempt.quizCorrect === null ? "自評" : attempt.quizCorrect ? "答對" : "答錯"} ·{" "}
-                  {attempt.rating || "—"} · {formatDateTime(attempt.completedAt, "zh-TW")}
+                  {RATING_ZH[attempt.rating]} · {formatDateTime(attempt.completedAt, "zh-TW")}
                 </span>
               </li>
             );

@@ -20,8 +20,8 @@ export function LearnSheet() {
     <main className="page sheet-page">
       <header className="page-head compact">
         <p className="eyebrow">{trainingSet.docNo}</p>
-        <h1>Lembar produksi</h1>
-        <p>Nomor oranye = kartu yang ada di gambar. Daftar bawah = seluruh {parts.length} kartu.</p>
+        <h1>生產製造表</h1>
+        <p>橘色編號是圖上對得到的卡片。下方是全部 {parts.length} 張。</p>
       </header>
       <div className="zoom-bar">
         <button type="button" onClick={() => setZoom((value) => Math.max(1, value - 0.4))}>
@@ -45,15 +45,13 @@ export function LearnSheet() {
         if (!group.length) return null;
         return (
           <section key={category} className="queue">
-            <h2>
-              {categoryLabels[category].idn} · {categoryLabels[category].zh}
-            </h2>
+            <h2>{categoryLabels[category].zh}</h2>
             <ul className="legend">
               {group.map((part) => (
                 <li key={part.id}>
                   <Link to={`/learn/${worker.id}/part/${part.id}`}>
                     <span className="num">{part.callout}</span>
-                    {part.nameId}
+                    {part.nameZh}
                   </Link>
                 </li>
               ))}
@@ -62,7 +60,7 @@ export function LearnSheet() {
         );
       })}
       <Link className="text-btn" to={`/learn/${worker.id}`}>
-        Kembali ke tugas
+        回今天的任務
       </Link>
     </main>
   );

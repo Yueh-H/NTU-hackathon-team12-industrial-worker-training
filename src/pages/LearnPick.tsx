@@ -8,9 +8,9 @@ export function LearnPick() {
   return (
     <main className="page">
       <header className="page-head">
-        <p className="eyebrow">Pilih nama</p>
-        <h1>Siapa yang belajar?</h1>
-        <p>{trainingSet.titleId}</p>
+        <p className="eyebrow">選擇員工</p>
+        <h1>誰要開始學？</h1>
+        <p>{trainingSet.titleZh}</p>
       </header>
       <div className="stack">
         {workers.map((worker) => {
@@ -29,7 +29,7 @@ export function LearnPick() {
         })}
       </div>
       <Link className="text-btn" to="/">
-        Kembali
+        回首頁
       </Link>
     </main>
   );

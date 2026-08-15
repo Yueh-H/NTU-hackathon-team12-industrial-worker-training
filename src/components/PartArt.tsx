@@ -18,7 +18,6 @@ export function PartArt({ part, label }: { part: Part; label: string }) {
   return (
     <figure className="part-art type-card">
       <strong>{part.nameZh}</strong>
-      <span>{part.nameId}</span>
     </figure>
   );
 }
