@@ -7,6 +7,29 @@ import { useShop } from "../store";
 
 type PetMood = "calm" | "due" | "urgent" | "celebrate";
 const PET_NAME = "學習小助手";
+const SPEECH_MEMORY_PREFIX = "learning-assistant-spoken-v1:";
+
+function speechMemoryKey(reminderKey: string): string {
+  return `${SPEECH_MEMORY_PREFIX}${encodeURIComponent(reminderKey)}`;
+}
+
+function wasReminderSpoken(reminderKey: string): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return window.sessionStorage.getItem(speechMemoryKey(reminderKey)) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function rememberReminder(reminderKey: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.sessionStorage.setItem(speechMemoryKey(reminderKey), "1");
+  } catch {
+    // Private browsing can disable sessionStorage; the in-memory guard still works.
+  }
+}
 
 function moodFor(overdue: number, dueToday: number, mastered: number, assigned: number): PetMood {
   if (overdue > 0) return "urgent";
@@ -48,8 +71,9 @@ export function AlisPet() {
 
   useEffect(() => {
     if (!workerId || !spokenKey || !voiceMessage) return;
-    if (spokenRef.current === spokenKey) return;
+    if (spokenRef.current === spokenKey || wasReminderSpoken(spokenKey)) return;
     spokenRef.current = spokenKey;
+    rememberReminder(spokenKey);
     speakZh(voiceMessage);
   }, [spokenKey, voiceMessage, workerId]);
 
