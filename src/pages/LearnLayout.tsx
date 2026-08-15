@@ -13,7 +13,7 @@ const RAIL_KEY = "wo-rail-collapsed";
 export function LearnLayout() {
   const { employeeId = DEFAULT_EMPLOYEE_ID, partId } = useParams();
   const worker = workerById(employeeId);
-  const { states } = useShop();
+  const { states, attempts } = useShop();
   const [setId, setSetId] = useState(trainingSet.id);
   const [collapsed, setCollapsed] = useState(() => localStorage.getItem(RAIL_KEY) === "1");
   const selected = trainingSetById(setId) ?? trainingSet;
@@ -25,6 +25,7 @@ export function LearnLayout() {
   usePageTitle(worker ? `${worker.name} · 員工學習` : "員工學習");
   if (!worker) return <Navigate to={`/learn/${DEFAULT_EMPLOYEE_ID}`} replace />;
   const mine = states.filter((state) => state.employeeId === worker.id);
+  const mineAttempts = attempts.filter((attempt) => attempt.employeeId === worker.id);
 
   return (
     <div className={`learn-shell three-col${collapsed ? " rail-min" : ""}`}>
@@ -40,6 +41,7 @@ export function LearnLayout() {
         setId={setId}
         training={selected}
         states={mine}
+        attempts={mineAttempts}
         selectedPartId={partId}
       />
       <section className="learn-main card-pane">
