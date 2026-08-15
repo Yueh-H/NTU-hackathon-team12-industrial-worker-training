@@ -21,7 +21,7 @@ export function DrawingBoard({
 }: DrawingBoardProps) {
   return (
     <div className="drawing-board">
-      <img className="drawing-image" src="/drawing.png" alt="FM720102 lembar produksi 11507010-9" />
+      <img className="drawing-image" src="/drawing.png" alt="FM720102 生產製造表 11507010-9" />
       {parts.map((part) => {
         if (!part.hotspot) return null;
         const state = states.find((item) => item.partId === part.id);
@@ -42,7 +42,7 @@ export function DrawingBoard({
             className={classes}
             style={{ left: `${part.hotspot.x}%`, top: `${part.hotspot.y}%` }}
             onClick={() => interactive && onPick(part.id)}
-            aria-label={`${part.callout} ${part.nameId}`}
+            aria-label={`${part.callout} ${part.nameZh}`}
           >
             {part.callout}
           </button>

@@ -5,6 +5,7 @@ import { PartArt } from "../components/PartArt";
 import { RatingBar } from "../components/RatingBar";
 import { parts, partById, workerById } from "../data/catalog";
 import { pickQuizKind } from "../engine/reviewEngine";
+import { QUIZ_KIND_ZH } from "../lib/copy";
 import { nameChoices, partChoices } from "../lib/quiz";
 import type { Rating } from "../types";
 import { useShop } from "../store";
@@ -28,13 +29,13 @@ export function LearnQuiz() {
   if (!worker || !part) return <Navigate to="/learn" replace />;
 
   const correct =
-    kind === "name_to_image" || kind === "hotspot" ? picked === part.id : picked === part.nameId;
+    kind === "name_to_image" || kind === "hotspot" ? picked === part.id : picked === part.nameZh;
 
   function lockAnswer(value: string) {
     if (checked) return;
     setPicked(value);
     setChecked(true);
-    if (value !== (kind === "image_to_name" ? part!.nameId : part!.id)) {
+    if (value !== (kind === "image_to_name" ? part!.nameZh : part!.id)) {
       setRating("forgot");
     }
   }
@@ -56,19 +57,19 @@ export function LearnQuiz() {
     return (
       <main className="page">
         <header className="page-head">
-          <p className="eyebrow">Selesai</p>
-          <h1>{correct ? "Jawaban benar." : "Akan diulang besok."}</h1>
+          <p className="eyebrow">完成</p>
+          <h1>{correct ? "答對了。" : "明天會再出現。"}</h1>
           <p>
             {rating === "remembered"
-              ? "Jadwal D+1 / 3 / 7 / 30 tetap."
-              : "Rescue besok ditambahkan. Milestone lama tidak dipindah."}
+              ? "D+1／3／7／30 排程維持不變。"
+              : "已加入隔日補強。原本的里程碑日期不搬動。"}
           </p>
         </header>
         <Link className="btn primary wide" to={`/learn/${worker.id}`}>
-          Kembali ke tugas
+          回今天的任務
         </Link>
         <button className="btn ghost wide" type="button" onClick={() => navigate(`/learn/${worker.id}/sheet`)}>
-          Lihat gambar lagi
+          再看工單圖
         </button>
       </main>
     );
@@ -77,24 +78,24 @@ export function LearnQuiz() {
   return (
     <main className="page">
       <header className="page-head compact">
-        <p className="eyebrow">Kuis · {kind.replaceAll("_", " ")}</p>
+        <p className="eyebrow">測驗 · {QUIZ_KIND_ZH[kind]}</p>
         <h1>
-          {kind === "image_to_name" && "Apa nama bagian ini?"}
-          {kind === "name_to_image" && `Manakah ${part.nameId}?`}
-          {kind === "hotspot" && `Sentuh posisi: ${part.nameId}`}
+          {kind === "image_to_name" && "這是什麼？"}
+          {kind === "name_to_image" && `哪一張是「${part.nameZh}」？`}
+          {kind === "hotspot" && `請在工單上點出：${part.nameZh}`}
         </h1>
       </header>
 
       {kind === "image_to_name" ? (
         <>
-          <PartArt part={part} label={part.nameId} />
+          <PartArt part={part} label={part.nameZh} />
           <div className="choice-list">
             {names.map((name) => (
               <button
                 key={name}
                 type="button"
-                className={`choice ${checked && name === part.nameId ? "is-right" : ""} ${
-                  checked && name === picked && name !== part.nameId ? "is-wrong" : ""
+                className={`choice ${checked && name === part.nameZh ? "is-right" : ""} ${
+                  checked && name === picked && name !== part.nameZh ? "is-wrong" : ""
                 }`}
                 onClick={() => lockAnswer(name)}
               >
@@ -116,7 +117,7 @@ export function LearnQuiz() {
               }`}
               onClick={() => lockAnswer(item.id)}
             >
-              <PartArt part={item} label={item.nameId} />
+              <PartArt part={item} label={item.nameZh} />
             </button>
           ))}
         </div>
@@ -138,18 +139,18 @@ export function LearnQuiz() {
 
       {checked ? (
         <section className="rate-panel">
-          <p>{correct ? "Benar. Seberapa yakin?" : "Kurang tepat. Tandai Lupa atau Ragu-ragu."}</p>
+          <p>{correct ? "答對。有多確定？" : "不對。請標成忘記或模糊。"}</p>
           <RatingBar value={rating} onChange={setRating} />
           <button className="btn primary wide" type="button" disabled={!rating} onClick={finish}>
-            Simpan hasil
+            儲存結果
           </button>
         </section>
       ) : (
-        <p className="fine">Pilih jawaban dulu, baru penilaian Lupa / Ragu-ragu / Ingat.</p>
+        <p className="fine">先選答案，再自評忘記／模糊／記得。</p>
       )}
 
       <Link className="text-btn" to={`/learn/${worker.id}/part/${part.id}`}>
-        Kembali ke kartu
+        回卡片
       </Link>
     </main>
   );

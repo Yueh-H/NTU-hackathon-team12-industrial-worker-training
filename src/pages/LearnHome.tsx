@@ -17,52 +17,52 @@ export function LearnHome() {
   return (
     <main className="page">
       <header className="page-head">
-        <p className="eyebrow">Halo, {worker.name}</p>
-        <h1>Tugas hari ini</h1>
+        <p className="eyebrow">你好，{worker.name}</p>
+        <h1>今天的任務</h1>
         <p>
           {trainingSet.docNo} · {trainingSet.machine}
         </p>
       </header>
       <section className="sheet-card">
         <div>
-          <small>Lembar produksi</small>
-          <strong>{trainingSet.titleId}</strong>
-          <p>{parts.length} kartu dari lembar produksi · versi {trainingSet.version}</p>
+          <small>生產製造表</small>
+          <strong>{trainingSet.titleZh}</strong>
+          <p>工單共 {parts.length} 張卡片 · 版本 {trainingSet.version}</p>
         </div>
         <Link className="btn primary" to={`/learn/${worker.id}/sheet`}>
-          Buka gambar mesin
+          打開工單圖
         </Link>
       </section>
       <div className="stat-row">
         <div>
-          <small>Baru</small>
+          <small>未學</small>
           <strong>{queue.fresh.length}</strong>
         </div>
         <div>
-          <small>Hari ini</small>
+          <small>今日</small>
           <strong>{queue.today.length}</strong>
         </div>
         <div>
-          <small>Terlambat</small>
+          <small>逾期</small>
           <strong className={queue.overdue.length ? "warn" : ""}>{queue.overdue.length}</strong>
         </div>
         <div>
-          <small>Dikuasai</small>
+          <small>已掌握</small>
           <strong>{snap.mastered}</strong>
         </div>
       </div>
       {first ? (
         <Link className="btn dark wide" to={`/learn/${worker.id}/part/${first.partId}`}>
-          Lanjut: {parts.find((part) => part.id === first.partId)?.nameId}
+          繼續：{parts.find((part) => part.id === first.partId)?.nameZh}
         </Link>
       ) : (
-        <p className="fine">Tidak ada tugas hari ini. Buka gambar untuk mengulang.</p>
+        <p className="fine">今天沒有待辦。可以打開工單複習。</p>
       )}
-      <Queue title="Terlambat" items={queue.overdue} employeeId={worker.id} tone="warn" />
-      <Queue title="Ulangan hari ini" items={queue.today} employeeId={worker.id} />
-      <Queue title="Kartu baru" items={queue.fresh} employeeId={worker.id} limit={8} />
+      <Queue title="逾期" items={queue.overdue} employeeId={worker.id} tone="warn" />
+      <Queue title="今日複習" items={queue.today} employeeId={worker.id} />
+      <Queue title="新卡片" items={queue.fresh} employeeId={worker.id} limit={8} />
       <Link className="text-btn" to="/learn">
-        Ganti orang
+        更換員工
       </Link>
     </main>
   );
@@ -96,16 +96,13 @@ function Queue({
             <li key={part.id}>
               <Link to={`/learn/${employeeId}/part/${part.id}`}>
                 <span className="num">{part.callout}</span>
-                <span>
-                  {part.nameId}
-                  <small> {part.nameZh}</small>
-                </span>
+                <span>{part.nameZh}</span>
               </Link>
             </li>
           );
         })}
       </ul>
-      {limit && items.length > limit ? <p className="fine">Dan {items.length - limit} kartu lagi di lembar.</p> : null}
+      {limit && items.length > limit ? <p className="fine">工單裡還有 {items.length - limit} 張。</p> : null}
     </section>
   );
 }

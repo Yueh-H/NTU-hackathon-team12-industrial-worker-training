@@ -19,10 +19,10 @@ function seededShuffle<T>(items: T[], seed: string): T[] {
 
 export function nameChoices(part: Part, all: Part[], count = 4): string[] {
   const others = seededShuffle(
-    all.filter((item) => item.id !== part.id).map((item) => item.nameId),
+    all.filter((item) => item.id !== part.id).map((item) => item.nameZh),
     part.id
   ).slice(0, count - 1);
-  return seededShuffle([part.nameId, ...others], `${part.id}-names`);
+  return seededShuffle([part.nameZh, ...others], `${part.id}-names`);
 }
 
 export function partChoices(part: Part, all: Part[], count = 4): Part[] {
