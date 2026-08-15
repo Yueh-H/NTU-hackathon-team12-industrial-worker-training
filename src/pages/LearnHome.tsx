@@ -34,8 +34,8 @@ export function LearnHome() {
         <p className="fine">
           已開始 {snap.viewedCount}/{snap.assigned} 張 · 最近{relativeTime(snap.lastAt, "zh")}
         </p>
-        <Link className="btn ghost" to="/learn/ranking">
-          查看全員排行榜
+        <Link className="btn ghost" to={`/learn/${worker.id}/sheet`}>
+          繼續看工單
         </Link>
       </section>
       {units.map((unit, unitIndex) => {
