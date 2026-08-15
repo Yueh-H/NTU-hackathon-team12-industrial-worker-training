@@ -158,8 +158,8 @@ export function LearnCard() {
           {speechTarget}
         </p>
         <p className="fine">
-          按下麥克風，唸出上方中文。辨識成功會得到 1 顆星，並解鎖測驗；本機 Codex 服務在線時會用
-          gpt-5.6-luna／reasoning max 複核結果。
+          朗讀是加分，不是必過關。唸對得 1 顆星；也可以先去做測驗。本機 Codex 服務在線時會用
+          gpt-5.6-luna／reasoning max 複核朗讀結果。
         </p>
         <div className="speech-actions">
           <button
@@ -185,7 +185,7 @@ export function LearnCard() {
         ) : null}
         {speechError ? <p className="backend-badge warn">{speechError}</p> : null}
         {!speechSupported ? (
-          <p className="fine">請用支援 SpeechRecognition 的 Chrome／Edge 並允許麥克風；目前不能手動跳過。</p>
+          <p className="fine">此瀏覽器沒有語音辨識。仍可直接開始測驗；要拿朗讀 1 星請改用 Chrome／Edge。</p>
         ) : null}
       </section>
 
@@ -198,13 +198,8 @@ export function LearnCard() {
         <h2>注意</h2>
         <p>{part.safetyId}</p>
       </section>
-      <button
-        className="btn primary wide"
-        type="button"
-        disabled={!speechComplete}
-        onClick={() => navigate(quizHref)}
-      >
-        {speechComplete ? "開始測驗" : "先完成中文朗讀"}
+      <button className="btn primary wide" type="button" onClick={() => navigate(quizHref)}>
+        開始測驗
       </button>
       <Link className="text-btn" to={`/learn/${worker.id}`}>
         回學習路徑

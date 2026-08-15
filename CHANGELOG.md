@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.6.2] - 2026-08-15
+
+### Changed
+- Quiz no longer requires finishing Chinese speech first; speech still awards 1 star
+
 ## [0.6.1] - 2026-08-15
 
 ### Added

@@ -16,7 +16,6 @@ import {
 import { pickQuizKind } from "../engine/reviewEngine";
 import { QUIZ_KIND_ZH } from "../lib/copy";
 import { nameChoices, partChoices } from "../lib/quiz";
-import { hasCompletedZhSpeech } from "../lib/speech";
 import type { Rating } from "../types";
 import { useShop } from "../store";
 
@@ -40,9 +39,6 @@ export function LearnQuiz() {
 
   if (!worker || !part) return <Navigate to="/learn" replace />;
   const unit = unitForPart(part.id);
-  if (!hasCompletedZhSpeech(worker.id, part.id)) {
-    return <Navigate to={`/learn/${worker.id}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`} replace />;
-  }
 
   const correct =
     kind === "name_to_image" || kind === "hotspot" ? picked === part.id : picked === part.nameZh;
