@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { AdminEmployee } from "./pages/AdminEmployee";
 import { AdminHome } from "./pages/AdminHome";
+import { AdminLayout } from "./pages/AdminLayout";
 import { Gate } from "./pages/Gate";
 import { LearnCard } from "./pages/LearnCard";
 import { LearnHome } from "./pages/LearnHome";
@@ -21,8 +22,10 @@ export function App() {
         <Route path="part/:partId" element={<LearnCard />} />
         <Route path="quiz/:partId" element={<LearnQuiz />} />
       </Route>
-      <Route path="/admin" element={<AdminHome />} />
-      <Route path="/admin/:employeeId" element={<AdminEmployee />} />
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminHome />} />
+        <Route path=":employeeId" element={<AdminEmployee />} />
+      </Route>
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

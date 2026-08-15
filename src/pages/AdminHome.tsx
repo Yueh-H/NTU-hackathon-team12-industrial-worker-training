@@ -1,12 +1,24 @@
 import { Link } from "react-router-dom";
 import { BackendBadge } from "../components/BackendBadge";
-import { trainingSet, workers } from "../data/catalog";
-import { rankSnapshots, snapshotFor } from "../engine/dashboard";
+import { categoryLabels, parts, partsByCategory, trainingSet, workers } from "../data/catalog";
+import { partStatusLabel, rankSnapshots, snapshotFor } from "../engine/dashboard";
+import { STATUS_ZH } from "../lib/copy";
 import { formatDateTime, percent, relativeTime } from "../lib/format";
+import type { CardCategory } from "../types";
 import { useShop } from "../store";
 
+const CARD_CATEGORIES = Object.keys(categoryLabels) as CardCategory[];
+const ORDERED_PARTS = CARD_CATEGORIES.flatMap((category) => partsByCategory(category));
+const HEAT_LEGEND = [
+  ["mastered", STATUS_ZH.mastered],
+  ["learning", STATUS_ZH.learning],
+  ["due", STATUS_ZH.due],
+  ["overdue", STATUS_ZH.overdue],
+  ["new", STATUS_ZH.new]
+] as const;
+
 export function AdminHome() {
-  const { states, attempts, resetDemo } = useShop();
+  const { states, attempts, resetDemo, stateFor } = useShop();
   const snaps = workers.map((worker) => snapshotFor(worker, states, attempts));
   const assigned = snaps.length;
   const started = snaps.filter((snap) => !snap.notStarted).length;
@@ -59,6 +71,54 @@ export function AdminHome() {
           </ul>
         </section>
       ) : null}
+      <section className="info-card heat-card">
+        <h2>全員掌握圖</h2>
+        <p>一格一張卡，左右滑可看完全部 {parts.length} 張。點名字或色塊進個人詳情。</p>
+        <div className="heat-legend" aria-hidden="true">
+          {HEAT_LEGEND.map(([status, label]) => (
+            <span key={status}>
+              <span className={`heat-swatch is-${status}`} />
+              {label}
+            </span>
+          ))}
+        </div>
+        <div className="heat-wrap">
+          <table className="heat-table">
+            <thead>
+              <tr>
+                <th className="heat-name">員工</th>
+                {CARD_CATEGORIES.map((category) => (
+                  <th key={category} colSpan={partsByCategory(category).length}>
+                    {categoryLabels[category].zh}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {snaps.map((snap) => (
+                <tr key={snap.employee.id}>
+                  <th className="heat-name">
+                    <Link to={`/admin/${snap.employee.id}`}>{snap.employee.name}</Link>
+                  </th>
+                  {ORDERED_PARTS.map((part) => {
+                    const status = partStatusLabel(stateFor(snap.employee.id, part.id));
+                    return (
+                      <td key={part.id}>
+                        <Link
+                          className={`heat-dot is-${status}`}
+                          to={`/admin/${snap.employee.id}`}
+                          title={`${part.nameZh} · ${STATUS_ZH[status]}`}
+                          aria-label={`${snap.employee.name} · ${part.nameZh} · ${STATUS_ZH[status]}`}
+                        />
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
       <section className="info-card">
         <h2>學習動機／本課程排行</h2>
         <p>積分獎勵持續學習、掌握關鍵零件與按時複習，不以答題速度或答錯扣分。</p>
