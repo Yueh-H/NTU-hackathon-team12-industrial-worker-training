@@ -178,6 +178,59 @@ img { max-width: 100%; display: block; }
 .choice-tile .part-art.type-card strong { font-size: 0.95rem; }
 .name-block { display: flex; gap: 8px; flex-wrap: wrap; }
 .zh-name { font-size: 1.15rem; font-weight: 700; }
+.speech-gate {
+  margin: 16px 0;
+  padding: 16px;
+  border: 2px solid rgba(35, 114, 82, 0.24);
+  border-radius: 18px;
+  background: #f3fbf6;
+}
+.speech-gate-complete { border-color: #63b889; background: #eef9f1; }
+.speech-gate-error,
+.speech-gate-unsupported { border-color: rgba(149, 61, 48, 0.3); background: #fff4ef; }
+.speech-gate-head,
+.speech-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.speech-gate-head h2 { margin: 2px 0 0; font-size: 1rem; }
+.speech-status {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #ece4d2;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.speech-gate-listening .speech-status { background: #e1f1fb; color: #315d92; }
+.speech-gate-complete .speech-status { background: #e0f3e9; color: var(--mint); }
+.speech-gate-error .speech-status,
+.speech-gate-unsupported .speech-status { background: #ffe7e2; color: var(--rose); }
+.speech-target {
+  margin: 14px 0 8px;
+  padding: 12px;
+  border-radius: 14px;
+  background: #fff;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+.speech-actions { justify-content: flex-start; flex-wrap: wrap; }
+.speech-transcript { min-height: 1.5em; margin: 12px 0 0; color: var(--muted); font-size: 0.86rem; }
+.speech-reward {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border: 1px solid #e7c65f;
+  border-radius: 14px;
+  background: #fff7d8;
+  color: #7a5900;
+}
+.speech-star { color: #e7ae00; font-size: 1.8rem; line-height: 1; }
+.speech-reward strong,
+.speech-reward small { display: block; }
+.speech-reward small { color: #8a6f25; font-size: 0.78rem; }
 
 .choice-list, .choice-grid { display: grid; gap: 8px; }
 .choice-grid { grid-template-columns: 1fr 1fr; }

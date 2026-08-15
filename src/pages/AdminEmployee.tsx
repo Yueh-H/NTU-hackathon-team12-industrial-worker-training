@@ -22,6 +22,16 @@ export function AdminEmployee() {
           正確率 {percent(snap.accuracy)} · 測驗 {snap.quizCount} 次 · 最後 {formatDateTime(snap.lastAt, "zh-TW")}
         </p>
       </header>
+      <section className="info-card">
+        <h2>學習動機與觀看情況</h2>
+        <p>
+          <strong>{snap.learningScore} 分</strong> · {snap.motivationLabel} · {snap.viewingLabel}
+        </p>
+        <p>{snap.motivationHint}</p>
+        <p className="fine">
+          依學習活動推算：已開始 {snap.viewedCount}/{snap.assigned} 張；不代表實際停留時間。
+        </p>
+      </section>
       <div className="part-grid">
         {parts.map((part) => {
           const state = stateFor(worker.id, part.id);
