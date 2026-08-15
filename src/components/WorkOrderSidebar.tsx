@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { trainingSet } from "../data/catalog";
 import { units, unitProgress } from "../engine/path";
+import { assetUrl } from "../lib/asset";
 import type { ReviewState } from "../types";
 
 export function WorkOrderSidebar({
@@ -25,7 +26,7 @@ export function WorkOrderSidebar({
         {trainingSet.machine} · {trainingSet.station}
       </p>
       <Link className="wo-drawing" to={`/learn/${employeeId}/sheet`}>
-        <img src="/drawing-sm.png" alt="生產製造表縮圖" />
+        <img src={assetUrl("drawing-sm.png")} alt="生產製造表縮圖" />
         <span>打開完整工單圖</span>
       </Link>
       <div className="wo-progress">
