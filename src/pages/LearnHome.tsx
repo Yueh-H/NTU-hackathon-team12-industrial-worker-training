@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { workerById } from "../data/catalog";
-import { firstOpenPart, nodeState, unitProgress, units } from "../engine/path";
+import { parts, workerById } from "../data/catalog";
+import { firstOpenPart, lessonForPart, nodeState, unitProgress, units } from "../engine/path";
+import { reviewStageHint, reviewStageOf } from "../engine/reviewEngine";
+import { REVIEW_STAGE_ZH } from "../lib/copy";
 import type { CardCategory } from "../types";
 import { useShop } from "../store";
 
@@ -9,12 +11,56 @@ export function LearnHome() {
   const { employeeId = "" } = useParams();
   const worker = workerById(employeeId);
   const { states } = useShop();
-  const [openUnit, setOpenUnit] = useState<CardCategory | "">(units[0]?.id ?? "struktur");
+  const [openUnit, setOpenUnit] = useState<CardCategory | "review" | "">("review");
   if (!worker) return <Navigate to="/learn" replace />;
   const mine = states.filter((state) => state.employeeId === worker.id);
+  const reviewing = parts.filter((part) => {
+    const state = mine.find((item) => item.partId === part.id);
+    return Boolean(state && state.status !== "inbox");
+  });
 
   return (
     <section className="path-stage">
+      <article className="path-unit is-review" id="unit-review">
+        <button
+          className="path-unit-banner review-banner"
+          type="button"
+          aria-expanded={openUnit === "review"}
+          onClick={() => setOpenUnit((current) => (current === "review" ? "" : "review"))}
+        >
+          <span>
+            <small>複習夾 · {reviewing.length} 張</small>
+            <strong>學過一次，依 D+1／3／7／30 再練</strong>
+          </span>
+          <b aria-hidden="true">{openUnit === "review" ? "−" : "+"}</b>
+        </button>
+        {openUnit === "review" ? (
+          reviewing.length ? (
+            <ol className="path-nodes">
+              {reviewing.map((part, index) => {
+                const state = mine.find((item) => item.partId === part.id);
+                if (!state) return null;
+                const stage = reviewStageOf(state);
+                const lesson = lessonForPart(part.id);
+                return (
+                  <li key={part.id} className={`path-row is-${stage} shift-${index % 3}`}>
+                    <Link
+                      className={`path-node is-${stage}`}
+                      to={`/learn/${worker.id}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`}
+                    >
+                      <span className="path-glyph">{REVIEW_STAGE_ZH[stage]}</span>
+                      <span className="path-label">{part.nameZh}</span>
+                      <small>{reviewStageHint(state)}</small>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ol>
+          ) : (
+            <p className="fine review-empty">先學一張卡，它就會出現在這個夾，顏色代表下一次複習站。</p>
+          )
+        ) : null}
+      </article>
       <header className="path-head">
         <p className="eyebrow">{worker.name} · {worker.station}</p>
         <h1>選一站開始學</h1>

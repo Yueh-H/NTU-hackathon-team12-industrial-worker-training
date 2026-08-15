@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { categoryLabels, parts } from "../data/catalog";
-import { firstOpenPart, lessonForPart, UNIT_ORDER } from "../engine/path";
-import { partStatusLabel } from "../engine/dashboard";
-import { STATUS_ZH } from "../lib/copy";
-import type { CardCategory, ReviewState, TrainingSet } from "../types";
+import { lessonForPart, UNIT_ORDER } from "../engine/path";
+import { REVIEW_FOLDERS, reviewStageHint, reviewStageOf } from "../engine/reviewEngine";
+import { REVIEW_STAGE_ZH } from "../lib/copy";
+import type { CardCategory, Part, ReviewState, TrainingSet } from "../types";
 
 export function MaterialsPanel({
   employeeId,
@@ -19,8 +19,10 @@ export function MaterialsPanel({
   states: ReviewState[];
   selectedPartId?: string;
 }) {
-  const selectedCategory = parts.find((part) => part.id === selectedPartId)?.category;
+  const selected = parts.find((part) => part.id === selectedPartId);
+  const selectedCategory = selected?.category;
   const [open, setOpen] = useState<CardCategory | "">(selectedCategory ?? "struktur");
+  const [reviewOpen, setReviewOpen] = useState(true);
 
   useEffect(() => {
     if (selectedCategory) setOpen(selectedCategory);
@@ -37,11 +39,21 @@ export function MaterialsPanel({
   }
 
   const visible = parts.filter((part) => part.setId === setId);
+  const reviewing = visible
+    .map((part) => ({ part, state: states.find((item) => item.partId === part.id) }))
+    .filter((item): item is { part: Part; state: ReviewState } => Boolean(item.state && item.state.status !== "inbox"));
   return (
     <aside className="materials-panel">
       <p className="eyebrow">材料</p>
       <h2>{training.titleZh}</h2>
-      <p className="fine">{visible.length} 項 · 點分類展開，再選要學的項目</p>
+      <p className="fine">{visible.length} 項 · 學過的進上方複習夾，顏色＝下一站</p>
+      <ReviewFolder
+        employeeId={employeeId}
+        items={reviewing}
+        selectedPartId={selectedPartId}
+        expanded={reviewOpen}
+        onToggle={() => setReviewOpen((value) => !value)}
+      />
       {UNIT_ORDER.map((category) => (
         <CategoryBlock
           key={category}
@@ -93,25 +105,98 @@ function CategoryBlock({
         <ul>
           {items.map((part) => {
             const state = states.find((item) => item.partId === part.id);
-            const status = state ? partStatusLabel(state) : "new";
+            const stage = state ? reviewStageOf(state) : "inbox";
             const lesson = lessonForPart(part.id);
-            const href = lesson
-              ? `/learn/${employeeId}/part/${firstOpenPart(lesson, states)}?lesson=${lesson.id}`
-              : `/learn/${employeeId}/part/${part.id}`;
+            const href = `/learn/${employeeId}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`;
             return (
               <li key={part.id}>
                 <Link
-                  className={`mat-item is-${status}${selectedPartId === part.id ? " is-on" : ""}`}
+                  className={`mat-item is-${stage}${selectedPartId === part.id ? " is-on" : ""}`}
                   to={href}
                 >
                   <span className="num">{part.callout}</span>
                   <span>{part.nameZh}</span>
-                  <small>{STATUS_ZH[status]}</small>
+                  <small>{state ? reviewStageHint(state) : "未學"}</small>
                 </Link>
               </li>
             );
           })}
         </ul>
+      ) : null}
+    </section>
+  );
+}
+
+function ReviewFolder({
+  employeeId,
+  items,
+  selectedPartId,
+  expanded,
+  onToggle
+}: {
+  employeeId: string;
+  items: { part: Part; state: ReviewState }[];
+  selectedPartId?: string;
+  expanded: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <section className={`mat-cat review-folder${expanded ? " is-open" : ""}`}>
+      <button className="mat-toggle" type="button" onClick={onToggle} aria-expanded={expanded}>
+        <span>
+          複習夾
+          <small>{items.length} 張</small>
+        </span>
+        <b aria-hidden="true">{expanded ? "−" : "+"}</b>
+      </button>
+      {expanded ? (
+        items.length ? (
+          <>
+            <p className="review-legend" aria-hidden="true">
+              {REVIEW_FOLDERS.filter((stage) => stage !== "mastered" && stage !== "rescue").map((stage) => (
+                <span key={stage}>
+                  <i className={`heat-swatch is-${stage}`} />
+                  {REVIEW_STAGE_ZH[stage]}
+                </span>
+              ))}
+              <span>
+                <i className="heat-swatch is-rescue" />
+                救援
+              </span>
+            </p>
+            {REVIEW_FOLDERS.map((stage) => {
+              const group = items.filter((item) => reviewStageOf(item.state) === stage);
+              if (!group.length) return null;
+              return (
+                <div key={stage} className="review-group">
+                  <h3>
+                    {REVIEW_STAGE_ZH[stage]}
+                    <small>{group.length}</small>
+                  </h3>
+                  <ul>
+                    {group.map(({ part, state }) => {
+                      const lesson = lessonForPart(part.id);
+                      return (
+                        <li key={part.id}>
+                          <Link
+                            className={`mat-item is-${stage}${selectedPartId === part.id ? " is-on" : ""}`}
+                            to={`/learn/${employeeId}/part/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`}
+                          >
+                            <span className="num">{part.callout}</span>
+                            <span>{part.nameZh}</span>
+                            <small>{reviewStageHint(state)}</small>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              );
+            })}
+          </>
+        ) : (
+          <p className="fine review-empty">學過一次的卡片會進這裡，依 D+1／3／7／30 分夾複習。</p>
+        )
       ) : null}
     </section>
   );

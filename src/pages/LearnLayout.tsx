@@ -4,6 +4,7 @@ import { AlisPet } from "../components/AlisPet";
 import { MaterialsPanel } from "../components/MaterialsPanel";
 import { WorkOrderRail } from "../components/WorkOrderRail";
 import { trainingSet, trainingSetById, workerById } from "../data/catalog";
+import { usePageTitle } from "../lib/pageTitle";
 import { useShop } from "../store";
 
 export const DEFAULT_EMPLOYEE_ID = "agus";
@@ -21,6 +22,7 @@ export function LearnLayout() {
     localStorage.setItem(RAIL_KEY, collapsed ? "1" : "0");
   }, [collapsed]);
 
+  usePageTitle(worker ? `${worker.name} · 員工學習` : "員工學習");
   if (!worker) return <Navigate to={`/learn/${DEFAULT_EMPLOYEE_ID}`} replace />;
   const mine = states.filter((state) => state.employeeId === worker.id);
 
