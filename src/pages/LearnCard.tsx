@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { PartArt } from "../components/PartArt";
 import { categoryLabels, partById, workerById } from "../data/catalog";
 import { partStatusLabel } from "../engine/dashboard";
+import { lessonById } from "../engine/path";
 import { STATUS_ZH } from "../lib/copy";
 import {
   hasCompletedZhSpeech,
@@ -26,6 +27,8 @@ const SPEECH_STATUS: Record<SpeechState, string> = {
 
 export function LearnCard() {
   const { employeeId = "", partId = "" } = useParams();
+  const [params] = useSearchParams();
+  const lesson = lessonById(params.get("lesson") ?? "");
   const worker = workerById(employeeId);
   const part = partById(partId);
   const { stateFor } = useShop();
@@ -58,8 +61,10 @@ export function LearnCard() {
   const state = stateFor(worker.id, part.id);
   const status = partStatusLabel(state);
   const category = categoryLabels[part.category];
+  const step = lesson ? lesson.partIds.indexOf(part.id) + 1 : 0;
   const speechComplete = speechState === "complete";
   const speechTarget = zhSpeechTarget(part.nameZh);
+  const quizHref = `/learn/${worker.id}/quiz/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`;
 
   function startSpeech() {
     if (!worker || !part) return;
@@ -99,7 +104,9 @@ export function LearnCard() {
     <main className="page">
       <header className="page-head compact">
         <p className="eyebrow">
-          {category.zh} · #{part.callout} · {STATUS_ZH[status]}
+          {lesson
+            ? `${categoryLabels[lesson.unit].zh} · ${lesson.title} · ${step}/${lesson.partIds.length}`
+            : `${category.zh} · #${part.callout} · ${STATUS_ZH[status]}`}
         </p>
         <h1>{part.nameZh}</h1>
       </header>
@@ -167,12 +174,12 @@ export function LearnCard() {
         className="btn primary wide"
         type="button"
         disabled={!speechComplete}
-        onClick={() => navigate(`/learn/${worker.id}/quiz/${part.id}`)}
+        onClick={() => navigate(quizHref)}
       >
         {speechComplete ? "開始測驗" : "先完成中文朗讀"}
       </button>
-      <Link className="text-btn" to={`/learn/${worker.id}/sheet`}>
-        回工單圖
+      <Link className="text-btn" to={`/learn/${worker.id}`}>
+        回學習路徑
       </Link>
     </main>
   );
