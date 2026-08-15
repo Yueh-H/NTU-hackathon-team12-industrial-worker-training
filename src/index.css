@@ -391,6 +391,138 @@ td small { color: var(--muted); }
 .attempt-list span { color: var(--muted); font-size: 0.86rem; }
 .admin-foot { display: flex; gap: 18px; }
 
+.admin-shell {
+  display: grid;
+  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 80% -10%, rgba(217, 106, 50, 0.12), transparent 24rem),
+    var(--paper);
+}
+.admin-side {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  max-height: 100vh;
+  overflow: auto;
+  padding: 24px 16px 32px;
+  background: #f7f0e2;
+  border-right: 1px solid var(--line);
+}
+.admin-side h1 {
+  margin: 8px 0 16px;
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
+}
+.admin-overview-link {
+  display: grid;
+  gap: 2px;
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  border: 1px solid rgba(217, 106, 50, 0.24);
+  border-radius: 16px;
+  background: #fff4e6;
+  color: inherit;
+  text-decoration: none;
+}
+.admin-overview-link small { color: var(--muted); }
+.admin-overview-link.is-on { box-shadow: 0 0 0 2px #d96a32; }
+.admin-people { display: grid; gap: 10px; }
+.admin-person {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px;
+  background: #fffaf3;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(23, 33, 43, 0.05);
+  color: inherit;
+  text-decoration: none;
+}
+.admin-person.is-on { box-shadow: 0 0 0 2px #d96a32, 0 8px 24px rgba(23, 33, 43, 0.06); }
+.admin-avatar {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+.admin-person-copy { min-width: 0; }
+.admin-person-copy strong { display: block; }
+.admin-person-copy small { display: block; color: var(--muted); }
+.admin-person .pill { margin-left: 0; }
+.admin-main { min-width: 0; }
+.admin-main .page.admin { width: min(1040px, calc(100% - 36px)); }
+.admin-cat { margin-top: 18px; }
+.admin-cat h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+.admin-cat h2 small { color: var(--muted); font-weight: 500; }
+.heat-card p { margin: 0 0 8px; color: var(--muted); }
+.heat-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+.heat-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.heat-swatch,
+.heat-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: #d8d0c0;
+}
+.heat-swatch.is-mastered, .heat-dot.is-mastered { background: var(--mint); }
+.heat-swatch.is-learning, .heat-dot.is-learning { background: #315d92; }
+.heat-swatch.is-due, .heat-dot.is-due { background: #d96a32; }
+.heat-swatch.is-overdue, .heat-dot.is-overdue { background: var(--rose); }
+.heat-swatch.is-new, .heat-dot.is-new { background: #d8d0c0; }
+.heat-wrap { overflow: auto; margin: 4px -4px 0; }
+.heat-table {
+  width: max-content;
+  border-collapse: separate;
+  border-spacing: 2px;
+  font-size: 0.75rem;
+}
+.heat-table th,
+.heat-table td {
+  padding: 2px;
+  border: 0;
+  vertical-align: middle;
+}
+.heat-table thead th { text-align: center; font-weight: 700; }
+.heat-table .heat-name {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 108px;
+  padding-right: 10px;
+  background: var(--card);
+  text-align: left;
+}
+.heat-table td { width: 14px; }
+.heat-dot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  text-decoration: none;
+}
+.heat-dot:hover { outline: 2px solid var(--navy); outline-offset: 1px; }
+
 .learn-shell {
   display: grid;
   grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
@@ -902,6 +1034,24 @@ td small { color: var(--muted); }
   .stat-row { grid-template-columns: 1fr 1fr; }
   .sheet-card { flex-direction: column; }
   .page.admin { width: min(520px, calc(100% - 28px)); }
+  .admin-shell { grid-template-columns: 1fr; }
+  .admin-side {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    max-height: none;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 14px 14px 16px;
+  }
+  .admin-people {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+  .admin-person { min-width: 196px; }
+  .admin-main .page.admin { width: min(520px, calc(100% - 28px)); }
   .learn-shell,
   .learn-shell.three-col,
   .learn-shell.three-col.rail-min { grid-template-columns: 1fr; }
