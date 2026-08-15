@@ -59,7 +59,28 @@ function readPersist(): PersistShape {
     if (parsed.version !== 1 || !Array.isArray(parsed.states) || !Array.isArray(parsed.attempts)) {
       return freshPersist();
     }
-    return parsed;
+    const seeded = buildDemoProgress();
+    const existingEmployeeIds = new Set(parsed.states.map((state) => state.employeeId));
+    const missingEmployeeIds = new Set(
+      seeded.states
+        .map((state) => state.employeeId)
+        .filter((employeeId) => !existingEmployeeIds.has(employeeId))
+    );
+    if (!missingEmployeeIds.size) return parsed;
+    const merged: PersistShape = {
+      ...parsed,
+      savedAt: new Date().toISOString(),
+      states: [
+        ...parsed.states,
+        ...seeded.states.filter((state) => missingEmployeeIds.has(state.employeeId))
+      ],
+      attempts: [
+        ...parsed.attempts,
+        ...seeded.attempts.filter((attempt) => missingEmployeeIds.has(attempt.employeeId))
+      ]
+    };
+    writePersist(merged);
+    return merged;
   } catch {
     return freshPersist();
   }

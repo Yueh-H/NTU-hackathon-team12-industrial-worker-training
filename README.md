@@ -51,7 +51,7 @@ cp .env.example .env
 
 - `public/11507010-9.pdf` 原製造表
 - `public/drawing.png` 工程圖
-- `src/data/seed.json` 3 名員工、1 名主管
+- `src/data/seed.json` 10 名員工、1 名主管，並含多種學習進度／逾期／弱項 demo 狀態
 - `src/data/workorder-cards.json` / `parts-cards/deck/` 工單 64 張卡（構造／材料／五金／動詞／欄位／讀行）
 
 ## 刻意不做（當天）

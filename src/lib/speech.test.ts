@@ -28,4 +28,8 @@ describe("Chinese speech target matching", () => {
     expect(zhSpeechTarget("開外／開內")).toBe("開外");
     expect(zhSpeechTarget("表頭：項次／製造規格")).toBe("表頭");
   });
+
+  it("accepts a short phrase with an extra polite prefix", () => {
+    expect(matchesZhTarget("防火玻璃", "請說防火玻璃")).toBe(true);
+  });
 });

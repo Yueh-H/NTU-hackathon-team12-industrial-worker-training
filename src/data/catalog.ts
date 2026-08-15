@@ -142,6 +142,90 @@ function replay(
   return { state, attempts };
 }
 
+type DemoStep = { offset: number; rating: "forgot" | "fuzzy" | "remembered"; daysAgo: number };
+
+interface DemoScenario {
+  employeeId: string;
+  partIds: string[];
+  learnedDaysAgo: number;
+  steps: DemoStep[];
+}
+
+const EXTRA_DEMO_SCENARIOS: DemoScenario[] = [
+  {
+    employeeId: "agus",
+    partIds: ["daun-anak", "daun-induk", "engsel-bendera", "grendel-3-titik", "papan-perlit", "lis-kaca"],
+    learnedDaysAgo: 0,
+    steps: []
+  },
+  {
+    employeeId: "dwi",
+    partIds: ["daun-anak", "daun-induk", "jendela", "kaca-tahan-api", "seal-bawah", "penutup-tepi"],
+    learnedDaysAgo: 7,
+    steps: [
+      { offset: 1, rating: "remembered", daysAgo: 6 },
+      { offset: 3, rating: "remembered", daysAgo: 4 },
+      { offset: 7, rating: "remembered", daysAgo: 0 }
+    ]
+  },
+  {
+    employeeId: "rina",
+    partIds: ["engsel-bendera", "pin-anti-congkel", "grendel-3-titik", "papan-perlit", "papan-mgo"],
+    learnedDaysAgo: 3,
+    steps: [{ offset: 1, rating: "remembered", daysAgo: 2 }]
+  },
+  {
+    employeeId: "joko",
+    partIds: ["daun-anak", "daun-induk", "kaca-tahan-api", "engsel-bendera", "pin-anti-congkel", "grendel-3-titik"],
+    learnedDaysAgo: 10,
+    steps: [
+      { offset: 1, rating: "remembered", daysAgo: 9 },
+      { offset: 3, rating: "fuzzy", daysAgo: 7 },
+      { offset: 7, rating: "forgot", daysAgo: 3 }
+    ]
+  },
+  {
+    employeeId: "maya",
+    partIds: parts.slice(0, 18).map((part) => part.id),
+    learnedDaysAgo: 36,
+    steps: [
+      { offset: 1, rating: "remembered", daysAgo: 35 },
+      { offset: 3, rating: "remembered", daysAgo: 33 },
+      { offset: 7, rating: "remembered", daysAgo: 29 },
+      { offset: 30, rating: "remembered", daysAgo: 0 }
+    ]
+  },
+  {
+    employeeId: "arif",
+    partIds: ["penutup-tepi", "seal-bawah", "gagang-tanam", "papan-mgo"],
+    learnedDaysAgo: 2,
+    steps: []
+  },
+  {
+    employeeId: "dewi",
+    partIds: ["daun-anak", "daun-induk", "engsel-bendera", "kaca-tahan-api", "lis-kaca", "penutup-tepi"],
+    learnedDaysAgo: 12,
+    steps: [
+      { offset: 1, rating: "remembered", daysAgo: 11 },
+      { offset: 3, rating: "remembered", daysAgo: 9 },
+      { offset: 7, rating: "fuzzy", daysAgo: 5 }
+    ]
+  }
+];
+
+function appendScenario(
+  scenario: DemoScenario,
+  today: Date,
+  states: ReviewState[],
+  attempts: Attempt[]
+): void {
+  for (const partId of scenario.partIds) {
+    const result = replay(scenario.employeeId, partId, today, scenario.learnedDaysAgo, scenario.steps);
+    states.push(result.state);
+    attempts.push(...result.attempts);
+  }
+}
+
 export function buildDemoProgress(today = new Date()): { states: ReviewState[]; attempts: Attempt[] } {
   const states: ReviewState[] = [];
   const attempts: Attempt[] = [];
@@ -185,10 +269,14 @@ export function buildDemoProgress(today = new Date()): { states: ReviewState[]; 
   states.push(sariLock.state);
   attempts.push(...sariLock.attempts);
 
-  for (const workerId of ["budi", "sari", "agus"] as const) {
+  for (const scenario of EXTRA_DEMO_SCENARIOS) {
+    appendScenario(scenario, today, states, attempts);
+  }
+
+  for (const worker of workers) {
     for (const part of parts) {
-      if (!states.some((state) => state.employeeId === workerId && state.partId === part.id)) {
-        states.push(emptyState(workerId, part.id));
+      if (!states.some((state) => state.employeeId === worker.id && state.partId === part.id)) {
+        states.push(emptyState(worker.id, part.id));
       }
     }
   }
