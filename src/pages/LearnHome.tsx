@@ -19,6 +19,9 @@ export function LearnHome() {
         <p className="eyebrow">{worker.name} · {worker.station}</p>
         <h1>選一站開始學</h1>
         <p>點關卡標題展開或收合。每一顆都可以直接進去學。</p>
+        <Link className="btn dark path-rank-btn" to={`/learn/ranking?from=${worker.id}`}>
+          全員排行榜
+        </Link>
       </header>
       {units.map((unit, unitIndex) => {
         const progress = unitProgress(unit, mine);

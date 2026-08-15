@@ -27,6 +27,7 @@ export function LearnLayout() {
   return (
     <div className={`learn-shell three-col${collapsed ? " rail-min" : ""}`}>
       <WorkOrderRail
+        employeeId={worker.id}
         selectedId={setId}
         collapsed={collapsed}
         onSelect={setSetId}

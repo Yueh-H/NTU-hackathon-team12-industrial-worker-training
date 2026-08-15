@@ -995,6 +995,12 @@ td small { color: var(--muted); }
 .ranking-score strong { color: var(--mint); }
 .path-head { width: min(520px, 100%); margin: 0 auto 28px; }
 .path-head h1 { margin: 6px 0 8px; letter-spacing: -0.04em; }
+.path-rank-btn { margin-top: 14px; }
+.wo-rank {
+  margin-top: 8px;
+  border-color: rgba(217, 106, 50, 0.24);
+  background: #fff4e6;
+}
 .path-unit { width: min(520px, 100%); margin: 0 auto 36px; }
 .path-unit-banner {
   display: flex;

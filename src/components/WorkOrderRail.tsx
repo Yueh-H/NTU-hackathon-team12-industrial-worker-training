@@ -1,12 +1,15 @@
+import { Link } from "react-router-dom";
 import { trainingSets } from "../data/catalog";
 import type { TrainingSet } from "../types";
 
 export function WorkOrderRail({
+  employeeId,
   selectedId,
   collapsed,
   onSelect,
   onToggle
 }: {
+  employeeId: string;
   selectedId: string;
   collapsed: boolean;
   onSelect: (setId: string) => void;
@@ -30,6 +33,14 @@ export function WorkOrderRail({
             onSelect={onSelect}
           />
         ))}
+        <Link
+          className="wo-rail-item wo-rank"
+          to={`/learn/ranking?from=${employeeId}`}
+          title="全員排行榜"
+        >
+          <strong>{collapsed ? "榜" : "排行榜"}</strong>
+          {collapsed ? null : <small>看全員學習積分</small>}
+        </Link>
       </div>
     </aside>
   );
