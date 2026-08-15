@@ -19,7 +19,8 @@ interface RecognitionAlternative {
 
 interface RecognitionResult {
   isFinal: boolean;
-  0: RecognitionAlternative;
+  length: number;
+  [index: number]: RecognitionAlternative;
 }
 
 interface RecognitionResultList {
@@ -120,6 +121,50 @@ export function normalizeSpeechText(value: string): string {
     .replace(/[总识链侧锁条点压边丝与颜]/g, (character) => simplifiedToTraditional[character] ?? character);
 }
 
+// Chrome can return a phonetically correct but visually different character.
+// These groups cover common terms in this deck without adding a large pinyin dependency.
+const HOMOPHONE_GROUPS = [
+  "子字紫仔",
+  "母木姆",
+  "扇善山",
+  "鉸交教膠腳",
+  "鍊鏈練煉戀",
+  "側策測色",
+  "鎖所索",
+  "玻波",
+  "璃離梨",
+  "壓押呀",
+  "鍍渡度",
+  "鋅心新辛",
+  "鐵帖",
+  "檔擋當",
+  "門們",
+  "封風峰",
+  "邊編鞭",
+  "珍真",
+  "珠朱",
+  "岩言",
+  "防房",
+  "火伙",
+  "板版",
+  "鈣蓋",
+  "矽稀",
+  "窗創"
+] as const;
+
+const HOMOPHONE_KEY: Record<string, string> = {};
+for (const group of HOMOPHONE_GROUPS) {
+  const key = group[0];
+  for (const character of [...group]) HOMOPHONE_KEY[character] = key;
+}
+
+function phoneticSpeechKey(value: string): string {
+  return [...normalizeSpeechText(value)]
+    .filter((character) => /[\u3400-\u9fff]/.test(character))
+    .map((character) => HOMOPHONE_KEY[character] ?? character)
+    .join("");
+}
+
 export function matchesZhTarget(target: string, transcript: string): boolean {
   const normalizedTarget = normalizeSpeechText(target);
   const normalizedTranscript = normalizeSpeechText(transcript);
@@ -129,6 +174,7 @@ export function matchesZhTarget(target: string, transcript: string): boolean {
   const transcriptChinese = [...normalizedTranscript].filter((character) => /[\u3400-\u9fff]/.test(character));
   if (!targetCharacters.length || !transcriptChinese.length) return false;
   if (normalizedTranscript.includes(normalizedTarget)) return true;
+  if (phoneticSpeechKey(normalizedTranscript).includes(phoneticSpeechKey(normalizedTarget))) return true;
   const matchedCount = targetCharacters.filter((character) => normalizedTranscript.includes(character)).length;
   const requiredCount = targetCharacters.length <= 2 ? targetCharacters.length : Math.ceil(targetCharacters.length * 0.75);
   return matchedCount >= requiredCount;
@@ -157,10 +203,11 @@ export function recognizeZh(target: string, handlers: ChineseSpeechHandlers): ()
   let completed = false;
   let reportedError = false;
   let finalTranscript = "";
+  const finalAlternatives: string[] = [];
   recognition.lang = "zh-TW";
   recognition.continuous = false;
   recognition.interimResults = true;
-  recognition.maxAlternatives = 3;
+  recognition.maxAlternatives = 5;
   recognition.onstart = () => {
     if (!cancelled) handlers.onStart?.();
   };
@@ -169,13 +216,20 @@ export function recognizeZh(target: string, handlers: ChineseSpeechHandlers): ()
     let interimTranscript = "";
     for (let index = event.resultIndex; index < event.results.length; index += 1) {
       const result = event.results[index];
-      const transcript = result[0]?.transcript ?? "";
+      const alternatives = Array.from({ length: result.length }, (_, alternativeIndex) =>
+        result[alternativeIndex]?.transcript ?? ""
+      );
+      const transcript = alternatives[0] ?? "";
       if (result.isFinal) finalTranscript += transcript;
       else interimTranscript += transcript;
+      if (result.isFinal) finalAlternatives.push(...alternatives);
     }
     const shownTranscript = `${finalTranscript}${interimTranscript}`.trim();
     handlers.onInterim?.(shownTranscript);
-    if (finalTranscript && matchesZhTarget(target, finalTranscript)) {
+    const recognized = [finalTranscript, ...finalAlternatives].some(
+      (candidate) => candidate && matchesZhTarget(target, candidate)
+    );
+    if (finalTranscript && recognized) {
       completed = true;
       handlers.onSuccess(finalTranscript.trim());
       try { recognition.stop(); } catch (_) {}

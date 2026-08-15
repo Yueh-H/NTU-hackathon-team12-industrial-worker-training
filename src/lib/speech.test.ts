@@ -10,6 +10,11 @@ describe("Chinese speech target matching", () => {
     expect(matchesZhTarget("防火玻璃", "這是防火玻璃")).toBe(true);
   });
 
+  it("accepts common same-sound characters from speech recognition", () => {
+    expect(matchesZhTarget("母扇", "木善")).toBe(true);
+    expect(matchesZhTarget("鉸鍊側", "教練色")).toBe(true);
+  });
+
   it("does not pass when the target term was not spoken", () => {
     expect(matchesZhTarget("母扇", "子扇")).toBe(false);
     expect(matchesZhTarget("母扇", "mother leaf")).toBe(false);
