@@ -14,8 +14,8 @@ export function LearnHome() {
     <section className="path-stage">
       <header className="path-head">
         <p className="eyebrow">{worker.name} · {worker.station}</p>
-        <h1>過關學這張工單</h1>
-        <p>右邊每一顆是一個檢核站。過完這一站，才開下一站。</p>
+        <h1>選一站開始學</h1>
+        <p>每一顆都是檢核站，可以直接點要學的內容，不必依序解鎖。</p>
       </header>
       {units.map((unit, unitIndex) => {
         const progress = unitProgress(unit, mine);
@@ -30,25 +30,14 @@ export function LearnHome() {
             <ol className="path-nodes">
               {unit.lessons.map((lesson, lessonIndex) => {
                 const status = nodeState(lesson, mine);
-                const href =
-                  status === "locked"
-                    ? undefined
-                    : `/learn/${worker.id}/part/${firstOpenPart(lesson, mine)}?lesson=${lesson.id}`;
+                const href = `/learn/${worker.id}/part/${firstOpenPart(lesson, mine)}?lesson=${lesson.id}`;
                 return (
                   <li key={lesson.id} className={`path-row is-${status} shift-${lessonIndex % 3}`}>
-                    {href ? (
-                      <Link className="path-node" to={href}>
-                        <span className="path-glyph">{status === "done" ? "✓" : lessonIndex + 1}</span>
-                        <span className="path-label">{lesson.title}</span>
-                        <small>{lesson.partIds.length} 題</small>
-                      </Link>
-                    ) : (
-                      <div className="path-node">
-                        <span className="path-glyph">鎖</span>
-                        <span className="path-label">{lesson.title}</span>
-                        <small>先過上一站</small>
-                      </div>
-                    )}
+                    <Link className="path-node" to={href}>
+                      <span className="path-glyph">{status === "done" ? "✓" : lessonIndex + 1}</span>
+                      <span className="path-label">{lesson.title}</span>
+                      <small>{lesson.partIds.length} 題</small>
+                    </Link>
                   </li>
                 );
               })}

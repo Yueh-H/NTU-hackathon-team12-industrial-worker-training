@@ -19,7 +19,7 @@ export interface UnitPath {
   lessons: Lesson[];
 }
 
-export type NodeState = "locked" | "current" | "done";
+export type NodeState = "open" | "done";
 
 export function buildUnits(): UnitPath[] {
   return UNIT_ORDER.map((unit, order) => {
@@ -77,16 +77,7 @@ export function unitProgress(unit: UnitPath, states: ReviewState[]): { done: num
 }
 
 export function nodeState(lesson: Lesson, states: ReviewState[]): NodeState {
-  if (isLessonDone(lesson, states)) return "done";
-  const unit = units.find((item) => item.id === lesson.unit);
-  if (!unit) return "locked";
-  if (lesson.index === 0) {
-    if (unit.order === 0) return "current";
-    const previous = units[unit.order - 1];
-    return previous.lessons.every((item) => isLessonDone(item, states)) ? "current" : "locked";
-  }
-  const previousLesson = unit.lessons[lesson.index - 1];
-  return isLessonDone(previousLesson, states) ? "current" : "locked";
+  return isLessonDone(lesson, states) ? "done" : "open";
 }
 
 export function firstOpenPart(lesson: Lesson, states: ReviewState[]): string {
