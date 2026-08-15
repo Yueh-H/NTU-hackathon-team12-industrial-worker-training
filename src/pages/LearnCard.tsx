@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { BiText, biLine } from "../components/BiText";
 import { FlipCard } from "../components/FlipCard";
 import { sheetSrc } from "../components/PartArt";
+import { StarPair } from "../components/StarPair";
 import { categoryLabels, partById, workerById } from "../data/catalog";
-import { lessonById } from "../engine/path";
-import { reviewStageHint, reviewStageOf } from "../engine/reviewEngine";
-import { REVIEW_STAGE_ZH } from "../lib/copy";
+import { cardStars, lessonById } from "../engine/path";
+import { reviewStageOf } from "../engine/reviewEngine";
+import { REVIEW_STAGE_ZH, reviewStageHintBi, t } from "../lib/copy";
 import {
   hasCompletedZhSpeech,
   isZhRecognitionSupported,
@@ -19,12 +21,12 @@ import { useShop } from "../store";
 
 type SpeechState = "idle" | "listening" | "complete" | "error" | "unsupported";
 
-const SPEECH_STATUS: Record<SpeechState, string> = {
-  idle: "尚未朗讀",
-  listening: "辨識中…",
-  complete: "已通過",
-  error: "請再試一次",
-  unsupported: "不支援"
+const SPEECH_STATUS: Record<SpeechState, { zh: string; idn: string }> = {
+  idle: t.speechIdleStatus,
+  listening: t.speechListenStatus,
+  complete: t.speechOkStatus,
+  error: t.speechErrStatus,
+  unsupported: t.speechNoSupport
 };
 
 export function LearnCard() {
@@ -33,7 +35,7 @@ export function LearnCard() {
   const lesson = lessonById(params.get("lesson") ?? "");
   const worker = workerById(employeeId);
   const part = partById(partId);
-  const { stateFor } = useShop();
+  const { stateFor, attempts } = useShop();
   const navigate = useNavigate();
   const speechSupported = isZhRecognitionSupported();
   const [flipped, setFlipped] = useState(false);
@@ -65,11 +67,14 @@ export function LearnCard() {
   const category = categoryLabels[part.category];
   const step = lesson ? lesson.partIds.indexOf(part.id) + 1 : 0;
   const speechComplete = speechState === "complete";
+  const stars = cardStars(part.id, attempts, worker.id, speechComplete);
   const speechTarget = zhSpeechTarget(part.nameZh);
   const quizHref = `/learn/${worker.id}/quiz/${part.id}${lesson ? `?lesson=${lesson.id}` : ""}`;
-  // For term cards the sheet crop is extra context ("this is how it looks on the sheet");
-  // for baris cards the crop already IS the front of the flip card.
   const crop = part.category === "baris" ? null : sheetSrc(part);
+  const starCopy = stars === 2 ? t.star2 : speechComplete ? t.star1 : t.star0;
+  const hint = reviewStageHintBi(state);
+  const speechBtn =
+    speechState === "listening" ? t.stopSpeech : speechComplete ? t.speechDone : t.startSpeech;
 
   function startSpeech() {
     if (!worker || !part) return;
@@ -78,7 +83,7 @@ export function LearnCard() {
       cancelSpeech.current?.();
       cancelSpeech.current = null;
       setSpeechState("idle");
-      setSpeechError("已停止辨識，請再看著卡片朗讀一次。");
+      setSpeechError(`${t.tryAgain.zh} / ${t.tryAgain.idn}`);
       return;
     }
     setSpeechState("listening");
@@ -110,47 +115,53 @@ export function LearnCard() {
       <header className="page-head compact">
         <p className="eyebrow">
           {lesson
-            ? `${categoryLabels[lesson.unit].zh} · ${lesson.title} · ${step}/${lesson.partIds.length}`
-            : `${category.zh} · #${part.callout}`}
+            ? `${category.zh} / ${category.idn} · ${step}/${lesson.partIds.length}`
+            : `${category.zh} / ${category.idn} · #${part.callout}`}
           {` · ${REVIEW_STAGE_ZH[stage]}`}
         </p>
-        <h1>{part.nameZh}</h1>
-        {stage !== "inbox" ? <p>{reviewStageHint(state)}。再測一次可提前推進下一站，原定期日期不搬。</p> : null}
+        <h1>
+          {part.nameZh}
+          <span className="bi-idn" lang="id">{part.nameId}</span>
+        </h1>
+        <p className="card-star-line">
+          <StarPair count={stars} />
+          <BiText zh={starCopy.zh} idn={starCopy.idn} />
+        </p>
+        {stage !== "inbox" ? (
+          <BiText as="p" zh={`${hint.zh}。${t.reviewAgain.zh}`} idn={`${hint.idn}. ${t.reviewAgain.idn}`} />
+        ) : null}
       </header>
       <FlipCard part={part} flipped={flipped} onFlip={() => setFlipped((value) => !value)} />
       <div className="name-block">
         <button className="btn ghost" type="button" onClick={() => speakZh(speechTarget)}>
-          聽中文示範
+          {biLine(t.listenZh)}
         </button>
         <button className="btn ghost" type="button" onClick={() => speakId(part.nameId)}>
-          Dengar (ID)
+          {biLine(t.listenId)}
         </button>
         <button className="btn ghost" type="button" onClick={() => setFlipped((value) => !value)}>
-          {flipped ? "看正面" : "翻面看印尼文"}
+          {biLine(flipped ? t.flipFront : t.flipBack)}
         </button>
       </div>
       {crop ? (
         <section className="info-card">
-          <h2>在單子上長這樣</h2>
-          <img className="sheet-crop" src={crop} alt={`${part.nameZh} 在生產製造表上的樣子`} />
+          <BiText as="h2" {...t.onSheet} />
+          <img className="sheet-crop" src={crop} alt={`${part.nameZh} / ${part.nameId}`} />
         </section>
       ) : null}
 
       <section className={`speech-gate speech-gate-${speechState}`} aria-labelledby="speechGateTitle">
         <div className="speech-gate-head">
           <div>
-            <p className="eyebrow">中文語音辨識通關</p>
-            <h2 id="speechGateTitle">請看著卡片，朗讀一次中文</h2>
+            <p className="eyebrow">{biLine(t.speechEyebrow)}</p>
+            <BiText as="h2" {...t.speechTitle} />
           </div>
-          <span className="speech-status">{SPEECH_STATUS[speechState]}</span>
+          <BiText as="span" className="speech-status" {...SPEECH_STATUS[speechState]} />
         </div>
         <p className="speech-target" lang="zh-Hant">
           {speechTarget}
         </p>
-        <p className="fine">
-          按下麥克風，唸出上方中文。辨識成功會得到 1 顆星，並解鎖測驗；本機 Codex 服務在線時會用
-          gpt-5.6-luna／reasoning max 複核結果。
-        </p>
+        <BiText as="p" className="fine" {...t.speechHelp} />
         <div className="speech-actions">
           <button
             className="btn primary"
@@ -158,46 +169,48 @@ export function LearnCard() {
             disabled={speechState === "complete" || speechState === "unsupported"}
             onClick={startSpeech}
           >
-            {speechState === "listening" ? "停止辨識" : speechComplete ? "✓ 已完成朗讀" : "🎙 開始朗讀"}
+            {speechComplete ? "✓ " : speechState === "listening" ? "" : "🎙 "}
+            {biLine(speechBtn)}
           </button>
         </div>
-        <p className="speech-transcript" aria-live="polite">
-          {transcript ? `辨識到：「${transcript}」` : speechState === "listening" ? "正在聆聽…" : "辨識結果會顯示在這裡。"}
-        </p>
+        <BiText
+          as="p"
+          className="speech-transcript"
+          {...(transcript ? t.heard(transcript) : speechState === "listening" ? t.listening : t.speechIdle)}
+        />
         {speechComplete ? (
           <div className="speech-reward" role="status" aria-live="polite">
             <span className="speech-star" aria-hidden="true">★</span>
             <span>
-              <strong>{justEarnedStar ? "+1 顆星" : "已獲得 1 顆星"}</strong>
-              <small>中文朗讀完成</small>
+              <BiText
+                as="strong"
+                {...(stars === 2 ? t.card2stars : justEarnedStar ? t.plus1 : t.got1)}
+              />
+              <BiText
+                as="small"
+                {...(stars === 2 ? t.speechAndQuiz : t.speechFinished)}
+              />
             </span>
           </div>
         ) : null}
         {speechError ? <p className="backend-badge warn">{speechError}</p> : null}
-        {!speechSupported ? (
-          <p className="fine">請用支援 SpeechRecognition 的 Chrome／Edge 並允許麥克風；目前不能手動跳過。</p>
-        ) : null}
+        {!speechSupported ? <BiText as="p" className="fine" {...t.noMic} /> : null}
       </section>
 
-      {part.uncertain ? <p className="backend-badge warn">譯名尚未經現場師傅確認</p> : null}
+      {part.uncertain ? <p className="backend-badge warn">{biLine(t.uncertain)}</p> : null}
       <section className="info-card">
-        <h2>工單怎麼寫</h2>
+        <BiText as="h2" {...t.howWritten} />
         <p>{part.functionId}</p>
       </section>
       <section className="info-card danger">
-        <h2>注意</h2>
+        <BiText as="h2" {...t.caution} />
         <p>{part.safetyId}</p>
       </section>
-      <button
-        className="btn primary wide"
-        type="button"
-        disabled={!speechComplete}
-        onClick={() => navigate(quizHref)}
-      >
-        {speechComplete ? "開始測驗" : "先完成中文朗讀"}
+      <button className="btn primary wide" type="button" onClick={() => navigate(quizHref)}>
+        {biLine(t.startQuiz)}
       </button>
       <Link className="text-btn" to={`/learn/${worker.id}`}>
-        回學習路徑
+        {biLine(t.backPath)}
       </Link>
     </main>
   );

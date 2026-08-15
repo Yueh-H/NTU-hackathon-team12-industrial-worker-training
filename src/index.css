@@ -50,6 +50,30 @@ img { max-width: 100%; display: block; }
 }
 .lede, .page-head p { margin: 0; color: var(--muted); }
 .fine { color: var(--muted); font-size: 0.86rem; }
+.bi { display: grid; gap: 1px; }
+.bi-idn {
+  display: block;
+  color: var(--muted);
+  font-weight: 500;
+  font-size: 0.86em;
+  line-height: 1.35;
+}
+.btn .bi, a.btn .bi { gap: 0; }
+.btn .bi-idn, a.btn .bi-idn, .text-btn .bi-idn {
+  color: inherit;
+  opacity: 0.82;
+  font-weight: 650;
+}
+.path-unit-banner .bi-idn,
+.review-banner .bi-idn,
+.wo-rail-item .bi-idn,
+.admin-overview-link .bi-idn,
+.mat-toggle .bi-idn {
+  color: inherit;
+  opacity: 0.72;
+}
+.rate .bi-idn { color: inherit; opacity: 0.8; }
+.gate .bi-idn { font-size: 0.92rem; }
 .backend-badge {
   margin: 12px 0 0;
   padding: 8px 12px;
@@ -479,6 +503,43 @@ td small { color: var(--muted); }
 .form-error { color: var(--rose); background: #fff0ed; }
 .form-warning { color: var(--amber); background: #fff7dd; }
 .form-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.card-editor-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.45fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+.card-editor-picker { position: sticky; top: 16px; }
+.editor-field { display: grid; gap: 6px; }
+.editor-field > span { font-size: 0.84rem; font-weight: 800; }
+.editor-field input:not([type="checkbox"]),
+.editor-field select,
+.editor-field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: var(--card);
+  color: var(--ink);
+  font: inherit;
+}
+.editor-field textarea { min-height: 96px; resize: vertical; }
+.editor-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.editor-meta .pill { margin-left: 0; }
+.editor-meta .pill.is-edited { background: #e0f3e9; color: var(--mint); }
+.editor-preview { margin-top: 12px; }
+.editor-preview strong { display: block; font-size: 1.3rem; }
+.editor-preview p { margin-top: 4px; }
+.card-editor-form { display: grid; gap: 14px; }
+.editor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.editor-checks { display: flex; flex-wrap: wrap; gap: 16px; }
+.editor-checks label { display: inline-flex; align-items: center; gap: 7px; }
+.editor-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (max-width: 720px) {
+  .card-editor-layout { grid-template-columns: 1fr; }
+  .card-editor-picker { position: static; }
+  .editor-grid { grid-template-columns: 1fr; }
+}
 .module-list { margin-top: 24px; }
 .module-card {
   margin-top: 12px;
@@ -1284,6 +1345,18 @@ td small { color: var(--muted); }
 .path-unit-banner small { display: block; opacity: 0.72; font-size: 0.75rem; }
 .path-unit-banner strong { display: block; }
 .path-unit-banner b { font-size: 1.2rem; opacity: 0.8; }
+.path-unit-banner b,
+.mat-toggle b {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 1.15rem;
+  line-height: 1;
+}
+.mat-toggle b { background: rgba(15, 44, 56, 0.08); }
 .path-unit-banner .banner-end,
 .mat-toggle .banner-end {
   display: flex;
@@ -1291,9 +1364,10 @@ td small { color: var(--muted); }
   gap: 10px;
 }
 .star-pair { letter-spacing: 1px; font-weight: 900; line-height: 1; }
-.star-pair .on { color: #f5c518; }
-.star-pair .off { color: rgba(255, 255, 255, 0.28); }
-.mat-toggle .star-pair .off { color: #d5ddd3; }
+.star-pair .on { color: #e0a800; }
+.star-pair .off { color: #d5ddd3; }
+.path-unit-banner .star-pair .off,
+.path-node .star-pair .off { color: rgba(255, 255, 255, 0.32); }
 .card-star-line {
   display: flex;
   align-items: center;
@@ -1301,7 +1375,8 @@ td small { color: var(--muted); }
   margin: 6px 0 0;
   font-size: 0.92rem;
 }
-.card-star-line .star-pair .off { color: #d5ddd3; }
+.path-node .star-pair { font-size: 0.78rem; }
+.mat-item .star-pair { margin-left: 6px; font-size: 0.85rem; }
 .path-unit-banner.is-locked { opacity: 0.58; }
 .path-lock-note {
   width: min(520px, 100%);

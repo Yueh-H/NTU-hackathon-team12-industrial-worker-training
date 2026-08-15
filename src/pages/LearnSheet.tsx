@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { BiText, biLine } from "../components/BiText";
 import { DrawingBoard } from "../components/DrawingBoard";
 import { categoryLabels, parts, trainingSet, workerById } from "../data/catalog";
+import { t } from "../lib/copy";
 import type { CardCategory } from "../types";
 import { useShop } from "../store";
 
@@ -20,8 +22,8 @@ export function LearnSheet() {
     <main className="page sheet-page">
       <header className="page-head compact">
         <p className="eyebrow">{trainingSet.docNo}</p>
-        <h1>生產製造表</h1>
-        <p>橘色編號是圖上對得到的卡片。下方是全部 {parts.length} 張。</p>
+        <BiText as="h1" {...t.sheetTitle} />
+        <BiText as="p" zh={`${t.sheetHelp.zh} ${t.cardsCount(parts.length).zh}`} idn={`${t.sheetHelp.idn} ${t.cardsCount(parts.length).idn}`} />
       </header>
       <div className="zoom-bar">
         <button type="button" onClick={() => setZoom((value) => Math.max(1, value - 0.4))}>
@@ -45,13 +47,17 @@ export function LearnSheet() {
         if (!group.length) return null;
         return (
           <section key={category} className="queue">
-            <h2>{categoryLabels[category].zh}</h2>
+            <h2>
+              {categoryLabels[category].zh}
+              <span className="bi-idn" lang="id">{categoryLabels[category].idn}</span>
+            </h2>
             <ul className="legend">
               {group.map((part) => (
                 <li key={part.id}>
                   <Link to={`/learn/${worker.id}/part/${part.id}`}>
                     <span className="num">{part.callout}</span>
                     {part.nameZh}
+                    <span className="bi-idn" lang="id">{part.nameId}</span>
                   </Link>
                 </li>
               ))}
@@ -60,7 +66,7 @@ export function LearnSheet() {
         );
       })}
       <Link className="text-btn" to={`/learn/${worker.id}`}>
-        回今天的任務
+        {biLine(t.backToday)}
       </Link>
     </main>
   );

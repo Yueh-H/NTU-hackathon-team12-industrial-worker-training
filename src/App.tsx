@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { AdminEmployee } from "./pages/AdminEmployee";
+import { AdminCards } from "./pages/AdminCards";
 import { AdminHome } from "./pages/AdminHome";
 import { AdminLayout } from "./pages/AdminLayout";
 import { AdminWorkOrderDetail, AdminWorkOrderNew, AdminWorkOrders } from "./pages/AdminWorkOrders";
@@ -30,6 +31,7 @@ export function App() {
         <Route path="workorders" element={<AdminWorkOrders />} />
         <Route path="workorders/new" element={<AdminWorkOrderNew />} />
         <Route path="workorders/:workOrderId" element={<AdminWorkOrderDetail />} />
+        <Route path="cards" element={<AdminCards />} />
         <Route path=":employeeId" element={<AdminEmployee />} />
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

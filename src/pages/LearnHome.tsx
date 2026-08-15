@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
+import { BiText, biLine } from "../components/BiText";
 import { StarPair } from "../components/StarPair";
-import { parts, workerById } from "../data/catalog";
+import { categoryLabels, parts, workerById } from "../data/catalog";
 import {
+  cardStars,
   firstOpenPart,
-  isUnitUnlocked,
   lessonForPart,
   nodeState,
   spokenSet,
@@ -12,81 +13,88 @@ import {
   unitStars,
   units
 } from "../engine/path";
-import { reviewStageHint, reviewStageOf, splitReviewInbox } from "../engine/reviewEngine";
-import { REVIEW_STAGE_ZH } from "../lib/copy";
+import { reviewStageOf, splitReviewInbox } from "../engine/reviewEngine";
+import { REVIEW_STAGE_ZH, reviewStageHintBi, t } from "../lib/copy";
 import { hasCompletedZhSpeech } from "../lib/speech";
 import type { CardCategory } from "../types";
-import type { Part, ReviewState } from "../types";
+import type { Attempt, Part, ReviewState } from "../types";
 import { useShop } from "../store";
 
-type OpenKey = CardCategory | "today" | "learned" | "";
+type OpenKey = CardCategory | "today" | "learned";
+
+function toggleKey(current: Set<OpenKey>, key: OpenKey): Set<OpenKey> {
+  const next = new Set(current);
+  if (next.has(key)) next.delete(key);
+  else next.add(key);
+  return next;
+}
 
 export function LearnHome() {
   const { employeeId = "" } = useParams();
   const worker = workerById(employeeId);
   const { states, attempts } = useShop();
-  const [openUnit, setOpenUnit] = useState<OpenKey>("today");
+  const [openKeys, setOpenKeys] = useState<Set<OpenKey>>(() => new Set(["today"]));
   if (!worker) return <Navigate to="/learn" replace />;
   const mine = states.filter((state) => state.employeeId === worker.id);
   const mineAttempts = attempts.filter((attempt) => attempt.employeeId === worker.id);
   const spoken = spokenSet(worker.id, hasCompletedZhSpeech);
   const inbox = splitReviewInbox(parts, mine);
-  const defaultOpen: OpenKey = inbox.today.length ? "today" : inbox.learned.length ? "learned" : units[0]?.id ?? "";
-  const expanded = openUnit || defaultOpen;
 
   return (
     <section className="path-stage">
       {inbox.today.length ? (
-        <p className="review-alert">今天有 {inbox.today.length} 張要複習，先清這個收件夾。</p>
+        <BiText as="p" className="review-alert" {...t.todayAlert(inbox.today.length)} />
       ) : null}
       <ReviewPathFolder
         id="today"
-        title="今天要複習"
-        detail="到期或逾期，系統會自動放進來提醒"
+        title={t.todayReview}
+        detail={t.todayReviewDetail}
         tone="today"
         items={inbox.today}
         employeeId={worker.id}
-        expanded={expanded === "today"}
-        onToggle={() => setOpenUnit((current) => (current === "today" ? "" : "today"))}
+        attempts={mineAttempts}
+        expanded={openKeys.has("today")}
+        onToggle={() => setOpenKeys((current) => toggleKey(current, "today"))}
       />
       <ReviewPathFolder
         id="learned"
-        title="已學習過"
-        detail="學過一次、還沒到下次複習日"
+        title={t.learned}
+        detail={t.learnedDetail}
         tone="learned"
         items={inbox.learned}
         employeeId={worker.id}
-        expanded={expanded === "learned"}
-        onToggle={() => setOpenUnit((current) => (current === "learned" ? "" : "learned"))}
+        attempts={mineAttempts}
+        expanded={openKeys.has("learned")}
+        onToggle={() => setOpenKeys((current) => toggleKey(current, "learned"))}
       />
       <header className="path-head">
         <p className="eyebrow">{worker.name} · {worker.station}</p>
-        <h1>選一站開始學</h1>
-        <p>每一關的題全部答對，這一關才會變成 2 顆星，並解鎖下一關。</p>
+        <BiText as="h1" {...t.pickStation} />
+        <BiText as="p" {...t.starRule} />
         <Link className="btn dark path-rank-btn" to={`/learn/ranking?from=${worker.id}`}>
-          全員排行榜
+          {biLine(t.ranking)}
         </Link>
       </header>
       {units.map((unit, unitIndex) => {
         const progress = unitProgress(unit, mineAttempts, worker.id);
         const stars = unitStars(unit, mineAttempts, worker.id, spoken);
-        const unlocked = isUnitUnlocked(unit, mineAttempts, worker.id);
-        const isOpen = expanded === unit.id;
+        const isOpen = openKeys.has(unit.id);
+        const labels = categoryLabels[unit.id];
         return (
           <article key={unit.id} className={`path-unit${stars === 2 ? " is-clear" : ""}`} id={`unit-${unit.id}`}>
             <button
-              className={`path-unit-banner${unlocked ? "" : " is-locked"}`}
+              className="path-unit-banner"
               type="button"
               aria-expanded={isOpen}
-              onClick={() => setOpenUnit((current) => (current === unit.id ? "" : unit.id))}
+              onClick={() => setOpenKeys((current) => toggleKey(current, unit.id))}
             >
               <span>
                 <small>
-                  第 {unitIndex + 1} 關 · {progress.done}/{progress.total}
-                  {unlocked ? "" : " · 未解鎖"}
-                  {stars === 2 ? " · 已過關" : ""}
+                  {t.unitN(unitIndex + 1).zh} · {t.unitN(unitIndex + 1).idn} · {progress.done}/{progress.total}
+                  {stars === 2 ? ` · ${t.cleared.zh} / ${t.cleared.idn}` : ""}
                 </small>
-                <strong>{unit.title}</strong>
+                <strong>{labels.zh}</strong>
+                <span className="bi-idn" lang="id">{labels.idn}</span>
               </span>
               <span className="banner-end">
                 <StarPair count={stars} />
@@ -94,27 +102,24 @@ export function LearnHome() {
               </span>
             </button>
             {isOpen ? (
-              unlocked ? (
-                <ol className="path-nodes">
-                  {unit.lessons.map((lesson, lessonIndex) => {
-                    const status = nodeState(lesson, mineAttempts, worker.id);
-                    const href = `/learn/${worker.id}/part/${firstOpenPart(lesson, mineAttempts, worker.id)}?lesson=${lesson.id}`;
-                    return (
-                      <li key={lesson.id} className={`path-row is-${status} shift-${lessonIndex % 3}`}>
-                        <Link className="path-node" to={href}>
-                          <span className="path-glyph">{status === "done" ? "✓" : lessonIndex + 1}</span>
-                          <span className="path-label">{lesson.title}</span>
-                          <small>{lesson.partIds.length} 題</small>
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ol>
-              ) : (
-                <p className="fine path-lock-note">
-                  先答對第 {unitIndex} 關全部題目，這一關才會變成 2 顆星並解鎖。
-                </p>
-              )
+              <ol className="path-nodes">
+                {unit.lessons.map((lesson, lessonIndex) => {
+                  const status = nodeState(lesson, mineAttempts, worker.id);
+                  const href = `/learn/${worker.id}/part/${firstOpenPart(lesson, mineAttempts, worker.id)}?lesson=${lesson.id}`;
+                  const label = t.checkpoint(lessonIndex + 1);
+                  const q = t.questions(lesson.partIds.length);
+                  return (
+                    <li key={lesson.id} className={`path-row is-${status} shift-${lessonIndex % 3}`}>
+                      <Link className="path-node" to={href}>
+                        <span className="path-glyph">{status === "done" ? "✓" : lessonIndex + 1}</span>
+                        <span className="path-label">{label.zh}</span>
+                        <small lang="id">{label.idn}</small>
+                        <small>{q.zh} / {q.idn}</small>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ol>
             ) : null}
           </article>
         );
@@ -130,15 +135,17 @@ function ReviewPathFolder({
   tone,
   items,
   employeeId,
+  attempts,
   expanded,
   onToggle
 }: {
   id: string;
-  title: string;
-  detail: string;
+  title: { zh: string; idn: string };
+  detail: { zh: string; idn: string };
   tone: "today" | "learned";
   items: Array<{ item: Part; state: ReviewState }>;
   employeeId: string;
+  attempts: Attempt[];
   expanded: boolean;
   onToggle: () => void;
 }) {
@@ -152,9 +159,10 @@ function ReviewPathFolder({
       >
         <span>
           <small>
-            {title} · {items.length} 張
+            {title.zh} / {title.idn} · {t.cardsCount(items.length).zh}
           </small>
-          <strong>{detail}</strong>
+          <strong>{detail.zh}</strong>
+          <span className="bi-idn" lang="id">{detail.idn}</span>
         </span>
         <b aria-hidden="true">{expanded ? "−" : "+"}</b>
       </button>
@@ -164,6 +172,8 @@ function ReviewPathFolder({
             {items.map(({ item, state }, index) => {
               const stage = reviewStageOf(state);
               const lesson = lessonForPart(item.id);
+              const stars = cardStars(item.id, attempts, employeeId, hasCompletedZhSpeech(employeeId, item.id));
+              const hint = reviewStageHintBi(state);
               return (
                 <li key={item.id} className={`path-row is-${stage} shift-${index % 3}`}>
                   <Link
@@ -172,16 +182,17 @@ function ReviewPathFolder({
                   >
                     <span className="path-glyph">{REVIEW_STAGE_ZH[stage]}</span>
                     <span className="path-label">{item.nameZh}</span>
-                    <small>{reviewStageHint(state)}</small>
+                    <small lang="id">{item.nameId}</small>
+                    <StarPair count={stars} />
+                    <small>{hint.zh}</small>
+                    <small lang="id">{hint.idn}</small>
                   </Link>
                 </li>
               );
             })}
           </ol>
         ) : (
-          <p className="fine review-empty">
-            {tone === "today" ? "今天沒有到期的複習。" : "學過一次、還沒到期的卡片會放這裡。"}
-          </p>
+          <BiText as="p" className="fine review-empty" {...(tone === "today" ? t.noToday : t.noLearned)} />
         )
       ) : null}
     </article>

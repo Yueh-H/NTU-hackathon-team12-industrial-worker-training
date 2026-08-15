@@ -1,6 +1,8 @@
 import { Link, useSearchParams } from "react-router-dom";
+import { BiText, biLine } from "../components/BiText";
 import { trainingSet, workers } from "../data/catalog";
 import { rankSnapshots, snapshotFor } from "../engine/dashboard";
+import { t } from "../lib/copy";
 import { percent } from "../lib/format";
 import { usePageTitle } from "../lib/pageTitle";
 import { useShop } from "../store";
@@ -8,7 +10,7 @@ import { useShop } from "../store";
 const medals = ["🥇", "🥈", "🥉"];
 
 export function LearnRanking() {
-  usePageTitle("全員排行榜");
+  usePageTitle(`${t.ranking.zh} / ${t.ranking.idn}`);
   const [params] = useSearchParams();
   const { states, attempts } = useShop();
   const ranking = rankSnapshots(workers.map((worker) => snapshotFor(worker, states, attempts)));
@@ -19,17 +21,20 @@ export function LearnRanking() {
   return (
     <section className="ranking-stage">
       <header className="path-head ranking-head">
-        <p className="eyebrow">學習動力</p>
-        <h1>全員學習排行榜</h1>
-        <p>{trainingSet.titleZh}</p>
-        <p className="fine">掌握卡片、答對測驗與按時複習，會反映在學習積分上。</p>
+        <p className="eyebrow">{biLine(t.motivation)}</p>
+        <BiText as="h1" {...t.rankingLong} />
+        <p>
+          {trainingSet.titleZh}
+          <span className="bi-idn" lang="id">{trainingSet.titleId}</span>
+        </p>
+        <BiText as="p" className="fine" {...t.rankingHelp} />
         <Link className="btn ghost" to={backTo}>
-          回到學習路徑
+          {biLine(t.backToPath)}
         </Link>
       </header>
 
       {ranking.length >= 3 ? (
-        <ol className="ranking-podium" aria-label="前三名">
+        <ol className="ranking-podium" aria-label={biLine({ zh: "前三名", idn: "Tiga besar" })}>
           {ranking.slice(0, 3).map((snap, index) => (
             <li key={snap.employee.id} className={`ranking-podium-card place-${index + 1}`}>
               <span className="ranking-medal" aria-hidden="true">
@@ -37,7 +42,8 @@ export function LearnRanking() {
               </span>
               <strong>{snap.employee.name}</strong>
               <small>{snap.employee.station}</small>
-              <b>{snap.learningScore} 分</b>
+              <b>{t.score(snap.learningScore).zh}</b>
+              <small lang="id">{t.score(snap.learningScore).idn}</small>
             </li>
           ))}
         </ol>
@@ -46,10 +52,10 @@ export function LearnRanking() {
       <section className="ranking-board">
         <div className="ranking-board-head">
           <div>
-            <p className="eyebrow">本課程</p>
-            <h2>所有學習者</h2>
+            <p className="eyebrow">{biLine(t.thisCourse)}</p>
+            <BiText as="h2" {...t.allLearners} />
           </div>
-          <span>{ranking.length} 人</span>
+          <span>{t.people(ranking.length).zh} / {t.people(ranking.length).idn}</span>
         </div>
         <ol className="ranking-list">
           {ranking.map((snap, index) => (
@@ -58,12 +64,16 @@ export function LearnRanking() {
               <div className="ranking-person">
                 <strong>{snap.employee.name}</strong>
                 <small>
-                  {snap.employee.station} · 掌握 {snap.mastered}/{snap.assigned} 張
+                  {snap.employee.station} · {t.masteredOf(snap.mastered, snap.assigned).zh}
+                  <span className="bi-idn" lang="id">{t.masteredOf(snap.mastered, snap.assigned).idn}</span>
                 </small>
               </div>
               <div className="ranking-score">
-                <strong>{snap.learningScore} 分</strong>
-                <small>正確率 {percent(snap.accuracy)}</small>
+                <strong>{t.score(snap.learningScore).zh}</strong>
+                <small>
+                  {t.accuracy.zh} {percent(snap.accuracy)}
+                  <span className="bi-idn" lang="id">{t.accuracy.idn} {percent(snap.accuracy)}</span>
+                </small>
               </div>
             </li>
           ))}

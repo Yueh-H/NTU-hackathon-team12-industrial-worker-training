@@ -264,7 +264,7 @@ function recognitionErrorMessage(error: string): string {
 export function recognizeZh(target: string, handlers: ChineseSpeechHandlers): () => void {
   const Recognition = getRecognitionConstructor();
   if (!Recognition) {
-    handlers.onError("此瀏覽器不支援中文語音辨識，請改用 Chrome／Edge；目前不能手動跳過。");
+    handlers.onError("此瀏覽器不支援中文語音辨識，請改用 Chrome／Edge。測驗仍可直接作答。");
     return () => undefined;
   }
 

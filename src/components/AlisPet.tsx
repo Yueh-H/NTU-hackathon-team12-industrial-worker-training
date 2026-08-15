@@ -40,11 +40,19 @@ function moodFor(overdue: number, dueToday: number, mastered: number, assigned: 
 }
 
 function reminderFor(mood: PetMood, dueToday: number, fresh: number, overdue: number): string {
-  if (mood === "urgent") return `有 ${overdue} 張逾期複習，先救回一張就好。`;
-  if (mood === "due") return `今天有 ${dueToday} 張複習，花幾分鐘維持手感。`;
-  if (mood === "celebrate") return "這一輪完成了！休息一下，再挑戰下一份工單。";
-  if (fresh > 0) return `還有 ${fresh} 張新卡，今天先學一張。`;
-  return "目前沒有急件，保持自己的學習節奏。";
+  if (mood === "urgent") {
+    return `有 ${overdue} 張逾期複習，先救回一張就好。 / Ada ${overdue} kartu terlambat. Pulihkan satu dulu.`;
+  }
+  if (mood === "due") {
+    return `今天有 ${dueToday} 張複習，花幾分鐘維持手感。 / Hari ini ${dueToday} kartu harus diulang.`;
+  }
+  if (mood === "celebrate") {
+    return "這一輪完成了！休息一下，再挑戰下一份工單。 / Selesai putaran ini! Istirahat, lalu lembar berikutnya.";
+  }
+  if (fresh > 0) {
+    return `還有 ${fresh} 張新卡，今天先學一張。 / Masih ada ${fresh} kartu baru. Belajar satu hari ini.`;
+  }
+  return "目前沒有急件，保持自己的學習節奏。 / Tidak ada yang mendesak. Ikuti ritmemu.";
 }
 
 export function AlisPet() {
@@ -135,7 +143,13 @@ export function AlisPet() {
             ×
           </button>
           <small>{PET_NAME} · {worker.name}</small>
-          <strong>{mood === "urgent" ? "先處理逾期複習" : mood === "due" ? "今天的學習提醒" : "學習進度更新"}</strong>
+          <strong>
+            {mood === "urgent"
+              ? "先處理逾期複習 / Tangani yang terlambat dulu"
+              : mood === "due"
+                ? "今天的學習提醒 / Pengingat hari ini"
+                : "學習進度更新 / Update progres"}
+          </strong>
           <p>{message}</p>
           <div
             className="alis-pet-progress"
@@ -153,7 +167,7 @@ export function AlisPet() {
           </div>
           {aiMessage ? <p className="alis-pet-ai-message"><strong>AI：</strong>{aiMessage}</p> : null}
           <form className="alis-pet-ask" onSubmit={(event) => { event.preventDefault(); void askHeadlessAssistant(); }}>
-            <label htmlFor="alis-pet-question">問學習小助手</label>
+            <label htmlFor="alis-pet-question">問學習小助手 / Tanya asisten belajar</label>
             <textarea
               id="alis-pet-question"
               value={aiQuestion}
@@ -167,18 +181,18 @@ export function AlisPet() {
               type="submit"
               disabled={aiBusy || !aiQuestion.trim()}
             >
-              {aiBusy ? "⏳ 回答中…" : "✨ 送出問題"}
+              {aiBusy ? "⏳ 回答中… / Menjawab…" : "✨ 送出問題 / Kirim"}
             </button>
-            <small>會用你的問題語言回答</small>
+            <small>會用你的問題語言回答 / Menjawab dalam bahasa pertanyaanmu</small>
           </form>
           <div className="alis-pet-tools">
             <button className="alis-pet-voice" type="button" onClick={() => speakZh(voiceMessage)}>
-              🔊 再說一次
+              🔊 再說一次 / Ulangi
             </button>
           </div>
           {nextPart ? (
             <Link className="alis-pet-action" to={`/learn/${worker.id}/part/${nextPart.id}`} onClick={() => setOpen(false)}>
-              開始「{nextPart.nameZh}」
+              開始「{nextPart.nameZh}」 / Mulai “{nextPart.nameId}”
             </Link>
           ) : null}
         </div>

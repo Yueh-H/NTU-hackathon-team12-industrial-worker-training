@@ -1,5 +1,39 @@
 # Changelog
 
+## [0.7.1] - 2026-08-15
+
+### Changed
+- Path and materials +/− each toggle on their own; opening one no longer closes the others
+
+## [0.7.0] - 2026-08-15
+
+### Added
+- Chinese and Indonesian shown together on worker, quiz, ranking, and supervisor chrome
+
+## [0.6.2] - 2026-08-15
+
+### Changed
+- Quiz no longer requires finishing Chinese speech first; speech still awards 1 star
+
+## [0.6.1] - 2026-08-15
+
+### Added
+- Standalone model-sheet Level 1 trainer under `model_sheet_training_v0_7_components/`
+
+## [0.6.0] - 2026-08-15
+
+### Added
+- Supervisor card editor so each card can be edited on its own
+
+## [0.5.0] - 2026-08-15
+
+### Added
+- Per-card stars: speech gives 1 star, a correct quiz gives 2 stars
+- Unit banners turn to 2 stars when every card in that unit is answered correctly
+
+### Changed
+- All six learning units stay open; later units are no longer locked
+
 ## [0.4.0] - 2026-08-15
 
 ### Added

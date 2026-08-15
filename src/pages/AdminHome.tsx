@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { BackendBadge } from "../components/BackendBadge";
 import { categoryLabels, parts, partsByCategory, trainingSet, workers } from "../data/catalog";
 import { partStatusLabel, rankSnapshots, snapshotFor } from "../engine/dashboard";
-import { STATUS_ZH } from "../lib/copy";
+import { STATUS_ID, STATUS_ZH } from "../lib/copy";
 import { formatDateTime, percent, relativeTime } from "../lib/format";
 import { usePageTitle } from "../lib/pageTitle";
 import type { CardCategory } from "../types";
@@ -33,7 +33,7 @@ export function AdminHome() {
   return (
     <main className="page admin">
       <header className="page-head">
-        <p className="eyebrow">主管監控</p>
+        <p className="eyebrow">主管監控 / Pantauan supervisor</p>
         <h1>{trainingSet.titleZh}</h1>
         <p>
           {trainingSet.docNo} · 已指派 {assigned} 人，已開始 {started} 人
@@ -74,13 +74,13 @@ export function AdminHome() {
         </section>
       ) : null}
       <section className="info-card heat-card">
-        <h2>全員掌握圖</h2>
-        <p>一格一張卡，左右滑可看完全部 {parts.length} 張。點名字或色塊進個人詳情。</p>
+        <h2>全員掌握圖<span className="bi-idn" lang="id">Peta penguasaan semua orang</span></h2>
+        <p>一格一張卡，左右滑可看完全部 {parts.length} 張。點名字或色塊進個人詳情。<span className="bi-idn" lang="id">Satu kotak satu kartu. Geser untuk melihat semua {parts.length}. Ketuk nama atau warna untuk detail.</span></p>
         <div className="heat-legend" aria-hidden="true">
           {HEAT_LEGEND.map(([status, label]) => (
             <span key={status}>
               <span className={`heat-swatch is-${status}`} />
-              {label}
+              {label} / {STATUS_ID[status]}
             </span>
           ))}
         </div>
@@ -187,11 +187,14 @@ export function AdminHome() {
       </div>
       <p className="fine">觀看情況依開始學習、作答與複習活動推算，不記錄是否在線，也不代表實際停留時間。</p>
       <div className="admin-foot">
+        <Link className="btn dark" to="/admin/cards">
+          編輯卡片模組 / Edit modul kartu
+        </Link>
         <Link className="text-btn" to="/">
-          回首頁
+          回首頁 / Kembali ke beranda
         </Link>
         <button className="text-btn" type="button" onClick={resetDemo}>
-          重設 demo 資料
+          重設 demo 資料 / Reset data demo
         </button>
       </div>
     </main>

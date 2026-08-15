@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
+import { biLine } from "./BiText";
 import { workers } from "../data/catalog";
 import { snapshotFor } from "../engine/dashboard";
+import { t } from "../lib/copy";
 import { useShop } from "../store";
 
 function initials(name: string): string {
@@ -16,15 +18,19 @@ export function AdminSidebar() {
 
   return (
     <aside className="admin-side">
-      <p className="eyebrow">主管檢核</p>
-      <h1>人員</h1>
+      <p className="eyebrow">{biLine(t.adminCheck)}</p>
+      <h1>{t.adminPeople.zh}<span className="bi-idn" lang="id">{t.adminPeople.idn}</span></h1>
       <NavLink className={({ isActive }) => `admin-overview-link${isActive ? " is-on" : ""}`} to="/admin" end>
-        <strong>全員總覽</strong>
-        <small>一眼看完進度、弱項與掌握圖</small>
+        <strong>{t.adminOverview.zh}<span className="bi-idn" lang="id">{t.adminOverview.idn}</span></strong>
+        <small>{t.adminOverviewFine.zh}<span className="bi-idn" lang="id">{t.adminOverviewFine.idn}</span></small>
       </NavLink>
       <NavLink className={({ isActive }) => `admin-overview-link workorder-nav${isActive ? " is-on" : ""}`} to="/admin/workorders">
-        <strong>大工單 → 學習</strong>
-        <small>貼上工單，AI 拆成員工情境</small>
+        <strong>{t.adminWorkorders.zh}<span className="bi-idn" lang="id">{t.adminWorkorders.idn}</span></strong>
+        <small>{t.adminWorkordersFine.zh}<span className="bi-idn" lang="id">{t.adminWorkordersFine.idn}</span></small>
+      </NavLink>
+      <NavLink className={({ isActive }) => `admin-overview-link${isActive ? " is-on" : ""}`} to="/admin/cards">
+        <strong>{t.adminCards.zh}<span className="bi-idn" lang="id">{t.adminCards.idn}</span></strong>
+        <small>{t.adminCardsFine.zh}<span className="bi-idn" lang="id">{t.adminCardsFine.idn}</span></small>
       </NavLink>
       <div className="admin-people">
         {workers.map((worker) => {
@@ -53,7 +59,7 @@ export function AdminSidebar() {
         })}
       </div>
       <Link className="text-btn" to="/">
-        回首頁
+        {biLine(t.backHome)}
       </Link>
     </aside>
   );
