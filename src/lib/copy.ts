@@ -83,9 +83,11 @@ export function reviewStageHintBi(state: ReviewState, day = todayKey()): Bi {
 
 export const t = {
   gateTitle: { zh: "工程訓練單", idn: "Lembar latihan kerja" },
-  workerLearn: { zh: "員工學習", idn: "Belajar karyawan" },
+  workerLearn: { zh: "員工頁面", idn: "Halaman karyawan" },
   supervisor: { zh: "主管監控", idn: "Pantauan supervisor" },
+  bossPage: { zh: "老闆頁面", idn: "Halaman bos" },
   bossUpload: { zh: "老闆發工單", idn: "Bos unggah lembar" },
+  bossOrders: { zh: "老闆剛發的工單", idn: "Lembar baru dari bos" },
   gateFine: {
     zh: "已接 Firebase 時，手機學習、筆電看主管頁會打同一份資料。沒接就存在這個瀏覽器。",
     idn: "Kalau Firebase tersambung, HP dan laptop memakai data yang sama. Kalau tidak, data hanya di browser ini."

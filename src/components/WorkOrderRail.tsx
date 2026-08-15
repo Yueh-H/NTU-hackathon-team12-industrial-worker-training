@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { biLine } from "./BiText";
 import { trainingSets } from "../data/catalog";
 import { t } from "../lib/copy";
+import { useShop } from "../store";
 import type { TrainingSet } from "../types";
 
 export function WorkOrderRail({
@@ -17,6 +18,7 @@ export function WorkOrderRail({
   onSelect: (setId: string) => void;
   onToggle: () => void;
 }) {
+  const { workOrders } = useShop();
   return (
     <aside className={`wo-rail${collapsed ? " is-collapsed" : ""}`}>
       <div className="wo-rail-head">
@@ -43,6 +45,22 @@ export function WorkOrderRail({
             collapsed={collapsed}
             onSelect={onSelect}
           />
+        ))}
+        {workOrders.map((workOrder) => (
+          <Link
+            key={workOrder.id}
+            className="wo-rail-item wo-boss"
+            to={`/learn/workorder/${workOrder.id}?employee=${employeeId}`}
+            title={workOrder.title}
+          >
+            <strong>{collapsed ? (workOrder.docNo || "工").slice(0, 6) : workOrder.docNo || t.bossOrders.zh}</strong>
+            {collapsed ? null : (
+              <>
+                <span>{workOrder.title}</span>
+                <small>{t.bossOrders.zh}<span className="bi-idn" lang="id">{t.bossOrders.idn}</span></small>
+              </>
+            )}
+          </Link>
         ))}
         <Link
           className="wo-rail-item wo-rank"

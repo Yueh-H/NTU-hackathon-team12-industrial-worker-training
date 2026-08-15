@@ -27,10 +27,7 @@ export function Gate() {
           {biLine(t.workerLearn)}
         </Link>
         <Link className="btn dark" to="/admin">
-          {biLine(t.supervisor)}
-        </Link>
-        <Link className="btn ghost" to="/admin/workorders">
-          {biLine(t.bossUpload)}
+          {biLine(t.bossPage)}
         </Link>
       </div>
       <BiText as="p" className="fine" zh={t.gateFine.zh} idn={t.gateFine.idn} />

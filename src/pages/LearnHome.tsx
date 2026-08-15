@@ -32,8 +32,8 @@ function toggleKey(current: Set<OpenKey>, key: OpenKey): Set<OpenKey> {
 export function LearnHome() {
   const { employeeId = "" } = useParams();
   const worker = workerById(employeeId);
-  const { states, attempts } = useShop();
-  const [openKeys, setOpenKeys] = useState<Set<OpenKey>>(() => new Set(["today"]));
+  const { states, attempts, workOrders } = useShop();
+  const [openKeys, setOpenKeys] = useState<Set<OpenKey>>(() => new Set());
   if (!worker) return <Navigate to="/learn" replace />;
   const mine = states.filter((state) => state.employeeId === worker.id);
   const mineAttempts = attempts.filter((attempt) => attempt.employeeId === worker.id);
@@ -45,35 +45,55 @@ export function LearnHome() {
       {inbox.today.length ? (
         <BiText as="p" className="review-alert" {...t.todayAlert(inbox.today.length)} />
       ) : null}
-      <ReviewPathFolder
-        id="today"
-        title={t.todayReview}
-        detail={t.todayReviewDetail}
-        tone="today"
-        items={inbox.today}
-        employeeId={worker.id}
-        attempts={mineAttempts}
-        expanded={openKeys.has("today")}
-        onToggle={() => setOpenKeys((current) => toggleKey(current, "today"))}
-      />
-      <ReviewPathFolder
-        id="learned"
-        title={t.learned}
-        detail={t.learnedDetail}
-        tone="learned"
-        items={inbox.learned}
-        employeeId={worker.id}
-        attempts={mineAttempts}
-        expanded={openKeys.has("learned")}
-        onToggle={() => setOpenKeys((current) => toggleKey(current, "learned"))}
-      />
+      <div className="path-trio">
+        <ReviewPathFolder
+          id="today"
+          title={t.todayReview}
+          detail={t.todayReviewDetail}
+          tone="today"
+          items={inbox.today}
+          employeeId={worker.id}
+          attempts={mineAttempts}
+          expanded={openKeys.has("today")}
+          onToggle={() => setOpenKeys((current) => toggleKey(current, "today"))}
+        />
+        <ReviewPathFolder
+          id="learned"
+          title={t.learned}
+          detail={t.learnedDetail}
+          tone="learned"
+          items={inbox.learned}
+          employeeId={worker.id}
+          attempts={mineAttempts}
+          expanded={openKeys.has("learned")}
+          onToggle={() => setOpenKeys((current) => toggleKey(current, "learned"))}
+        />
+        <Link className="path-unit is-review path-rank-card" to={`/learn/ranking?from=${worker.id}`}>
+          <span className="path-unit-banner review-banner is-rank">
+            <span>
+              <small>{biLine(t.ranking)}</small>
+              <strong>{t.rankingSee.zh}</strong>
+              <span className="bi-idn" lang="id">{t.rankingSee.idn}</span>
+            </span>
+            <b aria-hidden="true">→</b>
+          </span>
+        </Link>
+      </div>
       <header className="path-head">
         <p className="eyebrow">{worker.name} · {worker.station}</p>
         <BiText as="h1" {...t.pickStation} />
         <BiText as="p" {...t.starRule} />
-        <Link className="btn dark path-rank-btn" to={`/learn/ranking?from=${worker.id}`}>
-          {biLine(t.ranking)}
-        </Link>
+        {workOrders.length ? (
+          <div className="boss-order-list">
+            <p className="eyebrow">{biLine(t.bossOrders)}</p>
+            {workOrders.map((workOrder) => (
+              <Link key={workOrder.id} className="btn ghost wide" to={`/learn/workorder/${workOrder.id}?employee=${worker.id}`}>
+                {workOrder.docNo ? `${workOrder.docNo} · ` : ""}
+                {workOrder.title}
+              </Link>
+            ))}
+          </div>
+        ) : null}
       </header>
       {units.map((unit, unitIndex) => {
         const progress = unitProgress(unit, mineAttempts, worker.id);

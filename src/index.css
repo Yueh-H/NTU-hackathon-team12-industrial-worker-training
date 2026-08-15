@@ -836,6 +836,9 @@ td small { color: var(--muted); }
 .wo-rail-item small { color: var(--muted); }
 .wo-rail-item.is-on { box-shadow: 0 0 0 2px #d96a32; }
 .wo-rail-item.is-off { opacity: 0.72; }
+.wo-rail-item.wo-boss { background: #fff4e6; border-color: rgba(217, 106, 50, 0.28); }
+.boss-order-list { display: grid; gap: 8px; margin-top: 14px; }
+.boss-order-list .eyebrow { margin-bottom: 2px; }
 .wo-rail.is-collapsed .wo-rail-item {
   padding: 10px 4px;
   text-align: center;
@@ -1361,6 +1364,42 @@ td small { color: var(--muted); }
 .ranking-person small, .ranking-score small { color: var(--muted); font-size: 0.78rem; }
 .ranking-score { display: grid; gap: 2px; text-align: right; }
 .ranking-score strong { color: var(--mint); }
+.path-trio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  width: min(1040px, 100%);
+  margin: 0 auto 22px;
+  align-items: start;
+}
+.path-trio .path-unit {
+  width: 100%;
+  margin: 0;
+}
+.path-trio .path-unit-banner {
+  min-height: 118px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  padding: 12px 12px 14px;
+}
+.path-trio .path-unit-banner strong {
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+.path-trio .review-empty { margin: 0 2px 8px; }
+.path-trio .path-row { margin-bottom: 8px; }
+.path-trio .path-row.shift-0,
+.path-trio .path-row.shift-1,
+.path-trio .path-row.shift-2 {
+  justify-content: stretch;
+  padding: 0;
+}
+.path-trio .path-node { width: 100%; min-height: 64px; }
+.path-unit-banner.review-banner.is-rank {
+  background: var(--navy);
+  box-shadow: 0 6px 0 #0a1c24;
+}
+.path-rank-card { text-decoration: none; color: inherit; }
 .path-head { width: min(520px, 100%); margin: 0 auto 28px; }
 .path-head h1 { margin: 6px 0 8px; letter-spacing: -0.04em; }
 .path-rank-btn { margin-top: 14px; }
@@ -1490,6 +1529,9 @@ td small { color: var(--muted); }
 .path-node.is-rescue { background: var(--rose); box-shadow: 0 7px 0 #6f2c24; }
 .path-node.is-mastered { background: #237252; box-shadow: 0 7px 0 #18553d; }
 
+@media (max-width: 420px) {
+  .path-trio { grid-template-columns: 1fr; }
+}
 @media (max-width: 720px) {
   .stat-row { grid-template-columns: 1fr 1fr; }
   .sheet-card { flex-direction: column; }

@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.9.0] - 2026-08-15
+
+### Added
+- Home gate now has two entries: employee page and boss page
+- Boss-uploaded work orders appear on the worker rail and learn home
+
+### Changed
+- Today's review, already-learned, and ranking sit in one row on the worker path
+
 ## [0.8.0] - 2026-08-15
 
 ### Added

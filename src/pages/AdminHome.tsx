@@ -34,7 +34,7 @@ export function AdminHome() {
   return (
     <main className="page admin">
       <header className="page-head">
-        <p className="eyebrow">主管監控 / Pantauan supervisor</p>
+        <p className="eyebrow">老闆頁面 / Halaman bos</p>
         <h1>{trainingSet.titleZh}</h1>
         <p>
           {trainingSet.docNo} · 已指派 {assigned} 人，已開始 {started} 人
