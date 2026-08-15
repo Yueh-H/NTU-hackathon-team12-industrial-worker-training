@@ -1,0 +1,19 @@
+# Secrets
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node
+node_modules/
+dist/
+
+# OS / editor
+.DS_Store
+
+# Local session work log (auto-recorded by Claude Code hooks; never publish)
+work_log/
+.worklog_enabled
