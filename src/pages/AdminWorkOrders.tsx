@@ -60,7 +60,7 @@ export function AdminWorkOrders() {
         {workOrdersReady && !workOrders.length ? (
           <p className="info-card empty-state">
             還沒有新上傳的工單。示範拆解在{" "}
-            <Link to={`/admin/workorders/${DEMO_WORK_ORDER_ID}`}>DEMO-001</Link>。
+            <Link to={`/admin/workorders/${DEMO_WORK_ORDER_ID}`}>示範工單</Link>。
           </p>
         ) : null}
       </section>
@@ -189,7 +189,7 @@ export function AdminWorkOrderNew() {
           <input
             value={title}
             onChange={(event) => setTitle(event.target.value)}
-            placeholder="例如：FM-DEMO 防火門子母扇組立"
+            placeholder="例如：防火門示範工單"
             required
           />
         </label>
@@ -198,7 +198,7 @@ export function AdminWorkOrderNew() {
           <input
             value={docNo}
             onChange={(event) => setDocNo(event.target.value)}
-            placeholder="例如：DEMO-001"
+            placeholder="例如：示範編號"
           />
         </label>
         <label>

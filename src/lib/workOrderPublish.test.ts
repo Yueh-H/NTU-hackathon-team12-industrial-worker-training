@@ -34,6 +34,6 @@ describe("work order publish from demo sheet", () => {
     expect(bundle.workOrder.createdBy).toBe("boss");
     expect(bundle.modules).toHaveLength(1);
     expect(bundle.modules[0]?.workOrderId).toBe(bundle.workOrder.id);
-    expect(bundle.workOrder.rawContent).toContain("防火玻璃");
+    expect(bundle.workOrder.rawContent).toContain("示範防火門");
   });
 });

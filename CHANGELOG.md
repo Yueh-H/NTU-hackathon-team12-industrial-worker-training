@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.11.4] - 2026-08-16
+
+### Removed
+- Source work-order dump, named training HTML, and leftover document numbers from copy
+
 ## [0.11.3] - 2026-08-16
 
 ### Changed

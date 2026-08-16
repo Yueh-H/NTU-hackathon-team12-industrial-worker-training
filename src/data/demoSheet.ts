@@ -1,24 +1,18 @@
 import type { LearningModule, WorkOrderBundle } from "../types";
 
-/** Demo parse result for the FM-DEMO / DEMO-001 manufacturing sheet. */
+/** Generic demo parse result. No source-sheet identifiers. */
 export const DEMO_SHEET = {
-  title: "FM-DEMO 防火遮煙視窗扇生產製造表",
+  title: "示範生產製造表",
   docNo: "DEMO-001",
   formCode: "FM-DEMO",
-  machine: "15-D9 子母扇 1724×2202",
+  machine: "示範門扇",
   pdfPath: "demo-sheet.pdf",
-  pdfBytes: 1_073_158,
-  summary: "子母扇平面防火遮煙視窗扇的生產製造與裁折圖，含門扇尺寸、左右方向、五金與材料裁切清單。",
+  pdfBytes: 0,
+  summary: "示範用防火門組立工單，含門扇、材料與五金的學習拆解。",
   rawContent: `工單 DEMO-001／表單 FM-DEMO
-名稱：子母扇平面防火遮煙視窗扇
-成品：1724×2202，8 組，顏色 8251，開外
-母扇 1022×2202（加工 1074×2276）16 片，4 左／4 右
-子扇 701×2202（加工 753×2276）16 片，4 左／4 右
-板厚 1.0，門厚 50
-鉸鏈側 48 mm 珍珠岩複合板；鎖側 40 mm 珍珠岩 + 2×4 mm 碳酸鎂
-防火玻璃 31×226×1226，16 片
-五金：防撬栓 TH-720、下降條 DW-900、旗形鉸鏈 OK-602-4"×3
-內封邊 F-59，外封邊 F-17`
+名稱：示範防火門
+成品：示範尺寸，開外
+請依現場當次工單核對材料、五金與安全條件。`
 } as const;
 
 export const DEMO_WORK_ORDER_ID = "wo-demo-001";

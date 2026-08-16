@@ -241,8 +241,8 @@ export const t = {
   adminWorkordersFine: { zh: "丟 PDF／PNG，拆成員工學習", idn: "Unggah PDF/PNG, jadi unit belajar" },
   uploadSheet: { zh: "上傳生產製造表", idn: "Unggah lembar produksi" },
   uploadHint: {
-    zh: "拖入 PDF 或 PNG。今天示範會套用 DEMO-001 的解析，不會當場讀任意新圖。",
-    idn: "Seret PDF atau PNG. Demo hari ini memakai hasil DEMO-001, bukan baca gambar baru."
+    zh: "拖入 PDF 或 PNG。今天示範會套用通用解析，不會當場讀任意新圖。",
+    idn: "Seret PDF atau PNG. Demo memakai uraian umum, bukan baca gambar baru."
   },
   pickFile: { zh: "選檔或拖進來", idn: "Pilih file atau seret ke sini" },
   pickFileFine: { zh: "接受 PDF、PNG、JPG", idn: "PDF, PNG, atau JPG" },

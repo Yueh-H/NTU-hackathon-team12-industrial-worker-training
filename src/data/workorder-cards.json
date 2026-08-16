@@ -1,7 +1,7 @@
 {
  "meta": {
   "title": "防火門生產製造表 單字圖卡",
-  "source": "生產製造表 DEMO-001（60A 平面防火遮煙視窗扇・子母扇）",
+  "source": "示範生產製造表",
   "direction": "front = 中文（單子原字）+ 圖；back = 印尼文 + 英文 + 說明",
   "translation_status": "印尼文為 best-effort，未經母語者校對；uncertain=true 者尤其要問師傅",
   "categories": {
@@ -48,7 +48,7 @@
    "zh": "母扇（母）",
    "idn": "daun induk (daun besar)",
    "en": "mother leaf (larger)",
-   "hint": "1022×2202，16片",
+   "hint": "看單子上的成品尺寸",
    "icon": "daun-induk.svg",
    "sheet": null
   },
@@ -58,7 +58,7 @@
    "zh": "子扇（子）",
    "idn": "daun anak (daun kecil)",
    "en": "child leaf (smaller)",
-   "hint": "701×2202，16片",
+   "hint": "看單子上的成品尺寸",
    "icon": "daun-anak.svg",
    "sheet": null
   },
@@ -285,7 +285,7 @@
   {
    "id": "engsel-bendera",
    "cat": "hardware",
-   "zh": "旗形鉸鍊（旗 OK-602-4\"*3）",
+   "zh": "旗形鉸鍊",
    "idn": "engsel bendera",
    "en": "flag hinge (lift-off)",
    "hint": "每片 3 個 4 吋；「旗形鉸鍊焊點位置」",
@@ -336,7 +336,7 @@
   {
    "id": "pin-anti-congkel",
    "cat": "hardware",
-   "zh": "防撬栓（TH-720）",
+   "zh": "防撬栓",
    "idn": "pin anti congkel",
    "en": "anti-pry pin / dog bolt",
    "hint": "每片 +防撬栓*1；1-1「沖防撬栓」",
@@ -349,7 +349,7 @@
    "zh": "下降條／下降壓條",
    "idn": "seal bawah otomatis (drop seal)",
    "en": "automatic drop seal",
-   "hint": "DW-900；GD-3033 1018mm*8組、697mm*8組",
+   "hint": "看單子上的料號與長度",
    "icon": "seal-bawah.svg",
    "sheet": null
   },
@@ -377,7 +377,7 @@
   {
    "id": "kode-produk",
    "cat": "hardware",
-   "zh": "型號代碼（DW-900／OK-602／TH-720／GD-1043）",
+   "zh": "型號代碼",
    "idn": "kode produk — tidak perlu diterjemahkan, cocokkan hurufnya",
    "en": "product codes — match as-is",
    "hint": "不用翻，認得字母數字、對得上就好",
@@ -450,7 +450,7 @@
    "zh": "貼",
    "idn": "tempel",
    "en": "stick / paste on",
-   "hint": "「上貼 GD-1043」「兩側貼」",
+   "hint": "「上貼」「兩側貼」",
    "icon": "tempel.svg",
    "sheet": null
   },
@@ -550,17 +550,17 @@
    "zh": "製造規格／加工尺寸",
    "idn": "spesifikasi / ukuran proses",
    "en": "spec size / process size",
-   "hint": "1022*2202（成品）vs 1074*2276（折前展開）",
+   "hint": "成品尺寸 vs 折前展開尺寸",
    "icon": "ukuran.svg",
    "sheet": null
   },
   {
    "id": "warna",
    "cat": "lembar",
-   "zh": "顏色（8251）",
+   "zh": "顏色代碼",
    "idn": "warna",
    "en": "color code",
-   "hint": "8251 是色號",
+   "hint": "單子上的色號，對得上就好",
    "icon": "warna.svg",
    "sheet": null
   },
