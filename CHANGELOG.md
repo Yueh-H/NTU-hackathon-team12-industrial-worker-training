@@ -4,6 +4,8 @@
 
 ### Removed
 - Full manufacturing-sheet rasters and the pet atlas from GitHub (`drawing.png`, `drawing-sm.png`, `alis-pet.webp`)
+- Sheet crops under `public/deck/sheet/` and part photos under `public/parts/`
+- Standalone deck preview and workcard HTML from GitHub Pages
 
 ## [0.11.1] - 2026-08-16
 
