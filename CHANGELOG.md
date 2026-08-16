@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.3] - 2026-08-16
+
+### Removed
+- Published PDFs from GitHub Pages (`demo-sheet.pdf` and the model sheet)
+
 ## [0.10.2] - 2026-08-15
 
 ### Added

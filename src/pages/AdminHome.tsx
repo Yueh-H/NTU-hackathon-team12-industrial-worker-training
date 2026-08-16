@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { BackendBadge } from "../components/BackendBadge";
 import { WorkOrderUpload } from "../components/WorkOrderUpload";
 import { categoryLabels, parts, partsByCategory, trainingSet, workers } from "../data/catalog";
-import { assetUrl } from "../lib/asset";
 import { partStatusLabel, rankSnapshots, snapshotFor } from "../engine/dashboard";
 import { STATUS_ID, STATUS_ZH } from "../lib/copy";
 import { formatDateTime, percent, relativeTime } from "../lib/format";
@@ -42,23 +41,6 @@ export function AdminHome() {
         </p>
         <BackendBadge />
       </header>
-      <section className="info-card source-file-card">
-        <div className="section-title-row">
-          <h2>
-            模型 PDF
-            <span className="bi-idn" lang="id">PDF model</span>
-          </h2>
-          <a href={assetUrl("demo-sheet.pdf")} target="_blank" rel="noreferrer">
-            demo-sheet.pdf ↗
-          </a>
-        </div>
-        <iframe
-          className="workorder-pdf-frame"
-          title="DEMO-001 模型 PDF"
-          src={assetUrl("demo-sheet.pdf")}
-        />
-        <small className="fine">這份圖直接嵌在主管頁，可全頁捲動或另開分頁。</small>
-      </section>
       <WorkOrderUpload />
       <div className="stat-row">
         <div>

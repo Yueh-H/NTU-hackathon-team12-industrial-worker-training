@@ -89,7 +89,7 @@ export function demoWorkOrderBundle(): WorkOrderBundle {
       analysisSource: "demo-fallback",
       sourceFile: {
         name: DEMO_SHEET.pdfPath,
-        storagePath: `github-pages/${DEMO_SHEET.pdfPath}`,
+        storagePath: `local-only/${DEMO_SHEET.pdfPath}`,
         downloadUrl: "",
         size: DEMO_SHEET.pdfBytes,
         pageCount: 1,

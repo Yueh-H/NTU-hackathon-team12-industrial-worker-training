@@ -1,17 +1,13 @@
-import { DEMO_SHEET } from "../data/demoSheet";
-import { assetUrl } from "../lib/asset";
 import type { WorkOrder } from "../types";
 
 export function sheetPdfUrl(order: WorkOrder): string {
-  if (order.sourceFile?.downloadUrl) return order.sourceFile.downloadUrl;
-  if (order.docNo === DEMO_SHEET.docNo) return assetUrl(DEMO_SHEET.pdfPath);
-  return "";
+  return order.sourceFile?.downloadUrl || "";
 }
 
 export function WorkOrderPdf({ workOrder }: { workOrder: WorkOrder }) {
   const url = sheetPdfUrl(workOrder);
   if (!url) return null;
-  const name = workOrder.sourceFile?.name || DEMO_SHEET.pdfPath;
+  const name = workOrder.sourceFile?.name || "source.pdf";
   const pages = workOrder.sourceFile?.pageCount || 1;
   return (
     <section className="info-card source-file-card">
@@ -25,7 +21,7 @@ export function WorkOrderPdf({ workOrder }: { workOrder: WorkOrder }) {
           {name} ↗
         </a>
       </p>
-      <small className="fine">這份示範圖已拿掉客戶與工程名稱，可直接遠端展示。</small>
+      <small className="fine">這份 PDF 只在有上傳連結時顯示，不會放在 GitHub Pages。</small>
     </section>
   );
 }

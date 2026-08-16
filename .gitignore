@@ -17,10 +17,8 @@ dist/
 # OS / editor
 .DS_Store
 
-# Real customer production sheets stay local. Only the redacted demo sheet is published.
+# Production and demo sheets stay local. Do not publish PDFs to GitHub.
 *.pdf
-!public/demo-sheet.pdf
-!public/demo-sheet.pdf
 
 # Local session work log (auto-recorded by Claude Code hooks; never publish)
 work_log/

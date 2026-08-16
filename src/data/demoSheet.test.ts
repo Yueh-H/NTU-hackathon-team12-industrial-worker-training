@@ -3,11 +3,11 @@ import { DEMO_SHEET, DEMO_WORK_ORDER_ID, demoWorkOrderBundle, withDemoWorkOrder 
 import type { WorkOrderBundle } from "../types";
 
 describe("hosted demo sheet", () => {
-  it("always exposes the GitHub Pages PDF as a stable work order", () => {
+  it("always exposes the demo work order without hosting a PDF", () => {
     const bundle = demoWorkOrderBundle();
     expect(bundle.workOrder.id).toBe(DEMO_WORK_ORDER_ID);
     expect(bundle.workOrder.docNo).toBe(DEMO_SHEET.docNo);
-    expect(bundle.workOrder.sourceFile?.name).toBe("demo-sheet.pdf");
+    expect(bundle.workOrder.sourceFile?.downloadUrl).toBe("");
     expect(bundle.modules).toHaveLength(4);
   });
 

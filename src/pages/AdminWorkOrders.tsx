@@ -35,7 +35,7 @@ export function AdminWorkOrders() {
       <header className="page-head">
         <p className="eyebrow">老闆工具 · 上傳工單</p>
         <h1>發一張生產製造表</h1>
-        <p>遠端展示用的 demo-sheet.pdf 已上架；也可以再丟一份新的 PDF／PNG。</p>
+        <p>上傳 PDF／PNG，或打開本機示範工單。PDF 不會放上 GitHub Pages。</p>
       </header>
       <WorkOrderUpload />
       {workOrderError ? <p className="form-error">{workOrderError}</p> : null}
@@ -59,7 +59,7 @@ export function AdminWorkOrders() {
         ))}
         {workOrdersReady && !workOrders.length ? (
           <p className="info-card empty-state">
-            還沒有新上傳的工單。示範 PDF 在{" "}
+            還沒有新上傳的工單。示範拆解在{" "}
             <Link to={`/admin/workorders/${DEMO_WORK_ORDER_ID}`}>DEMO-001</Link>。
           </p>
         ) : null}

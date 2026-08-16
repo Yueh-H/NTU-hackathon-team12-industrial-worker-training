@@ -55,8 +55,7 @@ firebase deploy --only firestore:rules,storage
 
 ## 教材來源
 
-- `public/demo-sheet.pdf` 示範用生產製造表（識別資訊已遮）
-- `public/drawing.png` 工程圖
+- `public/drawing.png` 工程圖（PDF 不進 git）
 - `src/data/seed.json` 10 名員工、1 名主管，並含多種學習進度／逾期／弱項 demo 狀態
 - `src/data/workorder-cards.json` / `parts-cards/deck/` 工單 64 張卡（構造／材料／五金／動詞／欄位／讀行）
 

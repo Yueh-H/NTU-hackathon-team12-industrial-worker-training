@@ -174,7 +174,7 @@ export function WorkOrderUpload() {
       {warning ? <p className="form-warning">{warning}</p> : null}
       <div className="form-actions">
         <Link className="btn ghost" to={`/admin/workorders/${DEMO_WORK_ORDER_ID}`}>
-          開啟已上架 PDF
+          開啟示範工單
         </Link>
         <Link className="btn ghost" to="/admin/workorders/new">
           {biLine(t.pasteInstead)}
