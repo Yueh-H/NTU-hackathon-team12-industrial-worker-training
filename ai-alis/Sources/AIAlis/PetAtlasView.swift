@@ -69,7 +69,7 @@ final class PetAtlasView: NSView {
         layer?.backgroundColor = NSColor.clear.cgColor
         setAccessibilityElement(true)
         setAccessibilityRole(.button)
-        setAccessibilityLabel("AI Alis 學習伴讀桌寵。點擊查看目前學習情況，拖曳可移動位置。")
+        setAccessibilityLabel("學習小助手。點擊查看目前學習情況，拖曳可移動位置。")
         addTrackingArea(NSTrackingArea(
             rect: bounds,
             options: [.mouseEnteredAndExited, .activeAlways, .inVisibleRect],
@@ -134,14 +134,7 @@ final class PetAtlasView: NSView {
                 hints: [.interpolation: NSImageInterpolation.none]
             )
         } else {
-            let paragraph = NSMutableParagraphStyle()
-            paragraph.alignment = .center
-            let attributes: [NSAttributedString.Key: Any] = [
-                .font: NSFont.systemFont(ofSize: min(bounds.width, bounds.height) * 0.56),
-                .paragraphStyle: paragraph
-            ]
-            NSAttributedString(string: "🐈", attributes: attributes)
-                .draw(in: NSRect(x: 0, y: bounds.midY - bounds.height * 0.28, width: bounds.width, height: bounds.height * 0.66))
+            drawOriginalHelper()
         }
 
         drawProgressBar()
@@ -229,19 +222,30 @@ final class PetAtlasView: NSView {
         }
     }
 
+    private func drawOriginalHelper() {
+        let body = NSRect(x: bounds.midX - 22, y: 10, width: 44, height: 32)
+        NSColor(calibratedRed: 0.11, green: 0.34, blue: 0.39, alpha: 1).setFill()
+        NSBezierPath(roundedRect: body, xRadius: 7, yRadius: 7).fill()
+
+        let head = NSRect(x: bounds.midX - 18, y: 36, width: 36, height: 36)
+        NSColor(calibratedRed: 0.95, green: 0.84, blue: 0.69, alpha: 1).setFill()
+        NSBezierPath(ovalIn: head).fill()
+
+        let helmet = NSRect(x: bounds.midX - 20, y: 56, width: 40, height: 18)
+        NSColor(calibratedRed: 0.88, green: 0.48, blue: 0.18, alpha: 1).setFill()
+        NSBezierPath(roundedRect: helmet, xRadius: 8, yRadius: 8).fill()
+
+        NSColor(calibratedRed: 0.11, green: 0.20, blue: 0.25, alpha: 1).setFill()
+        NSBezierPath(ovalIn: NSRect(x: bounds.midX - 8, y: 50, width: 5, height: 5)).fill()
+        NSBezierPath(ovalIn: NSRect(x: bounds.midX + 3, y: 50, width: 5, height: 5)).fill()
+    }
+
     private static func loadAtlas() -> NSImage? {
-        var candidates: [URL] = []
-        if let resourceURL = Bundle.module.resourceURL {
-            candidates.append(resourceURL.appendingPathComponent("Resources/Pet/alis.webp"))
-            candidates.append(resourceURL.appendingPathComponent("Pet/alis.webp"))
-            candidates.append(resourceURL.appendingPathComponent("alis.webp"))
+        guard let custom = ProcessInfo.processInfo.environment["AI_ALIS_ATLAS"], !custom.isEmpty else {
+            return nil
         }
-        if let custom = ProcessInfo.processInfo.environment["AI_ALIS_ATLAS"], !custom.isEmpty {
-            candidates.insert(URL(fileURLWithPath: NSString(string: custom).expandingTildeInPath), at: 0)
-        }
-        for candidate in candidates where FileManager.default.fileExists(atPath: candidate.path) {
-            if let image = NSImage(contentsOf: candidate) { return image }
-        }
-        return nil
+        let url = URL(fileURLWithPath: NSString(string: custom).expandingTildeInPath)
+        guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+        return NSImage(contentsOf: url)
     }
 }

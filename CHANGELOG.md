@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.11.3] - 2026-08-16
+
+### Changed
+- Learning helper uses an original CC0 hard-hat mark (`public/helper.svg`) instead of a third-party character
+
+### Removed
+- Chiikawa / Usagi sprite atlas from the macOS helper (`ai-alis/.../alis.webp`)
+
 ## [0.11.2] - 2026-08-16
 
 ### Removed

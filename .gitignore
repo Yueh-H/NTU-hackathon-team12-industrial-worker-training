@@ -22,6 +22,8 @@ dist/
 firebase-debug.log
 node_modules/
 public/alis-pet.webp
+**/alis.webp
+**/alis-pet.webp
 public/deck/preview.html
 public/deck/sheet/
 public/drawing-sm.png

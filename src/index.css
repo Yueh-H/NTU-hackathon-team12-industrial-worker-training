@@ -1228,22 +1228,12 @@ td small { color: var(--muted); }
   outline-offset: 3px;
 }
 .alis-pet-sprite {
-  display: grid;
-  place-items: center;
+  display: block;
   width: 78px;
-  height: 78px;
-  margin-top: 18px;
-  border-radius: 50% 50% 46% 46%;
-  background: radial-gradient(circle at 34% 30%, #ffe7b4, #efb12a 64%, #c98416);
-  box-shadow: inset 0 -8px 0 rgba(148, 88, 12, 0.14), 0 6px 10px rgba(23, 33, 43, 0.12);
+  height: 90px;
+  margin-top: 8px;
+  object-fit: contain;
   animation: alis-pet-bob 2.4s ease-in-out infinite;
-}
-.alis-pet-sprite::before {
-  content: "◕‿◕";
-  color: #4a3010;
-  font-size: 1.15rem;
-  font-weight: 800;
-  line-height: 1;
 }
 .alis-pet-name {
   position: absolute;
@@ -1654,6 +1644,6 @@ td small { color: var(--muted); }
   .ranking-score { grid-column: 2; grid-row: 2; display: flex; gap: 8px; text-align: left; }
   .alis-pet { right: 12px; bottom: 12px; }
   .alis-pet-button { width: 104px; min-height: 122px; border-radius: 54px 54px 18px 18px; }
-  .alis-pet-sprite { width: 68px; height: 68px; margin-top: 14px; }
+  .alis-pet-sprite { width: 64px; height: 74px; margin-top: 8px; }
   .alis-pet-bubble { width: min(286px, calc(100vw - 24px)); }
 }

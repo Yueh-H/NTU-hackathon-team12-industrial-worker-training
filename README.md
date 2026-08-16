@@ -9,7 +9,7 @@ NTU Hackathon Team 12。把 Practice Cat 的間隔複習引擎，做成手機優
 - `/learn` 員工：點名進入 → 工單 64 張單字卡 → 測驗（看圖選名／看名選圖／圖上點位置）→ `Lupa` / `Ragu-ragu` / `Ingat`
 - `/admin` 主管：指派進度、今日／逾期、測驗正確率、弱項、需要協助的人
 
-員工頁內建「學習小助手」桌寵：進入 `/learn/:employeeId` 後會固定在右下角顯示圖案，會用瀏覽器語音說出提醒；點擊可查看目前進度、輸入問題、用中文／English／Bahasa Indonesia 問 AI，並開始下一張卡。網頁版直接讀取 React 學習狀態，不使用 JSON 同步流程。
+員工頁內建「學習小助手」：進入 `/learn/:employeeId` 後固定在右下角。圖案是本專案原創 SVG（`public/helper.svg`，CC0），會用瀏覽器語音說出提醒；點擊可查看目前進度、輸入問題、用中文／English／Bahasa Indonesia 問 AI，並開始下一張卡。網頁版直接讀取 React 學習狀態，不使用 JSON 同步流程。
 
 複習契約沿用 Practice Cat：第一次學會才排程；D+1／3／7／30；忘記或答錯加隔日 rescue，**不搬動原里程碑**。
 

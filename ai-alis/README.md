@@ -2,7 +2,7 @@
 
 AI Alis 是從 `practice-cat` 的 macOS 桌寵模式拆出的獨立 MVP：一個 always-on-top 的小寵物，定期讀取學習 snapshot，依照「逾期 → 今日到期 → 新卡 → 完成」的優先順序提醒你。
 
-這個資料夾不依賴工訓 Web App，也不會修改 `practice-cat`。角色 atlas 重用 `practice-cat/Resources/Pet/spritesheet.webp` 的 8×11 動畫格式；核心邏輯則拆成可測試的 `AIAlisCore` library。
+這個資料夾不依賴工訓 Web App，也不會修改 `practice-cat`。桌寵預設畫原創安全帽小助手（CC0），不再附第三方角色 atlas。若要自己換圖，設 `AI_ALIS_ATLAS` 指向本機 8×11 spritesheet。核心邏輯拆成可測試的 `AIAlisCore` library。
 
 ## 快速啟動
 

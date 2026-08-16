@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 112" role="img" aria-label="學習小助手">
+  <!-- Original work for this repo. License: CC0 1.0. Not based on any third-party character. -->
+  <ellipse cx="48" cy="104" rx="22" ry="5" fill="#1d3340" opacity=".14"/>
+  <rect x="24" y="70" width="48" height="34" rx="8" fill="#1c5664"/>
+  <rect x="30" y="76" width="15" height="14" rx="2.5" fill="#d7eef2"/>
+  <rect x="51" y="76" width="15" height="14" rx="2.5" fill="#d7eef2"/>
+  <rect x="30" y="93" width="36" height="5" rx="2" fill="#0f3a44"/>
+  <circle cx="48" cy="48" r="22" fill="#f3d7b0"/>
+  <path d="M22 34c2-16 16-24 26-24s24 8 26 24c-8-6-18-8-26-8s-18 2-26 8z" fill="#e07a2f"/>
+  <rect x="18" y="32" width="60" height="8" rx="4" fill="#c45e18"/>
+  <rect x="44" y="16" width="8" height="16" rx="2" fill="#f4c56d"/>
+  <circle cx="40" cy="48" r="3.2" fill="#1d3340"/>
+  <circle cx="56" cy="48" r="3.2" fill="#1d3340"/>
+  <path d="M41 56c2.4 4 11.6 4 14 0" fill="none" stroke="#1d3340" stroke-width="2.2" stroke-linecap="round"/>
+</svg>

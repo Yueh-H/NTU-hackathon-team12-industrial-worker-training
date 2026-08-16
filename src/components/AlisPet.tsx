@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { parts, workerById } from "../data/catalog";
 import { queueFor, snapshotFor } from "../engine/dashboard";
+import { assetUrl } from "../lib/asset";
 import { askAlisHeadless } from "../lib/alisHeadless";
 import { speakAuto, speakZh } from "../lib/speech";
 import { useShop } from "../store";
@@ -130,7 +131,7 @@ export function AlisPet() {
   if (!worker || !snapshot || !queue) return null;
 
   return (
-    <aside className={`alis-pet is-${mood}`} aria-label={`${PET_NAME}學習桌寵`}>
+    <aside className={`alis-pet is-${mood}`} aria-label={PET_NAME}>
       {open ? (
         <div className="alis-pet-bubble" role="status">
           <button
@@ -203,7 +204,13 @@ export function AlisPet() {
         aria-label={`${PET_NAME}：${message}`}
         aria-expanded={open}
       >
-        <span className="alis-pet-sprite" aria-hidden="true" />
+        <img
+          className="alis-pet-sprite"
+          src={assetUrl("helper.svg")}
+          alt=""
+          width={78}
+          height={90}
+        />
         {badge ? <b className="alis-pet-badge">{badge > 9 ? "9+" : badge}</b> : null}
         <span className="alis-pet-name">{PET_NAME}</span>
       </button>
