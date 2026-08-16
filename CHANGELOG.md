@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.11.1] - 2026-08-16
+
+### Removed
+- Identifying names and titles from training cards, seed copy, and deck notes
+
 ## [0.11.0] - 2026-08-16
 
 ### Changed
