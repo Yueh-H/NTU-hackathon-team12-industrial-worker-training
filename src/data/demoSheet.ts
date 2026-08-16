@@ -6,7 +6,6 @@ export const DEMO_SHEET = {
   docNo: "DEMO-001",
   formCode: "FM-DEMO",
   machine: "15-D9 子母扇 1724×2202",
-  previewPath: "drawing.png",
   pdfPath: "demo-sheet.pdf",
   pdfBytes: 1_073_158,
   summary: "子母扇平面防火遮煙視窗扇的生產製造與裁折圖，含門扇尺寸、左右方向、五金與材料裁切清單。",

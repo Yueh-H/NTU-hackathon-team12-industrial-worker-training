@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.11.2] - 2026-08-16
+
+### Removed
+- Full manufacturing-sheet rasters and the pet atlas from GitHub (`drawing.png`, `drawing-sm.png`, `alis-pet.webp`)
+
 ## [0.11.1] - 2026-08-16
 
 ### Removed

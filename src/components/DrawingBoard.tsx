@@ -1,6 +1,5 @@
 import { parts } from "../data/catalog";
 import { partStatusLabel } from "../engine/dashboard";
-import { assetUrl } from "../lib/asset";
 import type { ReviewState } from "../types";
 
 interface DrawingBoardProps {
@@ -22,7 +21,12 @@ export function DrawingBoard({
 }: DrawingBoardProps) {
   return (
     <div className="drawing-board">
-      <img className="drawing-image" src={assetUrl("drawing.png")} alt="FM-DEMO 生產製造表 DEMO-001" />
+      <div className="drawing-image drawing-placeholder" role="img" aria-label="工單圖不公開 / Gambar lembar tidak dipublikasikan">
+        <span>
+          工單圖不公開
+          <small>Gambar lembar tidak dipublikasikan</small>
+        </span>
+      </div>
       {parts.map((part) => {
         if (!part.hotspot) return null;
         const state = states.find((item) => item.partId === part.id);

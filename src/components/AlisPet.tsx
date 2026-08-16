@@ -75,7 +75,6 @@ export function AlisPet() {
   const next = queue ? queue.overdue[0] ?? queue.today[0] ?? queue.fresh[0] : undefined;
   const nextPart = next ? parts.find((part) => part.id === next.partId) : undefined;
   const progress = snapshot?.assigned ? Math.round((snapshot.started / snapshot.assigned) * 100) : 0;
-  const atlasUrl = `${import.meta.env.BASE_URL}alis-pet.webp`;
   const badge = snapshot ? snapshot.overdue || snapshot.dueToday : 0;
   const workerId = worker?.id ?? "";
   const spokenKey = worker ? `${worker.id}:${mood}:${message}` : "";
@@ -204,11 +203,7 @@ export function AlisPet() {
         aria-label={`${PET_NAME}：${message}`}
         aria-expanded={open}
       >
-        <span
-          className="alis-pet-sprite"
-          style={{ backgroundImage: `url("${atlasUrl}")` }}
-          aria-hidden="true"
-        />
+        <span className="alis-pet-sprite" aria-hidden="true" />
         {badge ? <b className="alis-pet-badge">{badge > 9 ? "9+" : badge}</b> : null}
         <span className="alis-pet-name">{PET_NAME}</span>
       </button>

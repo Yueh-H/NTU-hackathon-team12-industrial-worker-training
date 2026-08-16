@@ -17,8 +17,12 @@ dist/
 # OS / editor
 .DS_Store
 
-# Production and demo sheets stay local. Do not publish PDFs to GitHub.
+# Production and demo sheets stay local. Do not publish PDFs or full-sheet rasters to GitHub.
 *.pdf
+public/drawing.png
+public/drawing-sm.png
+public/alis-pet.webp
+firebase-debug.log
 
 # Local session work log (auto-recorded by Claude Code hooks; never publish)
 work_log/

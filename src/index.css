@@ -367,6 +367,31 @@ img { max-width: 100%; display: block; }
 .sheet-stage { position: relative; }
 .drawing-board { position: relative; min-height: 12rem; background: #fff; }
 .drawing-image { width: 100%; height: auto; display: block; }
+.drawing-placeholder {
+  aspect-ratio: 1872 / 2647;
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(#e8ecee 1px, transparent 1px) 0 0 / 100% 7.14%,
+    linear-gradient(90deg, #e8ecee 1px, transparent 1px) 0 0 / 12.5% 100%,
+    #f6f7f5;
+  color: var(--muted);
+  text-align: center;
+}
+.drawing-placeholder span {
+  display: grid;
+  gap: 4px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.86);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+.drawing-placeholder small {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
 .hotspot {
   position: absolute;
   width: 28px;
@@ -1203,15 +1228,22 @@ td small { color: var(--muted); }
   outline-offset: 3px;
 }
 .alis-pet-sprite {
-  display: block;
-  width: 112px;
-  height: 122px;
-  margin-top: 3px;
-  background-repeat: no-repeat;
-  background-size: 800% 1100%;
-  background-position: 0 0;
-  animation: alis-pet-idle 2.8s steps(7) infinite;
-  filter: drop-shadow(0 5px 5px rgba(23, 33, 43, 0.12));
+  display: grid;
+  place-items: center;
+  width: 78px;
+  height: 78px;
+  margin-top: 18px;
+  border-radius: 50% 50% 46% 46%;
+  background: radial-gradient(circle at 34% 30%, #ffe7b4, #efb12a 64%, #c98416);
+  box-shadow: inset 0 -8px 0 rgba(148, 88, 12, 0.14), 0 6px 10px rgba(23, 33, 43, 0.12);
+  animation: alis-pet-bob 2.4s ease-in-out infinite;
+}
+.alis-pet-sprite::before {
+  content: "◕‿◕";
+  color: #4a3010;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1;
 }
 .alis-pet-name {
   position: absolute;
@@ -1240,9 +1272,9 @@ td small { color: var(--muted); }
 .alis-pet.is-due .alis-pet-button { border-color: rgba(217, 106, 50, 0.38); }
 .alis-pet.is-celebrate .alis-pet-button { border-color: rgba(35, 114, 82, 0.32); }
 .alis-pet.is-celebrate .alis-pet-badge { background: var(--mint); }
-@keyframes alis-pet-idle {
-  from { background-position-x: 0%; }
-  to { background-position-x: 100%; }
+@keyframes alis-pet-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 .learn-empty {
   display: grid;
@@ -1622,6 +1654,6 @@ td small { color: var(--muted); }
   .ranking-score { grid-column: 2; grid-row: 2; display: flex; gap: 8px; text-align: left; }
   .alis-pet { right: 12px; bottom: 12px; }
   .alis-pet-button { width: 104px; min-height: 122px; border-radius: 54px 54px 18px 18px; }
-  .alis-pet-sprite { width: 92px; height: 101px; }
+  .alis-pet-sprite { width: 68px; height: 68px; margin-top: 14px; }
   .alis-pet-bubble { width: min(286px, calc(100vw - 24px)); }
 }
