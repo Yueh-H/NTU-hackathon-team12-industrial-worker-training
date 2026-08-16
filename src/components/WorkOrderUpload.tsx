@@ -25,7 +25,7 @@ function kindOf(file: File): "pdf" | "image" | null {
 
 export function WorkOrderUpload() {
   const navigate = useNavigate();
-  const { saveWorkOrder, uploadWorkOrderPdf, backend } = useShop();
+  const { saveWorkOrder, uploadWorkOrderPdf } = useShop();
   const [picked, setPicked] = useState<Picked | null>(null);
   const [over, setOver] = useState(false);
   const [reading, setReading] = useState(false);
@@ -164,7 +164,7 @@ export function WorkOrderUpload() {
             </small>
             <p>{DEMO_SHEET.summary}</p>
             <small>
-              {backend === "cloud" ? "PDF 會寫進 Firebase Storage，學習內容寫進 Firestore。" : "目前會先存於這個瀏覽器。"}
+              工單文字只存在這個瀏覽器，PDF 不會上傳。
             </small>
           </div>
         </div>

@@ -31,27 +31,17 @@ https://yueh-h.github.io/NTU-hackathon-team12-industrial-worker-training/
 
 `main` 一推就會由 GitHub Actions 部署到 GitHub Pages。員工頁 `/learn`，主管頁 `/admin`。
 
-## 資料持久化（Firebase Firestore）
+## 資料持久化（本機）
 
-沒有 `.env` 時用瀏覽器 `localStorage`。有 Firebase 設定時，學習進度寫進 Firestore，主管頁即時更新。
+學習進度與工單文字存在瀏覽器 `localStorage`。同一台電腦開兩個分頁會同步；換裝置或清掉網站資料就沒了。Firebase 已關掉，GitHub Pages 也不再注入雲端金鑰。
 
-主管可從 `/admin/workorders` 上傳一張 PDF 大工單，也可以補充文字。PDF 會先在瀏覽器抽取文字，再上傳到 Firebase Storage 的 `work_orders/{workOrderId}/source.pdf`；工單 metadata／抽取文字寫入 `work_orders/{workOrderId}`，AI 拆出的員工學習單元寫入 `work_orders/{workOrderId}/learning_modules/{moduleId}`。結果頁可直接切到 `/learn/workorder/{workOrderId}` 預覽員工學習流程。
+主管可從 `/admin/workorders` 上傳 PDF／PNG 或貼文字。PDF 只在瀏覽器抽字，檔案不上雲。結果頁可切到 `/learn/workorder/{workOrderId}`。
 
-專案：`ntu-team12-trainer`。本機：
-
-```bash
-cp .env.example .env
-```
-
-填入 Project settings 裡的 web app 金鑰，重開 `npm run dev`。GitHub Pages 由 Actions secrets 注入同一組 `VITE_FIREBASE_*`。
-
-規則在 `firestore.rules` 與 `storage.rules`：hackathon demo 允許讀寫進度與工單 PDF。若要把規則同步到 Firebase：
+`firestore.rules` 與 `storage.rules` 現在預設全拒。若專案裡還留著舊的公開讀寫規則，請在有 Firebase CLI 的機器執行：
 
 ```bash
 firebase deploy --only firestore:rules,storage
 ```
-
-正式上線要改 Auth。
 
 ## 教材來源
 

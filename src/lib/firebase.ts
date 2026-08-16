@@ -29,7 +29,13 @@ let app: FirebaseApp | null | undefined;
 let db: Firestore | null | undefined;
 let storage: FirebaseStorage | null | undefined;
 
+/** Cloud is off until we explicitly opt in. LocalStorage is the demo backend. */
+export function isCloudEnabled(): boolean {
+  return false;
+}
+
 export function getFirebaseApp(): FirebaseApp | null {
+  if (!isCloudEnabled()) return null;
   if (app !== undefined) return app;
   const config = firebaseConfig();
   app = config ? initializeApp(config) : null;
@@ -37,6 +43,7 @@ export function getFirebaseApp(): FirebaseApp | null {
 }
 
 export function getDb(): Firestore | null {
+  if (!isCloudEnabled()) return null;
   if (db !== undefined) return db;
   const firebaseApp = getFirebaseApp();
   db = firebaseApp ? getFirestore(firebaseApp) : null;
@@ -44,12 +51,9 @@ export function getDb(): Firestore | null {
 }
 
 export function getFirebaseStorage(): FirebaseStorage | null {
+  if (!isCloudEnabled()) return null;
   if (storage !== undefined) return storage;
   const firebaseApp = getFirebaseApp();
   storage = firebaseApp ? getStorage(firebaseApp) : null;
   return storage;
-}
-
-export function isCloudEnabled(): boolean {
-  return getDb() !== null;
 }

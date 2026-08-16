@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.11.0] - 2026-08-16
+
+### Changed
+- Learning and work-order data stay in the browser; Firebase is switched off
+- GitHub Pages no longer injects Firebase web keys
+- Firestore and Storage rules now deny all access until Auth exists
+
 ## [0.10.4] - 2026-08-16
 
 ### Changed

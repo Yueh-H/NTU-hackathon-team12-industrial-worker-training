@@ -44,7 +44,7 @@ export function AdminWorkOrders() {
           <h2>已建立的工單</h2>
           <span className="fine">{workOrders.length} 張</span>
         </div>
-        {!workOrdersReady ? <p className="info-card">正在讀取 Firebase 工單資料……</p> : null}
+        {!workOrdersReady ? <p className="info-card">正在讀取本機工單資料……</p> : null}
         {workOrders.map((workOrder) => (
           <Link className="workorder-list-card" key={workOrder.id} to={`/admin/workorders/${workOrder.id}`}>
             <span className="workorder-list-copy">
@@ -73,7 +73,7 @@ export function AdminWorkOrders() {
 
 export function AdminWorkOrderNew() {
   const navigate = useNavigate();
-  const { saveWorkOrder, uploadWorkOrderPdf, backend } = useShop();
+  const { saveWorkOrder, uploadWorkOrderPdf } = useShop();
   const [title, setTitle] = useState("");
   const [docNo, setDocNo] = useState("");
   const [rawContent, setRawContent] = useState("");
@@ -204,7 +204,7 @@ export function AdminWorkOrderNew() {
         <label>
           上傳工單 PDF
           <input type="file" accept="application/pdf,.pdf" onChange={handlePdfChange} />
-          <small className="field-hint">PDF 會先上傳到 Firebase Storage，再抽取文字交給 break down。單檔上限 25 MB。</small>
+          <small className="field-hint">PDF 只在瀏覽器抽取文字，檔案不會上傳雲端。單檔上限 25 MB。</small>
           {pdfLoading ? <small className="field-status">正在讀取 PDF 文字……</small> : null}
           {pdfDraft ? (
             <small className="field-status">
@@ -225,7 +225,7 @@ export function AdminWorkOrderNew() {
           <strong>AI 拆解設定</strong>
           <span>Codex · gpt-5.6-luna · reasoning effort max</span>
           <small>
-            不把 API key 放在前端；由 headless service 代為呼叫。{backend === "cloud" ? "PDF 存 Firebase Storage，工單與 break down 存 Firestore。" : "目前只會在這個瀏覽器保存文字與檔案 metadata。"}
+            不把 API key 放在前端；由本機 headless service 代為呼叫。工單文字與 metadata 只存在這個瀏覽器。
           </small>
         </div>
         {error ? <p className="form-error">{error}</p> : null}

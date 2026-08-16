@@ -89,8 +89,8 @@ export const t = {
   bossUpload: { zh: "老闆發工單", idn: "Bos unggah lembar" },
   bossOrders: { zh: "老闆剛發的工單", idn: "Lembar baru dari bos" },
   gateFine: {
-    zh: "已接 Firebase 時，手機學習、筆電看主管頁會打同一份資料。沒接就存在這個瀏覽器。",
-    idn: "Kalau Firebase tersambung, HP dan laptop memakai data yang sama. Kalau tidak, data hanya di browser ini."
+    zh: "進度存在這個瀏覽器。同一台電腦開兩個分頁可以同步，換裝置不會跟著走。",
+    idn: "Progres disimpan di browser ini. Dua tab di komputer yang sama bisa sinkron. Perangkat lain tidak ikut."
   },
   resetDemo: { zh: "重設示範資料", idn: "Reset data demo" },
   todayReview: { zh: "今天要複習", idn: "Harus diulang hari ini" },
