@@ -2,7 +2,6 @@ import { useEffect, useState, type ChangeEvent, type DragEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DEMO_SHEET, DEMO_WORK_ORDER_ID } from "../data/demoSheet";
 import { analyzeWorkOrder } from "../lib/aiWorkOrder";
-import { assetUrl } from "../lib/asset";
 import { biLine, BiText } from "./BiText";
 import { t } from "../lib/copy";
 import { extractPdfText } from "../lib/pdfText";
@@ -128,7 +127,7 @@ export function WorkOrderUpload() {
     }
   }
 
-  const previewSrc = picked?.kind === "image" ? picked.url : assetUrl(DEMO_SHEET.previewPath);
+  const previewSrc = picked?.kind === "image" ? picked.url : "";
 
   return (
     <section className="sheet-upload info-card">
@@ -156,7 +155,7 @@ export function WorkOrderUpload() {
       </label>
       {picked ? (
         <div className="sheet-preview">
-          <img src={previewSrc} alt={DEMO_SHEET.title} />
+          {previewSrc ? <img src={previewSrc} alt={picked.file.name} /> : null}
           <div className="sheet-parse">
             <p className="eyebrow">{biLine(t.parsedAs)}</p>
             <strong>{DEMO_SHEET.title}</strong>

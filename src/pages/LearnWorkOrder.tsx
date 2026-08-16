@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useSearchParams } from "react-router-dom";
-import { WorkOrderPdf } from "../components/WorkOrderPdf";
 import { workerById } from "../data/catalog";
 import { useShop } from "../store";
 import type { LearningModule, WorkOrderBundle } from "../types";
@@ -70,7 +69,6 @@ export function LearnWorkOrder() {
         <h1>{workOrder.title}</h1>
         <p>{workOrder.docNo || "未編號"} · 這張工單拆成 {modules.length} 個學習情境</p>
       </header>
-      <WorkOrderPdf workOrder={workOrder} />
       <section className="learning-progress-card">
         <div className="section-title-row">
           <strong>本張工單學習進度</strong>

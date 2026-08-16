@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.10.4] - 2026-08-16
+
+### Changed
+- Work-order pages no longer embed or preview a PDF unless the user opens the file link
+
 ## [0.10.3] - 2026-08-16
 
 ### Removed

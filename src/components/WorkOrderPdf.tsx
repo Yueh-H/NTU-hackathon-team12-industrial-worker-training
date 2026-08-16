@@ -12,16 +12,18 @@ export function WorkOrderPdf({ workOrder }: { workOrder: WorkOrder }) {
   return (
     <section className="info-card source-file-card">
       <div className="section-title-row">
-        <h2>來源 PDF</h2>
-        <span className="fine">{pages} 頁</span>
+        <h2>
+          來源檔
+          <span className="bi-idn" lang="id">Berkas sumber</span>
+        </h2>
+        <span className="fine">{pages} 頁 / {pages} hlm</span>
       </div>
-      <iframe className="workorder-pdf-frame" title={name} src={url} />
       <p>
         <a href={url} target="_blank" rel="noreferrer">
-          {name} ↗
+          另開 {name} ↗
         </a>
       </p>
-      <small className="fine">這份 PDF 只在有上傳連結時顯示，不會放在 GitHub Pages。</small>
+      <small className="fine">不會自動預覽 PDF，只在你點連結時開啟。</small>
     </section>
   );
 }
