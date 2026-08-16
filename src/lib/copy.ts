@@ -83,6 +83,10 @@ export function reviewStageHintBi(state: ReviewState, day = todayKey()): Bi {
 
 export const t = {
   gateTitle: { zh: "工程訓練單", idn: "Lembar latihan kerja" },
+  gateLede: {
+    zh: "員工認零件、做測驗；主管看進度。示範資料不含來源單位。",
+    idn: "Karyawan kenali suku cadang dan kuis. Supervisor lihat progres. Data demo tanpa identitas sumber."
+  },
   workerLearn: { zh: "員工頁面", idn: "Halaman karyawan" },
   supervisor: { zh: "主管監控", idn: "Pantauan supervisor" },
   bossPage: { zh: "老闆頁面", idn: "Halaman bos" },

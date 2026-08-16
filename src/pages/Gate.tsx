@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { BiText, biLine } from "../components/BiText";
 import { BackendBadge } from "../components/BackendBadge";
-import { trainingSet } from "../data/catalog";
 import { t } from "../lib/copy";
 import { usePageTitle } from "../lib/pageTitle";
 import { useShop } from "../store";
@@ -14,12 +13,10 @@ export function Gate() {
       <p className="eyebrow">Team 12 · NTU Hackathon</p>
       <BiText as="h1" zh={t.gateTitle.zh} idn={t.gateTitle.idn} />
       <p className="lede">
-        {trainingSet.titleZh}
+        {t.gateLede.zh}
         <span className="bi-idn" lang="id">
-          {trainingSet.titleId}
+          {t.gateLede.idn}
         </span>
-        <br />
-        {trainingSet.docNo} · {trainingSet.machine}
       </p>
       <BackendBadge />
       <div className="gate-actions">

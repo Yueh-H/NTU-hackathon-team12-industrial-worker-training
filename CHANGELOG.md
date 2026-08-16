@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.11.5] - 2026-08-16
+
+### Changed
+- GitHub README and the site gate no longer describe a source shop or real work order
+
 ## [0.11.4] - 2026-08-16
 
 ### Removed
